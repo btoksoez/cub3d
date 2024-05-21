@@ -14,11 +14,9 @@ void	get_texture(char *line, char type, t_map *map)
 	line += 2;
 	skip_whitespace(&line);
 	file = ft_strdup_delimiter(line, WHITESPACE);
-	printf("File: %s\n", file);
-	file = "./textures/north.xpm";
 	if (access(file, F_OK) != 0 || access(file, R_OK) != 0)
 	{
-		// free(file);
+		free(file);
 		error_message("texture file not readable\n");
 	}
 	if (type == 'N')
@@ -33,17 +31,17 @@ void	get_texture(char *line, char type, t_map *map)
 }
 void	assign_color(int i, char *num, char type, t_map *map)
 {
-	if (i == 0 && type == 'f')
+	if (i == 0 && type == 'F')
 		map->f_color.red = ft_atoi(num);
-	else if (i == 1 && type == 'f')
+	else if (i == 1 && type == 'F')
 		map->f_color.green = ft_atoi(num);
-	else if (i == 2 && type == 'f')
+	else if (i == 2 && type == 'F')
 		map->f_color.blue = ft_atoi(num);
-	else if (i == 0 && type == 'c')
+	else if (i == 0 && type == 'C')
 		map->c_color.red = ft_atoi(num);
-	else if (i == 1 && type == 'c')
+	else if (i == 1 && type == 'C')
 		map->c_color.green = ft_atoi(num);
-	else if (i == 2 && type == 'c')
+	else if (i == 2 && type == 'C')
 		map->c_color.blue = ft_atoi(num);
 }
 
@@ -57,7 +55,7 @@ void	get_color(char *line, char type, t_map *map)
 	skip_whitespace(&line);
 	while (i < 3)
 	{
-		num = ft_strdup_delimiter(line, ",");
+		num = ft_strdup_delimiter(line, WS_COMMA);
 		if (!ft_isdigit_str(num))
 		{
 			free(num);
@@ -82,6 +80,18 @@ bool	is_cub(char *file)
 	return (false);
 }
 
+bool	assigned_all(t_map *map)
+{
+	if (map->ea_texture && map->no_texture
+		&& map->so_texture && map->we_texture
+		&& map->f_color.blue != -1 && map->f_color.green != -1
+		&& map->f_color.red != -1 && map->c_color.green != -1
+		&& map->c_color.blue != -1 && map->f_color.red != -1
+		)
+		return (true);
+	return (false);
+}
+
 void	read_textures(t_map *map, int fd)
 {
 	char *line;
@@ -90,7 +100,6 @@ void	read_textures(t_map *map, int fd)
 	line = get_next_line(fd);
 	while (line)
 	{
-		printf("Line: %s", line);
 		tmp = line;
 		skip_whitespace(&tmp);
 		if (*tmp == 'N' && *(tmp + 1) == 'O')
@@ -101,45 +110,36 @@ void	read_textures(t_map *map, int fd)
 			get_texture(tmp, 'W', map);
 		else if (*tmp == 'E' && *(tmp + 1) == 'A')
 			get_texture(tmp, 'E', map);
-		else if (*tmp == 'F' && *(tmp + 1) == ' ')
+		else if (*tmp == 'F' && ft_strchr(WHITESPACE, *(tmp + 1)))
 			get_color(tmp, 'F', map);
-		else if (*tmp == 'C' && *(tmp + 1) == ' ')
+		else if (*tmp == 'C' && ft_strchr(WHITESPACE, *(tmp + 1)))
 			get_color(tmp, 'C', map);
 		if (line)
 			free(line);
+		if (assigned_all(map))
+			return ;
 		line = get_next_line(fd);
 	}
+	if (!assigned_all(map))
+		error_message("Missing textures or colors in .cub file\n");
 }
 
-// void	read_map(t_map *map, int fd, int rows)
-// {
-// 	char	*line;
+bool	is_valid_color(int color)
+{
+	if (color >= 0 && color <= 255)
+		return (true);
+	return (false);
+}
 
-// 	line = get_next_line(fd);
-// 	if (line)
-// 		read_map(map, fd, rows + 1);
-// 	else
-// 	{
-// 		if (rows == 0)
-// 			error_message("Empty file");
-// 		map->map = ft_calloc((rows + 1), sizeof(char *));
-// 		if (!map->map)
-// 			error_message("Memory allocation failed");
-// 		map->rows = rows;
-// 	}
-// 	if (line)
-// 	{
-// 		map->map[rows] = ft_strtrim(line, "\n");
-// 		if (!map->map[rows])
-// 		{
-// 			free(line);
-// 			free_map(map, "Memory allocation failed", 1);
-// 		}
-// 		free(line);
-// 	}
-// }
+void	validate_map(t_map *map)
+{
+	if (!is_valid_color(map->f_color.blue) || !is_valid_color(map->f_color.green)
+		|| !is_valid_color(map->f_color.red) || !is_valid_color(map->c_color.green)
+		|| !is_valid_color(map->c_color.blue) || !is_valid_color(map->c_color.red))
+		error_message("Invalid color\n");
+}
 
-bool	read_input(int argc, char *argv[], t_map *map)
+void	read_input(int argc, char *argv[], t_map *map)
 {
 	int		fd;
 
@@ -153,20 +153,14 @@ bool	read_input(int argc, char *argv[], t_map *map)
 	if (fd < 0)
 		error_message("Failed to open file\n");
 
+	init_map(map);
 	read_textures(map, fd);
 	print_map(map);
 	// read_map(map, fd, 0);
 	// close(fd);
-	// validade_map(map);
-
-
-	//check other args
-		//check specifier
-		//check for file access
-		//check for number boundaries
+	validate_map(map);
 
 	//check map
 		//check for right chars
 		//surrounded by walls
-	return (1);
 }

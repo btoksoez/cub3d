@@ -27,6 +27,7 @@
 # define DOWN 65364
 
 # define WHITESPACE " \t\n\r\f\v"
+# define WS_COMMA " \t\n\r\f\v,"
 
 typedef struct	s_rgb
 {
@@ -53,6 +54,9 @@ typedef struct s_player
 
 }			t_player;
 
+/* ------- init ------ */
+void init_map(t_map *map);
+
 /*	------ utils -------- */
 char	*ft_strdup_delimiter(const char *s, char *delimiter);
 bool	ft_isdigit_str(char *str);
@@ -60,7 +64,7 @@ void	print_map(t_map *map_info);
 void	skip_whitespace(char **line);
 
 /* ----- parsing ------- */
-bool	read_input(int argc, char *argv[], t_map *map);
+void	read_input(int argc, char *argv[], t_map *map);
 
 
 #endif
