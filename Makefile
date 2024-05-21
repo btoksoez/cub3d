@@ -1,5 +1,5 @@
 NAME = cub3D
-CC = cc
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
 LIBFT = includes/libft/libft.a
 COMPRESS = ar rcs
@@ -14,12 +14,6 @@ OBJ_DIR = objects
 OBJ = $(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.c=.o)))
 OBJ_BONUS_DIR = bonus_objects
 OBJ_BONUS = $(addprefix $(OBJ_BONUS_DIR)/,$(notdir $(SRC_BONUS:.c=.o)))
-
-# Mac
-#MLX_DIR = minilibx/minilibx-mac
-#MLX_LIB = $(MLX_DIR)/libmlx.a
-#MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/libmlx
-#MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 # Linux
 MLX_DIR = includes/minilibx-linux

@@ -1,0 +1,8 @@
+rotating the view:
+	multiply vector by
+	[ cos(a) -sin(a) ]
+	[ sin(a)  cos(a) ]
+
+https://lodev.org/cgtutor/raycasting.html
+https://www.youtube.com/watch?v=NbSee-XM7WA&list=PLGU1kcPKHMKg_gYNZ0668-6hW27JBECoU&index=3&ab_channel=javidx9
+
