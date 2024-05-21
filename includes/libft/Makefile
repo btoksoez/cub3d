@@ -10,7 +10,7 @@ S = ft_atoi ft_atol ft_bzero ft_calloc ft_freematrix ft_isalnum ft_isalpha ft_is
 	ft_lstadd_front ft_lstclear ft_lstdelone ft_lstiter ft_lstlast ft_lstmap ft_lstnew ft_lstsize ft_memcpy ft_memmove ft_memset ft_printf \
 	ft_printf_utils ft_putchar_fd ft_putendl_fd ft_putnbr_fd ft_putstr_fd ft_split ft_strchr ft_strcmp ft_strdup ft_strequ ft_striteri \
 	ft_strjoin ft_strjoin_free ft_strlcat ft_strlcpy ft_strlen ft_strmapi ft_strncmp ft_strnstr ft_strrchr ft_strtrim ft_substr ft_tolower \
-	ft_toupper get_next_line
+	ft_toupper get_next_line ft_realloc
 
 # Colours
 CYAN = \033[1;36m
