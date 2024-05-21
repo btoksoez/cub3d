@@ -14,7 +14,7 @@ char	*ft_strdup_delimiter(const char *s, char *delimiter)
 	if (dup == NULL)
 		return (NULL);
 	i = 0;
-	while (s[i])
+	while (s[i] && !ft_strchr(delimiter, s[i]))
 	{
 		((unsigned char *)dup)[i] = ((unsigned char *)s)[i];
 		i++;
@@ -38,6 +38,8 @@ bool	ft_isdigit_str(char *str)
 
 void	skip_whitespace(char **line)
 {
+	if (**line == '\0')
+		return ;
 	while (ft_strchr(WHITESPACE, **line))
 		(*line)++;
 }
@@ -45,7 +47,7 @@ void	skip_whitespace(char **line)
 void print_map(t_map *map_info)
 {
     // Print the map grid
-    printf("Map:\n");
+    printf("---- Map ----\n");
     for (int i = 0; i < map_info->rows; i++) {
         printf("%s\n", map_info->map[i]);
     }
@@ -59,6 +61,9 @@ void print_map(t_map *map_info)
     // Print the floor and ceiling colors
     printf("Floor Color: R=%d, G=%d, B=%d\n", map_info->f_color.red, map_info->f_color.green, map_info->f_color.blue);
     printf("Ceiling Color: R=%d, G=%d, B=%d\n", map_info->c_color.red, map_info->c_color.green, map_info->c_color.blue);
+	printf("\n\n\n");
 }
+
+
 
 

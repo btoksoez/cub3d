@@ -23,6 +23,7 @@ int	main(int argc, char *argv[])
 {
 	t_map map;
 
+	init_map(&map);
 	read_input(argc, argv, &map);
 	print_map2(map);
 	// init();
