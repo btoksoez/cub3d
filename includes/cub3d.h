@@ -26,7 +26,7 @@
 # define RIGHT 65363
 # define DOWN 65364
 
-# define WHITESPACE " /t/r/v"
+# define WHITESPACE " \t\n\r\f\v"
 
 typedef struct	s_rgb
 {
@@ -43,7 +43,8 @@ typedef struct	s_map
 	char			*so_texture;
 	char			*we_texture;
 	char			*ea_texture;
-	struct s_rgb	*color
+	struct s_rgb	f_color;
+	struct s_rgb	c_color;
 
 }					t_map;
 
@@ -51,5 +52,15 @@ typedef struct s_player
 {
 
 }			t_player;
+
+/*	------ utils -------- */
+char	*ft_strdup_delimiter(const char *s, char *delimiter);
+bool	ft_isdigit_str(char *str);
+void	print_map(t_map *map_info);
+void	skip_whitespace(char **line);
+
+/* ----- parsing ------- */
+bool	read_input(int argc, char *argv[], t_map *map);
+
 
 #endif
