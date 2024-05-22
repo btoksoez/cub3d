@@ -28,6 +28,7 @@
 # define DOWN 65364
 
 # define WHITESPACE " \t\n\r\f\v"
+# define VALID_CHARS "NSEW01 \t\n\r\f\v\0"
 # define WS_COMMA " \t\n\r\f\v,"
 
 typedef struct	s_rgb

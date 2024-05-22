@@ -9,12 +9,17 @@ void	error_message(char *str)
 
 void	free_map(t_map *map, char *str, int status)
 {
-	int	row;
+	int	rows;
 
-	row = 0;
-	while (map->map[row])
-		free(map->map[row++]);
-	free(map->map);
+	rows = 0;
+	while (map->map[rows])
+	{
+		if (map->map[rows])
+			free(map->map[rows]);
+		rows++;
+	}
+	if (map->map)
+		free(map->map);
 	if (status)
 		error_message(str);
 	else
