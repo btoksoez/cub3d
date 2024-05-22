@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 void	read_input(int argc, char *argv[], t_map *map)
 {

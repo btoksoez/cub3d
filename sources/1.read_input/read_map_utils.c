@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 void	remove_extra_rows(t_map *map, int rows, char **temp)
 {

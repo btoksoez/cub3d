@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 bool	surrounded_by_walls(t_map *map)
 {

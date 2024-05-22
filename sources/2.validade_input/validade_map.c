@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 // at the end add a 0 in the left of the map
 // at the end add multiple 1's in the right and bottom of the map

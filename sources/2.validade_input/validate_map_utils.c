@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 void	get_player_coordinates(t_map *map, int rows, int coll)
 {

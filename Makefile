@@ -1,21 +1,18 @@
 NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-LIBFT = includes/libft/libft.a
+LIBFT_DIR = includes/libft
+LIBFT = $(LIBFT_DIR)/libft.a
 COMPRESS = ar rcs
 RM = rm -rf
 
-SRC_DIR = sources
-SRC = $(wildcard $(SRC_DIR)/*.c)
-SRC_BONUS_DIR = sources_bonus
-SRC_BONUS = $(wildcard $(SRC_BONUS_DIR)/*.c)
-
 OBJ_DIR = objects
-OBJ = $(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.c=.o)))
-OBJ_BONUS_DIR = bonus_objects
-OBJ_BONUS = $(addprefix $(OBJ_BONUS_DIR)/,$(notdir $(SRC_BONUS:.c=.o)))
+SRC_DIR = sources
+SRC_DIRS = $(wildcard $(SRC_DIR)/*)
+SRC = $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/*/*.c)
+OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
-# Linux
+# Mlx Library
 MLX_DIR = includes/minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
 MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/linux
@@ -34,39 +31,25 @@ $(NAME): $(OBJ_DIR) $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) $(LIBFT) -o $(NAME)
 	@echo "$(CYAN)make$(RESET)   $@ $(GREEN)[OK]$(RESET)"
 
-bonus: $(NAME)_bonus
-
-$(NAME)_bonus: $(OBJ_BONUS_DIR) $(OBJ_BONUS) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJ_BONUS) $(MLX_FLAGS) $(LIBFT) -o $(NAME)_bonus
-	@echo "$(CYAN)make$(RESET)   bonus   $(GREEN)[OK]$(RESET)"
-
 $(LIBFT):
-	@$(MAKE) -s -C ./includes/libft --no-print-directory
+	@$(MAKE) -s -C $(LIBFT_DIR) --no-print-directory
 
 $(OBJ_DIR):
-	@mkdir -p $@
+	@mkdir -p $(OBJ_DIR) $(foreach dir, $(SRC_DIRS), $(OBJ_DIR)/$(notdir $(dir)))
 
-$(OBJ_BONUS_DIR):
-	@mkdir -p $@
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@$(CC) $(CFLAGS) $(MLX_INC) -c $< -o $@
-
-$(OBJ_BONUS_DIR)/%.o: $(SRC_BONUS_DIR)/%.c
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(MLX_INC) -c $< -o $@
 
 clean:
-	@$(RM) $(OBJ_DIR) $(OBJ_BONUS_DIR)
-	@$(MAKE) -C ./includes/libft clean --no-print-directory
+	@$(RM) $(OBJ_DIR)
+	@$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
 	@echo "$(ORANGE)$@$(RESET)  $(NAME) $(GREEN)[OK]$(RESET)"
-#	@echo "$(ORANGE)$@$(RESET)  bonus $(GREEN)[OK]$(RESET)"
 
 fclean: clean
 	@$(RM) $(NAME)
-	@$(RM) $(NAME)_bonus
-	@$(MAKE) -C ./includes/libft fclean --no-print-directory
+	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
 	@echo "$(RED)$@$(RESET) $(NAME) $(GREEN)[OK]$(RESET)"
-#	@echo "$(RED)$@$(RESET) bonus $(GREEN)[OK]$(RESET)"
 
 re: fclean all
 
@@ -74,4 +57,4 @@ v: re
 	@echo "\n"
 	valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) maps/map2.ber
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re v
