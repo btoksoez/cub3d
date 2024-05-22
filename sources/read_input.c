@@ -121,7 +121,10 @@ void	read_textures(t_map *map, int fd)
 		line = get_next_line(fd);
 	}
 	if (!assigned_all(map))
+	{
+		//free_map(map);
 		error_message("Missing textures or colors in .cub file\n");
+	}
 }
 
 bool	is_valid_color(int color)
@@ -136,7 +139,10 @@ void	validate_map(t_map *map)
 	if (!is_valid_color(map->f_color.blue) || !is_valid_color(map->f_color.green)
 		|| !is_valid_color(map->f_color.red) || !is_valid_color(map->c_color.green)
 		|| !is_valid_color(map->c_color.blue) || !is_valid_color(map->c_color.red))
-		error_message("Invalid color\n");
+		{
+			// free_map(map);
+			error_message("Invalid color\n");
+		}
 }
 
 void	read_input(int argc, char *argv[], t_map *map)
@@ -152,9 +158,7 @@ void	read_input(int argc, char *argv[], t_map *map)
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		error_message("Failed to open file\n");
-
-	init_map(map);
-	read_textures(map, fd);
+	init_map(map);	read_textures(map, fd);
 	print_map(map);
 	// read_map(map, fd, 0);
 	// close(fd);
