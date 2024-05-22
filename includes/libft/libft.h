@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 18:13:05 by andre-da          #+#    #+#             */
-/*   Updated: 2024/05/21 18:22:24 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/05/22 12:01:49 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@
 # include <limits.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+
+# define WHITESPACE " \t\n\r\f\v"
+# define WS_COMMA " \t\n\r\f\v,"
 
 typedef struct s_list
 {
@@ -100,5 +103,8 @@ int		ft_print_hex_pnumber(long nbr, int i);
 int		ft_print_address(void	*address, int i);
 size_t	ft_stringlen(const char *s);
 int		ft_strequ(const char *s1, const char *s2);
+bool	ft_isdigit_str(char *str);
+char	*ft_strdup_delimiter(const char *s, char *delimiter);
+void	ft_skip_whitespace(char **line);
 
 #endif

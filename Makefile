@@ -1,5 +1,5 @@
 NAME = cub3D
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 LIBFT = includes/libft/libft.a
 COMPRESS = ar rcs
@@ -73,9 +73,5 @@ re: fclean all
 v: re
 	@echo "\n"
 	valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) maps/map2.ber
-
-v_mac: re
-	@echo "\n"
-	leaks -atExit -- ./$(NAME) maps/map2.ber
 
 .PHONY: all clean fclean re bonus
