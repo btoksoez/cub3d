@@ -59,74 +59,32 @@ void	get_player_coordinates(t_map *map, int rows, int coll)
 
 bool	invalid_characters(t_map *map)
 {
-	int	rows;
-	int	coll;
+	int		rows;
+	int		coll;
+	bool	player_found;
 
 	rows = 0;
+	player_found = false;
 	while (rows < map->rows)
 	{
 		coll = 0;
 		while (map->map[rows][coll])
 		{
 			if (ft_strchr(PLAYER, map->map[rows][coll]))
+			{
 				get_player_coordinates(map, rows, coll);
+				player_found = true;
+			}
 			if (!ft_strchr(VALID_CHARS, map->map[rows][coll]))
 				return (true);
 			coll++;
 		}
+		if (map->max_coll < coll)
+			map->max_coll = coll;
 		rows++;
 	}
-	return (false);
-}
-
-char	**copy_map(t_map *map, char **original, int rows)
-{
-	char	**copy;
-	int		i;
-
-	copy = ft_calloc(rows + 1, sizeof(char *));
-	if (!copy)
-		free_map(map, "Memory allocation failed", 1);
-	i = 0;
-	while (i < rows)
-	{
-		copy[i] = ft_strdup(original[i]);
-		if (!copy[i])
-		{
-			ft_freematrix(copy);
-			free_map(map, "Memory allocation failed", 1);
-		}
-		i++;
-	}
-	return (copy);
-}
-
-void	player_access(t_map *map, char **visited, int x, int y)
-{
-	if (visited[y][x] == VISITED || visited[y][x] == WALL)
-		return ;
-	if (ft_strchr(WHITESPACE, visited[y][x]) || visited[y][x] == '\0')
-	{
-		map->valid = false;
-		return ;
-	}
-	visited[y][x] = VISITED;
-	player_access(map, visited, x + 1, y);
-	player_access(map, visited, x - 1, y);
-	player_access(map, visited, x, y + 1);
-	player_access(map, visited, x, y - 1);
-}
-
-bool	surrounded_by_walls(t_map *map)
-{
-	char	**visited;
-
-	visited = copy_map(map, map->map, map->rows);
-	player_access(map, visited, map->player_x, map->player_y);
-	if (visited)
-		ft_freematrix(visited);
-	if (map->valid == true)
-		return (true);
+	if (!player_found)
+		free_map(map, "There is no player in this map", 1);
 	return (false);
 }
 
@@ -140,4 +98,28 @@ void	validate_map(t_map *map)
 		free_map(map, "Map has invalid characters", 1);
 	if (!surrounded_by_walls(map))
 		free_map(map, "Map isn't surrounded by walls", 1);
+
+	// check if there is no space without walls surrounding it in the middle of the map
 }
+
+// at the end add a 0 in the right and bottom of the map
+// at the end add two 1's in the right and bottom of the map
+	// printf("%d\n", map->rows);
+	// printf("%d\n", map->max_coll);
+
+//check for an empy space on the right (potentially left too)
+
+// 	        11111111111 1111111111111
+//         10000000001 1000000000001
+//         10110000011 1000000000001
+//         1001000000111000000000001
+// 111111111011000001001000000000001
+// 100000000011000001110111111111111
+// 11110111111111011100000010111
+// 111101111111110111010100101  0
+// 11000000110101011100000010111
+// 10000000000000001100000010001
+// 10000000000000001101010010001
+// 11000001110101011111011110N01
+// 11110111 1110101 101111010001
+// 11111111 1111111 111111111111

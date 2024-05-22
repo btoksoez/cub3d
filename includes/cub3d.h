@@ -44,9 +44,9 @@ typedef struct	s_map
 	char			**map;
 	int				rows;
 	int				player_x;
+	int				max_coll;
 	int				player_y;
 	int				player_dir;
-	bool			valid;
 	char			*no_texture;
 	char			*so_texture;
 	char			*we_texture;
@@ -78,6 +78,11 @@ void	validate_map(t_map *map);
 bool	valid_color(int color);
 bool	invalid_color(t_map *map);
 bool	map_split(t_map *map);
+bool	surrounded_by_walls(t_map *map);
+bool	valid_upside(t_map *map, int *coll, int *row, bool *last_dir);
+bool	valid_rightside(t_map *map, int *coll, int *row, bool *last_dir);
+bool	valid_downside(t_map *map, int *coll, int *row, bool *last_dir);
+bool	valid_leftside(t_map *map, int *coll, int *row, bool *last_dir);
 
 /* ------------------------------- Mlx Init -------------------------------- */
 void	init_map(t_map *map);
