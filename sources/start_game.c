@@ -9,6 +9,7 @@ void	put_pixel_to_img(t_game *game, int x, int y)
 	*(unsigned int *)(game->img.pixels_ptr + offset) = RED;
 }
 
+//somehow need to scale map to screensize, so that for any map, the screensize if still 1080 x 720
 void	render_game(t_game *game)
 {
 	int			x;

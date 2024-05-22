@@ -31,8 +31,8 @@
 # define WHITESPACE " \t\n\r\f\v"
 # define WS_COMMA " \t\n\r\f\v,"
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1080
+# define HEIGHT 720
 
 # define RED 0xFF0000
 # define GREEN 0x00FF00
