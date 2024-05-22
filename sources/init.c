@@ -25,7 +25,7 @@ void	init_game(t_game *game, t_map *map)
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3D");
 	if (!game->win)
 	{
-		mlx_destroy_display(game->mlx);
+		// mlx_destroy_display(game->mlx);	//add for linux
 		free(game->mlx);
 		error_message("MLX Window error\n");
 	}
@@ -33,7 +33,7 @@ void	init_game(t_game *game, t_map *map)
 	if (game->img.img_ptr == NULL)
 	{
 		mlx_destroy_window(game->mlx, game->win);
-		mlx_destroy_display(game->mlx);
+		// mlx_destroy_display(game->mlx);	//add for linux
 		free(game->mlx);
 		error_message("MLX IMG error\n");
 	}

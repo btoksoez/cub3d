@@ -1,6 +1,6 @@
 NAME = cub3D
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -I/opt/X11/include
 LIBFT = includes/libft/libft.a
 COMPRESS = ar rcs
 RM = rm -rf
@@ -15,11 +15,17 @@ OBJ = $(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.c=.o)))
 OBJ_BONUS_DIR = bonus_objects
 OBJ_BONUS = $(addprefix $(OBJ_BONUS_DIR)/,$(notdir $(SRC_BONUS:.c=.o)))
 
-# Linux
-MLX_DIR = includes/minilibx-linux
-MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
-MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/linux
-MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
+# # Linux
+# MLX_DIR = includes/minilibx-linux
+# MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
+# MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/linux
+# MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
+
+# Mac
+MLX_DIR = includes/minilibx-mac
+MLX_LIB = $(MLX_DIR)/libmlx.a
+MLX_INC = -I$(MLX_DIR)
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 # Colours
 GREEN = \033[1;32m

@@ -15,11 +15,11 @@ void	render_game(t_game *game)
 	int			y;
 	static int	i = 0;
 
-	y = 0;
-	while (game->map->map[y])
+	y = -1;
+	while (++y < HEIGHT)
 	{
-		x = 0;
-		while (game->map->map[y][x])
+		x = -1;
+		while (++x < WIDTH)
 		{
 			put_pixel_to_img(game, x, y);	//use this to read from images to img
 			x++;
@@ -33,6 +33,7 @@ void	render_game(t_game *game)
 void	start_game(t_map *map)
 {
 	t_game	game;
+
 
 	init(&game, map);
 	render_game(&game);
