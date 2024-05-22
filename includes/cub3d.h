@@ -10,6 +10,7 @@
 # define EAST 82
 # define WEAST 83
 
+# define PLAYER "NSEW"
 # define WALL 49
 # define VISITED 85
 # define ENEMY 88
@@ -44,6 +45,7 @@ typedef struct	s_map
 	int				rows;
 	int				player_x;
 	int				player_y;
+	int				player_dir;
 	bool			valid;
 	char			*no_texture;
 	char			*so_texture;
@@ -65,6 +67,7 @@ void	check_arguments(int argc, char *argv[]);
 bool	is_cub(char *file);
 void	read_textures(t_map *map, int fd);
 void	read_map(t_map *map, int fd);
+void	remove_extra_rows(t_map *map, int rows, char **temp);
 void	get_texture(char *line, char type, t_map *map);
 void	assign_color(int i, char *num, char type, t_map *map);
 void	get_color(char *line, char type, t_map *map);

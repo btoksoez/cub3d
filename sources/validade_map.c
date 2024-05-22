@@ -43,17 +43,40 @@ bool	map_split(t_map *map)
 	return (false);
 }
 
-void	player_access(t_map *map, char **visited, int x, int y)
+void	get_player_coordinates(t_map *map, int rows, int coll)
 {
-	if (visited[y][x] == VISITED || visited[y][x] == WALL)
-		return ;
-	if (ft_strchr(WHITESPACE, visited[y][x]))
-		map->valid = false;
-	visited[y][x] = VISITED;
-	player_access(map, visited, x + 1, y);
-	player_access(map, visited, x - 1, y);
-	player_access(map, visited, x, y + 1);
-	player_access(map, visited, x, y - 1);
+	map->player_x = coll;
+	map->player_y = rows;
+	if (map->map[rows][coll] == 'N')
+		map->player_dir = NORTH;
+	if (map->map[rows][coll] == 'S')
+		map->player_dir = SOUTH;
+	if (map->map[rows][coll] == 'E')
+		map->player_dir = EAST;
+	if (map->map[rows][coll] == 'W')
+		map->player_dir = WEAST;
+}
+
+bool	invalid_characters(t_map *map)
+{
+	int	rows;
+	int	coll;
+
+	rows = 0;
+	while (rows < map->rows)
+	{
+		coll = 0;
+		while (map->map[rows][coll])
+		{
+			if (ft_strchr(PLAYER, map->map[rows][coll]))
+				get_player_coordinates(map, rows, coll);
+			if (!ft_strchr(VALID_CHARS, map->map[rows][coll]))
+				return (true);
+			coll++;
+		}
+		rows++;
+	}
+	return (false);
 }
 
 char	**copy_map(t_map *map, char **original, int rows)
@@ -78,6 +101,22 @@ char	**copy_map(t_map *map, char **original, int rows)
 	return (copy);
 }
 
+void	player_access(t_map *map, char **visited, int x, int y)
+{
+	if (visited[y][x] == VISITED || visited[y][x] == WALL)
+		return ;
+	if (ft_strchr(WHITESPACE, visited[y][x]) || visited[y][x] == '\0')
+	{
+		map->valid = false;
+		return ;
+	}
+	visited[y][x] = VISITED;
+	player_access(map, visited, x + 1, y);
+	player_access(map, visited, x - 1, y);
+	player_access(map, visited, x, y + 1);
+	player_access(map, visited, x, y - 1);
+}
+
 bool	surrounded_by_walls(t_map *map)
 {
 	char	**visited;
@@ -91,34 +130,14 @@ bool	surrounded_by_walls(t_map *map)
 	return (false);
 }
 
-bool	invalid_characters(t_map *map)
-{
-	int	rows;
-	int	coll;
-
-	rows = 0;
-	while (rows < map->rows)
-	{
-		coll = 0;
-		while (map->map[rows][coll])
-		{
-			if (!ft_strchr(VALID_CHARS, map->map[rows][coll]))
-				return (true);
-			coll++;
-		}
-		rows++;
-	}
-	return (false);
-}
-
 void	validate_map(t_map *map)
 {
 	if (invalid_color(map))
 		free_map(map, "Invalid color", 1);
-	if (map_split(map))
+	if (map_split(map))										// triggers if there is text after
 		free_map(map, "Map is separated by empty lines", 1);
 	if (invalid_characters(map))
 		free_map(map, "Map has invalid characters", 1);
-	// if (!surrounded_by_walls(map))
-	// 	free_map(map, "Map isn't surrounded by walls", 1);
+	if (!surrounded_by_walls(map))
+		free_map(map, "Map isn't surrounded by walls", 1);
 }

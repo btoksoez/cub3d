@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 18:13:05 by andre-da          #+#    #+#             */
-/*   Updated: 2024/05/22 12:01:49 by marvin           ###   ########.fr       */
+/*   Updated: 2024/05/22 14:55:16 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,6 @@ int		ft_strequ(const char *s1, const char *s2);
 bool	ft_isdigit_str(char *str);
 char	*ft_strdup_delimiter(const char *s, char *delimiter);
 void	ft_skip_whitespace(char **line);
+int		ft_isspace(int c);
 
 #endif

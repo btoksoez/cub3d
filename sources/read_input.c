@@ -77,19 +77,7 @@ void	read_map(t_map *map, int fd)
 		line = get_next_line(fd);
 		rows++;
 	}
-	if (rows == 0)
-		error_message("Empty map\n");
-	while (rows > 0 && *map->map[rows - 1] == '\0')
-	{
-		free(map->map[rows - 1]);
-		rows--;
-	}
-	temp = ft_realloc(map->map, sizeof(char *) * (rows + 1));
-	if (!temp)
-		free_map(map, "Memory allocation failed", 1);
-	map->rows = rows;
-	map->map = temp;
-	map->map[rows] = NULL;
+	remove_extra_rows(map, rows, temp);
 }
 
 void	check_arguments(int argc, char *argv[])

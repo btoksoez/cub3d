@@ -8,6 +8,7 @@ void init_map(t_map *map)
 	map->rows = 0;
 	map->player_x = 0;
 	map->player_y = 0;
+	map->player_dir = 0;
 	map->valid = true;
 	map->no_texture = NULL;
 	map->so_texture = NULL;
