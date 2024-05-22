@@ -2,8 +2,34 @@
 # define CUB3D_H
 
 # include "./libft/libft.h"
-# include "./minilibx-linux/mlx.h"
-# include <stdio.h>
+# include "./minilibx-mac/mlx.h"
+// # include "./minilibx-linux/mlx.h"
+
+// Linux
+// # define ESC 65307
+// # define W 119
+// # define A 97
+// # define S 115
+// # define D 100
+// # define UP 65362
+// # define LEFT 65361
+// # define RIGHT 65363
+// # define DOWN 65364
+
+// Mac
+# define ESC 53
+# define W 13
+# define A 0
+# define S 1
+# define D 2
+# define UP 126
+# define LEFT 123
+# define RIGHT 124
+# define DOWN 125
+
+# define WHITESPACE " \t\n\r\f\v"
+# define VALID_CHARS "NSEW01 \t\n\r\f\v\0"
+# define WS_COMMA " \t\n\r\f\v,"
 
 # define NORTH 80
 # define SOUTH 81
@@ -17,20 +43,6 @@
 # define EMPTY 48
 # define WON 87
 # define SCALE 50
-
-# define ESC 65307
-# define W 119
-# define A 97
-# define S 115
-# define D 100
-# define UP 65362
-# define LEFT 65361
-# define RIGHT 65363
-# define DOWN 65364
-
-# define WHITESPACE " \t\n\r\f\v"
-# define VALID_CHARS "NSEW01 \t\n\r\f\v\0"
-# define WS_COMMA " \t\n\r\f\v,"
 
 typedef struct	s_rgb
 {
@@ -111,6 +123,7 @@ bool	valid_leftside(t_map *map, int *coll, int *row, bool *last_dir);
 void	init_map(t_map *map);
 void	start_game(t_map *map);
 int		close_window(t_game *game, int status, int exit);
+int		key_press(int key, t_game *game);
 
 /* -------------------------------- Utils ---------------------------------- */
 void	print_textures(t_map *map_info);

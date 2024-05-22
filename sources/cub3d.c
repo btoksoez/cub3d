@@ -6,10 +6,11 @@ int	main(int argc, char *argv[])
 
 	init_map(&map);
 	read_input(argc, argv, &map);
-	start_game(&map);
 
 	// print_textures(&map);
-	// print_map(map);
+	print_map(map);
+
+	start_game(&map);
 	// clean_up();
 	return (0);
 }
