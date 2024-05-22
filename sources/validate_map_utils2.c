@@ -105,6 +105,8 @@ bool	valid_downside(t_map *map, int *coll, int *row, bool *last_dir)
 		else
 			return (false);
 	}
+	if (ft_strchr(map->map[map->rows - 1], '0'))
+		return (false);
 	return (true);
 }
 
