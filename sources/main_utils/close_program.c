@@ -7,6 +7,18 @@ void	error_message(char *str)
 	exit (1);
 }
 
+int	close_window(t_game *game, int status, int exit)
+{
+	mlx_destroy_window(game->mlx, game->win);
+	// mlx_destroy_display(game->mlx);
+	free(game->mlx);
+	if (exit == WON)
+		free_map(game->map, "You Won!", status);
+	else
+		free_map(game->map, "Game Over!", status);
+	return (0);
+}
+
 void	free_map(t_map *map, char *str, int status)
 {
 	int	rows;

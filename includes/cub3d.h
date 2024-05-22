@@ -56,6 +56,25 @@ typedef struct	s_map
 
 }					t_map;
 
+typedef struct s_img
+{
+	void			*img_ptr;
+	char			*pixels_ptr;
+	int				bits_per_pixel;
+	int				endian;
+	int				line_len;
+}					t_img;
+
+typedef struct	s_game
+{
+	void			*mlx;
+	void			*win;
+	struct s_map	*map;
+	struct s_img	img;
+	int				width;
+	int				heigth;
+}					t_game;
+
 typedef struct s_player
 {
 
@@ -90,6 +109,8 @@ bool	valid_leftside(t_map *map, int *coll, int *row, bool *last_dir);
 
 /* ------------------------------- Mlx Init -------------------------------- */
 void	init_map(t_map *map);
+void	start_game(t_map *map);
+int		close_window(t_game *game, int status, int exit);
 
 /* -------------------------------- Utils ---------------------------------- */
 void	print_textures(t_map *map_info);
@@ -98,5 +119,6 @@ void	print_map(t_map map);
 /* ----------------------------- Close Program ----------------------------- */
 void	error_message(char *str);
 void	free_map(t_map *map, char *str, int status);
+int		close_window(t_game *game, int status, int exit);
 
 #endif
