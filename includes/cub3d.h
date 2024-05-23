@@ -34,6 +34,8 @@
 # define WIDTH 1080
 # define HEIGHT 720
 
+# define TILE_SIZE 64
+
 # define RED 0xFF0000
 # define GREEN 0x00FF00
 # define BLUE 0x0000FF

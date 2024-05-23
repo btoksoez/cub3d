@@ -6,6 +6,7 @@ COMPRESS = ar rcs
 RM = rm -rf
 
 SRC_DIR = sources
+# SRC = test.c
 SRC = $(wildcard $(SRC_DIR)/*.c)
 SRC_BONUS_DIR = sources_bonus
 SRC_BONUS = $(wildcard $(SRC_BONUS_DIR)/*.c)
