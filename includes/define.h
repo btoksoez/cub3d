@@ -30,8 +30,8 @@
 # define WS_COMMA " \t\n\r\f\v,"
 /* -------------- PI Values -------------- */
 # define PI 3.141592653f
-# define PI_05 1.570796326f
-# define PI_15 6.283185307f
+# define PI_05 (PI / 2.0)
+# define PI_15 (3.0 * PI / 2.0)
 /* -------------- Directions ------------- */
 # define NORTH PI_15
 # define SOUTH PI_05

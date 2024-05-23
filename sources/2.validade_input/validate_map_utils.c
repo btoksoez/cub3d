@@ -30,6 +30,8 @@ bool	invalid_characters(t_map *map)
 		{
 			if (ft_strchr(PLAYER, map->map[rows][coll]))
 			{
+				if (player_found)
+					free_map(map, "There can only be 1 player", 1);
 				get_player_coordinates(map, rows, coll);
 				player_found = true;
 			}
