@@ -96,10 +96,8 @@ int		mouse_hook(int button, int x, int y, t_game *game);
 
 /* ------------------------------- Rendering ------------------------------- */
 /* ------------------------------------------------------------------------- */
-void	draw_player(t_game *game, int start_x, int start_y, int width, int height, int color);
 void	render_2dgame(t_game *game);
-void	draw_rectangle(t_game *game, int start_x, int start_y, int width, int height, int color);
-void	draw_player(t_game *game, int start_x, int start_y, int width, int height, int color);
+void	render_image(t_game *game, int start_x, int start_y, int color);
 void	put_pixel_to_img(t_game *game, int x, int y, int color);
 void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
 

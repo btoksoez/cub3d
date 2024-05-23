@@ -12,43 +12,60 @@ void	start_game(t_map *map)
 //somehow need to scale map to screensize, so that for any map, the screensize if still 1080 x 720
 void	render_2dgame(t_game *game)
 {
-	draw_rectangle(game, 0, 0, game->width, game->height, BLACK);
+	int	y;
+	int	x;
 
-	for (int y = 0; y < game->map->rows; y++)
+	render_image(game, 0, 0, SCREEN);
+	y = 0;
+	while (y < game->map->rows)
 	{
-		for (int x = 0; x < game->map->max_coll; x++)
+		x = 0;
+		while (x < game->map->max_coll)
 		{
 			if (game->map->map[y][x] == WALL)
-				draw_rectangle(game, x * SCALE, y * SCALE, SCALE, SCALE, GREEN);
+				render_image(game, x * SCALE, y * SCALE, WALLS);
 			if (game->map->map[y][x] == EMPTY)
-				draw_rectangle(game, x * SCALE, y * SCALE, SCALE, SCALE, BLUE);
-			draw_player(game, game->player_x, game->player_y, PSIZE, PSIZE, YELLOW);
+				render_image(game, x * SCALE, y * SCALE, SPACE);
+			render_image(game, game->player_x, game->player_y, PLAYER_);
+			x++;
 		}
+		y++;
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
 }
 
-void	draw_rectangle(t_game *game, int start_x, int start_y, int width, int height, int color)
+void	render_image(t_game *game, int start_x, int start_y, int color)
 {
-	for (int y = start_y; y < start_y + height; y++)
-	{
-		for (int x = start_x; x < start_x + width; x++)
-			put_pixel_to_img(game, x, y, color);
-	}
-}
+	int	width;
+	int	heigth;
+	int	line_length;
+	int	end_x;
+	int	end_y;
 
-void	draw_player(t_game *game, int start_x, int start_y, int width, int height, int color)
-{
-	for (int y = start_y; y < start_y + height; y++)
+	if (color == SCREEN)
 	{
-		for (int x = start_x; x < start_x + width; x++)
+		width = game->width;
+		heigth = game->height;
+	}
+	else if (color == PLAYER_)
+	{
+		line_length = 50;					// Change this to control the length of the line
+		width = PSIZE;
+		heigth = PSIZE;
+		end_x = (start_x + PSIZE / 2) + line_length * cos(game->player_angle);
+		end_y = (start_y + PSIZE / 2) + line_length * sin(game->player_angle);
+		draw_line(game, (start_x + PSIZE / 2), (start_y + PSIZE / 2), end_x, end_y, color);
+	}
+	else
+	{
+		width = SCALE;
+		heigth = SCALE;
+	}
+	for (int y = start_y; y < start_y + width; y++)
+	{
+		for (int x = start_x; x < start_x + heigth; x++)
 			put_pixel_to_img(game, x, y, color);
 	}
-	// Draw the viewing direction line
-	int line_length = 50; // Change this to control the length of the line
-	int end_x = (start_x + PSIZE / 2) + line_length * cos(game->player_angle);
-	int end_y = (start_y + PSIZE / 2) + line_length * sin(game->player_angle);
-	draw_line(game, (start_x + PSIZE / 2), (start_y + PSIZE / 2), end_x, end_y, color);
 }
 
 void	put_pixel_to_img(t_game *game, int x, int y, int color)

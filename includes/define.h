@@ -45,7 +45,7 @@
 /* ----------------- Game ---------------- */
 # define PLAYER "NSEW"
 # define MOVE 10
-# define BUFFER 7
+# define BUFFER 10
 # define WALL 49
 # define VISITED 85
 # define ENEMY 88
@@ -63,5 +63,12 @@
 # define CYAN 0x00FFFF
 # define MAGENTA 0xFF00FF
 # define BLACK 0x000000
+# define WHITE 0xFFFFFF
+# define ORANGE 0xFF4500
+/* ---------------- Images --------------- */
+# define SCREEN BLACK
+# define SPACE WHITE
+# define WALLS ORANGE
+# define PLAYER_ BLUE
 
 #endif
