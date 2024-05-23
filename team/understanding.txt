@@ -6,3 +6,4 @@ rotating the view:
 https://lodev.org/cgtutor/raycasting.html
 https://www.youtube.com/watch?v=NbSee-XM7WA&list=PLGU1kcPKHMKg_gYNZ0668-6hW27JBECoU&index=3&ab_channel=javidx9
 
+https://medium.com/@afatir.ahmedfatir/cub3d-tutorial-af5dd31d2fcf
