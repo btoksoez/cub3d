@@ -58,7 +58,6 @@ bool	valid_rightside(t_map *map, int *coll, int *row, bool *last_dir)
 {
 	while (*row < (map->rows - 1))
 	{
-		// printf("x: %d y: %d\n", *row, *coll);
 		if (*coll != (map->max_coll - 1) && map->map[*row][*coll + 1] == WALL && !*last_dir)
 		{
 			*last_dir = false;

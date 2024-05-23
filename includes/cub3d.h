@@ -2,11 +2,12 @@
 # define CUB3D_H
 
 # include "./libft/libft.h"
-# include "./minilibx-mac/mlx.h"
+// # include "./minilibx-mac/mlx.h"
 # include "./minilibx-linux/mlx.h"
 # include <stdio.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include <math.h>
 
 // Linux
 # define ESC 65307
@@ -46,8 +47,13 @@
 # define EMPTY 48
 # define WON 89
 # define SCALE 50
+# define PSIZE 15
 # define WIDTH 1080
 # define HEIGHT 720
+
+#ifndef PI
+# define PI 3.141592653
+#endif
 
 # define RED 0xFF0000
 # define GREEN 0x00FF00
@@ -70,7 +76,7 @@ typedef struct	s_map
 	int				rows;
 	int				player_x;
 	int				max_coll;
-	int				player_y;
+	int				player_y;	//maybe use different variable type
 	int				player_dir;
 	char			*no_texture;
 	char			*so_texture;
@@ -98,6 +104,9 @@ typedef struct	s_game
 	struct s_img	img;
 	int				width;
 	int				height;
+	float			player_x;
+	float			player_y;
+	float			player_angle;
 }					t_game;
 
 typedef struct s_player
@@ -140,6 +149,11 @@ int		close_window(t_game *game, int status, int exit);
 int		key_press(int keysym, t_game *game);
 int		mouse_hook(int button, int x, int y, t_game *game);
 void	init_mlx(t_game *game, t_map *map);
+
+
+/* ------------------------------- Rendering ------------------------------- */
+void	draw_player(t_game *game, int start_x, int start_y, int width, int height, int color);
+void	render_2dgame(t_game *game);
 
 /* -------------------------------- Utils ---------------------------------- */
 void	print_textures(t_map *map_info);
