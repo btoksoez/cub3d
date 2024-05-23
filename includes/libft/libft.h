@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 18:13:05 by andre-da          #+#    #+#             */
-/*   Updated: 2024/05/22 14:55:16 by marvin           ###   ########.fr       */
+/*   Updated: 2024/05/23 20:58:17 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # include <limits.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <math.h>
 
 # define WHITESPACE " \t\n\r\f\v"
 # define WS_COMMA " \t\n\r\f\v,"

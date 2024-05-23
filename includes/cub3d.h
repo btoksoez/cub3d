@@ -2,67 +2,10 @@
 # define CUB3D_H
 
 # include "./libft/libft.h"
-// # include "./minilibx-mac/mlx.h"
-# include "./minilibx-linux/mlx.h"
-# include <stdio.h>
-# include <X11/X.h>
-# include <X11/keysym.h>
-# include <math.h>
+# include "define.h"
 
-// Linux
-# define ESC 65307
-# define W 119
-# define A 97
-# define S 115
-# define D 100
-# define UP 65362
-# define LEFT 65361
-# define RIGHT 65363
-# define DOWN 65364
-
-// // Mac
-// # define ESC 53
-// # define W 13
-// # define A 0
-// # define S 1
-// # define D 2
-// # define UP 126
-// # define LEFT 123
-// # define RIGHT 124
-// # define DOWN 125
-
-# define WHITESPACE " \t\n\r\f\v"
-# define VALID_CHARS "NSEW01 \t\n\r\f\v\0"
-# define WS_COMMA " \t\n\r\f\v,"
-
-# define NORTH PI_15
-# define SOUTH PI_05
-# define EAST 0
-# define WEST PI
-
-# define PLAYER "NSEW"
-# define WALL 49
-# define VISITED 85
-# define ENEMY 88
-# define EMPTY 48
-# define WON 89
-# define SCALE 50
-# define PSIZE 15
-# define WIDTH 1080
-# define HEIGHT 720
-
-# define PI 3.141592653f
-# define PI_05 1.570796326f
-# define PI_15 6.283185307f
-
-# define RED 0xFF0000
-# define GREEN 0x00FF00
-# define BLUE 0x0000FF
-# define YELLOW 0xFFFF00
-# define CYAN 0x00FFFF
-# define MAGENTA 0xFF00FF
-# define BLACK 0x000000
-
+/* -------------------------------- Structs -------------------------------- */
+/* ------------------------------------------------------------------------- */
 typedef struct	s_rgb
 {
 	int	red;
@@ -109,12 +52,8 @@ typedef struct	s_game
 	float			player_angle;
 }					t_game;
 
-typedef struct s_player
-{
-
-}			t_player;
-
 /* ------------------------------- Read Input ------------------------------ */
+/* ------------------------------------------------------------------------- */
 void	read_input(int argc, char *argv[], t_map *map);
 void	check_arguments(int argc, char *argv[]);
 bool	is_cub(char *file);
@@ -128,6 +67,7 @@ bool	assigned_all(t_map *map);
 void	init_map(t_map *map);
 
 /* ----------------------------- Validade map ------------------------------ */
+/* ------------------------------------------------------------------------- */
 void	validate_map(t_map *map);
 bool	valid_color(int color);
 bool	invalid_color(t_map *map);
@@ -144,22 +84,32 @@ bool	valid_leftside(t_map *map, int *coll, int *row, bool *last_dir);
 void	fill_with_space(t_map *map);
 
 /* ------------------------------- Mlx Init -------------------------------- */
+/* ------------------------------------------------------------------------- */
 void	start_game(t_map *map);
-int		close_window(t_game *game, int status, int exit);
+void	init_mlx(t_game *game, t_map *map);
+void	init_game_struct(t_game *game, t_map *map);
+void	init_window(t_game *game, t_map *map);
+void	init_image(t_game *game);
+void	init_events(t_game *game);
 int		key_press(int keysym, t_game *game);
 int		mouse_hook(int button, int x, int y, t_game *game);
-void	init_mlx(t_game *game, t_map *map);
-
 
 /* ------------------------------- Rendering ------------------------------- */
+/* ------------------------------------------------------------------------- */
 void	draw_player(t_game *game, int start_x, int start_y, int width, int height, int color);
 void	render_2dgame(t_game *game);
+void	draw_rectangle(t_game *game, int start_x, int start_y, int width, int height, int color);
+void	draw_player(t_game *game, int start_x, int start_y, int width, int height, int color);
+void	put_pixel_to_img(t_game *game, int x, int y, int color);
+void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
 
 /* -------------------------------- Utils ---------------------------------- */
+/* ------------------------------------------------------------------------- */
 void	print_textures(t_map *map_info);
 void	print_map(t_map map);
 
 /* ----------------------------- Close Program ----------------------------- */
+/* ------------------------------------------------------------------------- */
 void	error_message(char *str);
 void	free_map(t_map *map, char *str, int status);
 int		close_window(t_game *game, int status, int exit);

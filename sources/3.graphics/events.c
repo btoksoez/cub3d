@@ -6,23 +6,23 @@ int	key_press(int key, t_game *game)
 		close_window(game, 0, ESC);
 	if (key == W)
 	{
-		if (game->map->map[(int)(game->player_y - 0.6)/ SCALE][(int)game->player_x / SCALE] != WALL)
-			game->player_y -= 0.5;
+		if (game->map->map[(int)(game->player_y - BUFFER)/ SCALE][(int)game->player_x / SCALE] != WALL)
+			game->player_y -= MOVE;
 	}
 	if (key == A)
 	{
-		if (game->map->map[(int)(game->player_y)/ SCALE][(int)(game->player_x - 0.6) / SCALE] != WALL)
-			game->player_x -= 0.5;
+		if (game->map->map[(int)(game->player_y)/ SCALE][(int)(game->player_x - BUFFER) / SCALE] != WALL)
+			game->player_x -= MOVE;
 	}
 	if (key == S)
 	{
-		if (game->map->map[(int)(game->player_y + 0.6 + PSIZE)/ SCALE][(int)game->player_x / SCALE] != WALL)
-			game->player_y += 0.5;
+		if (game->map->map[(int)(game->player_y + BUFFER + PSIZE)/ SCALE][(int)game->player_x / SCALE] != WALL)
+			game->player_y += MOVE;
 	}
 	if (key == D)
 	{
-		if (game->map->map[(int)(game->player_y)/ SCALE][(int)(game->player_x + 0.6 + PSIZE) / SCALE] != WALL)
-			game->player_x += 0.5;
+		if (game->map->map[(int)(game->player_y)/ SCALE][(int)(game->player_x + BUFFER + PSIZE) / SCALE] != WALL)
+			game->player_x += MOVE;
 	}
 	if (key == LEFT)
 	{
@@ -30,7 +30,7 @@ int	key_press(int key, t_game *game)
 	}
 	if (key == RIGHT)
 		game->player_angle = fmod(game->player_angle + 0.1, 2.0 * PI);
-	printf("player x: %f, PLayer Y: %f\n", game->player_x, game->player_y);
+	// printf("player x: %f, PLayer Y: %f\n", game->player_x, game->player_y);
 	// add shooting, space, reload ...
 	render_2dgame(game);
 	return (0);
