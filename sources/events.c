@@ -3,7 +3,7 @@
 int	key_press(int keysym, t_game *game)
 {
 	printf("Pressed key: %d\n", keysym);
-	if (keysym == XK_Escape || keysym == 53)
+	if (keysym == ESC)
 		close_window(game);
 	//add WDAS, ARROWS, shooting, space, reload ...
 	return (0);

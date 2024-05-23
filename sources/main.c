@@ -3,7 +3,6 @@
 int	main(int argc, char *argv[])
 {
 	t_map	map;
-
 	// read_input(argc, argv, &map);
 
 	//testing
@@ -14,7 +13,7 @@ int	main(int argc, char *argv[])
 		"1010101010",
 		"0101010101",
 		"1010101010",
-		"0101010101",
+		"010101P101",
 		"1010101010",
 		"1101010101",
 		NULL

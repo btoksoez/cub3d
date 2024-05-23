@@ -18,6 +18,15 @@ void draw_rectangle(t_img *img, int start_x, int start_y, int width, int height,
     }
 }
 
+void draw_player(t_img *img, int start_x, int start_y, int width, int height, int color)
+{
+    for (int y = start_y; y < start_y + height; y++) {
+        for (int x = start_x; x < start_x + width; x++) {
+            put_pixel_to_img(img, x, y, color);
+        }
+    }
+}
+
 
 //somehow need to scale map to screensize, so that for any map, the screensize if still 1080 x 720
 void	render_game(t_game *game)
@@ -29,15 +38,19 @@ void	render_game(t_game *game)
     int start_x = (WIDTH - map_width * TILE_SIZE) / 2;
     int start_y = (HEIGHT - map_height * TILE_SIZE) / 2;
 
-    for (int y = 0; y < map_height; y++) {
-        for (int x = 0; x < map_width; x++) {
-            if (game->map->map[y][x] == '1') {
+    for (int y = 0; y < map_height; y++)
+    {
+        for (int x = 0; x < map_width; x++)
+        {
+            if (game->map->map[y][x] == '1')
                 draw_rectangle(&game->img, start_x + x * TILE_SIZE, start_y + y * TILE_SIZE, TILE_SIZE, TILE_SIZE, GREEN);
-            } else if (game->map->map[y][x] == '0') {
+            else if (game->map->map[y][x] == '0' || game->map->map[y][x] == 'P')
                 draw_rectangle(&game->img, start_x + x * TILE_SIZE, start_y + y * TILE_SIZE, TILE_SIZE, TILE_SIZE, BLUE);
-            }
+            if (game->map->map[y][x] == 'P')
+                draw_player(&game->img, start_x + x * TILE_SIZE + TILE_SIZE / 3, start_y + y * TILE_SIZE + TILE_SIZE / 3, 0.3 * TILE_SIZE, 0.3 * TILE_SIZE, BLACK);
         }
     }
+
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
 }
 
@@ -45,7 +58,7 @@ void	start_game(t_map *map)
 {
 	t_game	game;
 
-	init(&game, map);
+	init_mlx(&game, map);
 	render_game(&game);
 	mlx_loop(game.mlx);
 }

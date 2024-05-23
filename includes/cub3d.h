@@ -42,6 +42,7 @@
 # define YELLOW 0xFFFF00
 # define CYAN 0x00FFFF
 # define MAGENTA 0xFF00FF
+# define BLACK 0x000000
 
 typedef struct	s_rgb
 {
@@ -87,10 +88,10 @@ typedef struct s_player
 
 /* ------- init ------ */
 void	init_map(t_map *map);
-void	init_game(t_game *game, t_map *map);
+void	init_window(t_game *game, t_map *map);
 void	init_images();
 void	init_events(t_game *game);
-void	init(t_game *game, t_map *map);
+void	init_mlx(t_game *game, t_map *map);
 
 /*	------ utils -------- */
 char	*ft_strdup_delimiter(const char *s, char *delimiter);

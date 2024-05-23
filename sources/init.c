@@ -17,7 +17,7 @@ void init_map(t_map *map)
 	map->c_color.green = -1;
 	map->c_color.blue = -1;
 }
-void	init_game(t_game *game, t_map *map)
+void	init_window(t_game *game, t_map *map)
 {
 	game->mlx = mlx_init();
 	if (!game->mlx)
@@ -58,9 +58,9 @@ void	init_events(t_game *game)
 	mlx_mouse_hook(game->win, mouse_hook, game);
 }
 
-void	init(t_game *game, t_map *map)
+void	init_mlx(t_game *game, t_map *map)
 {
-	init_game(game, map);
+	init_window(game, map);
 	init_images();
 	init_events(game);
 }
