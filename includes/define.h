@@ -44,6 +44,7 @@
 # define StructureNotifyMask 1L << 17
 /* ----------------- Game ---------------- */
 # define PLAYER "NSEW"
+# define SCALE 50
 # define MOVE 10
 # define BUFFER 10
 # define WALL 49
@@ -51,7 +52,6 @@
 # define ENEMY 88
 # define EMPTY 48
 # define WON 89
-# define SCALE 50
 # define PSIZE 15
 # define WIDTH 1080
 # define HEIGHT 720

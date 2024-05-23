@@ -50,8 +50,8 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 	else if (color == PLAYER_)
 	{
 		line_length = SCALE;					// Change this to control the length of the line
-		end_x = (start_x + PSIZE / 2) + line_length * cos(game->player_angle);
-		end_y = (start_y + PSIZE / 2) + line_length * sin(game->player_angle);
+		end_x = (start_x + PSIZE / 2) + (line_length * cos(game->player_angle));
+		end_y = (start_y + PSIZE / 2) + (line_length * sin(game->player_angle));
 		draw_line(game, (start_x + PSIZE / 2), (start_y + PSIZE / 2), end_x, end_y, color);
 		width = PSIZE;
 		heigth = PSIZE;
