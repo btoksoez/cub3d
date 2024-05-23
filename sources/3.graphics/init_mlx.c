@@ -51,7 +51,7 @@ void	init_game_struct(t_game *game, t_map *map)
 	game->map = map;
 	game->player_x = map->player_x * SCALE + (SCALE / 3);
 	game->player_y = map->player_y * SCALE + (SCALE / 3);
-	game->player_angle = 0;
+	game->player_angle = map->player_dir;
 }
 
 void	init_mlx(t_game *game, t_map *map)

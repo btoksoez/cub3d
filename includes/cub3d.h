@@ -35,10 +35,10 @@
 # define VALID_CHARS "NSEW01 \t\n\r\f\v\0"
 # define WS_COMMA " \t\n\r\f\v,"
 
-# define NORTH 78
-# define SOUTH 83
-# define EAST 69
-# define WEST 87
+# define NORTH PI_15
+# define SOUTH PI_05
+# define EAST 0
+# define WEST PI
 
 # define PLAYER "NSEW"
 # define WALL 49
@@ -51,9 +51,9 @@
 # define WIDTH 1080
 # define HEIGHT 720
 
-#ifndef PI
-# define PI 3.141592653
-#endif
+# define PI 3.141592653f
+# define PI_05 1.570796326f
+# define PI_15 6.283185307f
 
 # define RED 0xFF0000
 # define GREEN 0x00FF00
@@ -77,7 +77,7 @@ typedef struct	s_map
 	int				player_x;
 	int				max_coll;
 	int				player_y;	//maybe use different variable type
-	int				player_dir;
+	float			player_dir;
 	char			*no_texture;
 	char			*so_texture;
 	char			*we_texture;

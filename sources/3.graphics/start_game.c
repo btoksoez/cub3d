@@ -57,28 +57,28 @@ void draw_player(t_game *game, int start_x, int start_y, int width, int height, 
 			put_pixel_to_img(game, x, y, color);
 	}
 	// Draw the viewing direction line
-    int line_length = 50; // Change this to control the length of the line
-    int end_x = (start_x + PSIZE / 2) + line_length * cos(game->player_angle);
-    int end_y = (start_y + PSIZE / 2) + line_length * sin(game->player_angle);
-    draw_line(game, (start_x + PSIZE / 2), (start_y + PSIZE / 2), end_x, end_y, color);
+	int line_length = 50; // Change this to control the length of the line
+	int end_x = (start_x + PSIZE / 2) + line_length * cos(game->player_angle);
+	int end_y = (start_y + PSIZE / 2) + line_length * sin(game->player_angle);
+	draw_line(game, (start_x + PSIZE / 2), (start_y + PSIZE / 2), end_x, end_y, color);
 }
 
 //somehow need to scale map to screensize, so that for any map, the screensize if still 1080 x 720
 void	render_2dgame(t_game *game)
 {
-    draw_rectangle(game, 0, 0, game->width, game->height, BLACK);
+	draw_rectangle(game, 0, 0, game->width, game->height, BLACK);
 
-    for (int y = 0; y < game->map->rows; y++)
-    {
-        for (int x = 0; x < game->map->max_coll; x++)
+	for (int y = 0; y < game->map->rows; y++)
+	{
+		for (int x = 0; x < game->map->max_coll; x++)
 		{
 			if (game->map->map[y][x] == WALL)
 				draw_rectangle(game, x * SCALE, y * SCALE, SCALE, SCALE, GREEN);
 			if (game->map->map[y][x] == EMPTY)
 				draw_rectangle(game, x * SCALE, y * SCALE, SCALE, SCALE, BLUE);
 			draw_player(game, game->player_x, game->player_y, PSIZE, PSIZE, YELLOW);
-        }
-    }
+		}
+	}
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
 }
 

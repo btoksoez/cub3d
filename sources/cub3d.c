@@ -3,14 +3,10 @@
 int	main(int argc, char *argv[])
 {
 	t_map	map;
-	// read_input(argc, argv, &map);
 
 	init_map(&map);
 	read_input(argc, argv, &map);
-
-	// print_textures(&map);
 	print_map(map);
-
 	start_game(&map);
 	// clean_up();
 	return (0);
