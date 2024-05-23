@@ -11,7 +11,7 @@ void	get_player_coordinates(t_map *map, int rows, int coll)
 	if (map->map[rows][coll] == 'E')
 		map->player_dir = EAST;
 	if (map->map[rows][coll] == 'W')
-		map->player_dir = WEAST;
+		map->player_dir = WEST;
 }
 
 bool	invalid_characters(t_map *map)

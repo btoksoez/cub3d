@@ -6,26 +6,26 @@
 // # include "./minilibx-linux/mlx.h"
 
 // Linux
-// # define ESC 65307
-// # define W 119
-// # define A 97
-// # define S 115
-// # define D 100
-// # define UP 65362
-// # define LEFT 65361
-// # define RIGHT 65363
-// # define DOWN 65364
+# define ESC 65307
+# define W 119
+# define A 97
+# define S 115
+# define D 100
+# define UP 65362
+# define LEFT 65361
+# define RIGHT 65363
+# define DOWN 65364
 
-// Mac
-# define ESC 53
-# define W 13
-# define A 0
-# define S 1
-# define D 2
-# define UP 126
-# define LEFT 123
-# define RIGHT 124
-# define DOWN 125
+// // Mac
+// # define ESC 53
+// # define W 13
+// # define A 0
+// # define S 1
+// # define D 2
+// # define UP 126
+// # define LEFT 123
+// # define RIGHT 124
+// # define DOWN 125
 
 # define WHITESPACE " \t\n\r\f\v"
 # define VALID_CHARS "NSEW01 \t\n\r\f\v\0"
@@ -34,7 +34,7 @@
 # define NORTH 80
 # define SOUTH 81
 # define EAST 82
-# define WEAST 83
+# define WEST 83
 
 # define PLAYER "NSEW"
 # define WALL 49

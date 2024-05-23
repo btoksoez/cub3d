@@ -12,17 +12,17 @@ SRC_DIRS = $(wildcard $(SRC_DIR)/*)
 SRC = $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/*/*.c)
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
-# Mac
-MLX_DIR = includes/minilibx-mac
-MLX_LIB = $(MLX_DIR)/libmlx.a
-MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/libmlx
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+# # Mac
+# MLX_DIR = includes/minilibx-mac
+# MLX_LIB = $(MLX_DIR)/libmlx.a
+# MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/libmlx
+# MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 # Linux
-#MLX_DIR = includes/minilibx-linux
-#MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
-#MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/linux
-#MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
+MLX_DIR = includes/minilibx-linux
+MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
+MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/linux
+MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 
 # Colours
 GREEN = \033[1;32m

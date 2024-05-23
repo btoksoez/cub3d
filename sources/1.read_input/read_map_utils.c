@@ -5,7 +5,7 @@ void	remove_extra_rows(t_map *map, int rows, char **temp)
 	int	coll;
 
 	if (rows == 0)
-		error_message("Empty map\n");
+		error_message("Empty map");
 	while (rows > 0)
 	{
 		coll = 0;

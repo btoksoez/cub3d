@@ -2,8 +2,9 @@
 
 // at the end add a 0 in the left of the map
 // at the end add multiple 1's in the right and bottom of the map
-//check for an empy space on the right (potentially left too)
+// check for an empy space on the right (potentially left too)
 // map split triggers if there is text after map
+// trim 1's which are outside of the outer wall
 
 void	validate_map(t_map *map)
 {

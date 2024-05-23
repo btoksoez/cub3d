@@ -7,7 +7,7 @@ void	read_input(int argc, char *argv[], t_map *map)
 	check_arguments(argc, argv);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		error_message("Failed to open file\n");
+		error_message("Failed to open file");
 	read_textures(map, fd);
 	read_map(map, fd);
 	close(fd);
@@ -43,7 +43,7 @@ void	read_textures(t_map *map, int fd)
 		line = get_next_line(fd);
 	}
 	if (!assigned_all(map))
-		error_message("Missing textures or colors in .cub file\n");
+		free_map(map, "Missing textures or colors in .cub file", 1);
 }
 
 void	read_map(t_map *map, int fd)
@@ -83,9 +83,9 @@ void	read_map(t_map *map, int fd)
 void	check_arguments(int argc, char *argv[])
 {
 	if (argc != 2)
-		error_message("Invalid number of arguments\n");
+		error_message("Invalid number of arguments");
 	if (!is_cub(argv[1]))
-		error_message("File must be of type .cub\n");
+		error_message("File must be of type .cub");
 }
 
 bool	is_cub(char *file)

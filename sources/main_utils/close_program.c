@@ -24,14 +24,17 @@ void	free_map(t_map *map, char *str, int status)
 	int	rows;
 
 	rows = 0;
-	while (map->map[rows])
-	{
-		if (map->map[rows])
-			free(map->map[rows]);
-		rows++;
-	}
 	if (map->map)
+	{
+		while (map->map[rows])
+		{
+			if (map->map[rows])
+				free(map->map[rows]);
+			rows++;
+		}
 		free(map->map);
+	}
+	//add freeing texture strings
 	if (status)
 		error_message(str);
 	else

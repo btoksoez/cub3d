@@ -10,7 +10,7 @@ void	get_texture(char *line, char type, t_map *map)
 	if (access(file, F_OK) != 0 || access(file, R_OK) != 0)
 	{
 		free(file);
-		error_message("texture file not readable\n");
+		free_map(map, "texture file not readable", 1);
 	}
 	if (type == 'N')
 		map->no_texture = file;
@@ -52,7 +52,7 @@ void	get_color(char *line, char type, t_map *map)
 		if (!ft_isdigit_str(num))
 		{
 			free(num);
-			error_message("Invalid color\n");
+			free_map(map, "invalid color", 1);
 		}
 		assign_color(i, num, type, map);
 		line += ft_strlen(num) + 1;
