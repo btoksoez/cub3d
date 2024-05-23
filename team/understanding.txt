@@ -22,3 +22,4 @@ more empty line(s).
 4.  The map must be parsed as it looks in the file. Spaces are a valid part of the
 map and are up to you to handle. You must be able to parse any kind of map,
 as long as it respects the rules of the map.
+https://medium.com/@afatir.ahmedfatir/cub3d-tutorial-af5dd31d2fcf

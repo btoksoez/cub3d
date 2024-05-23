@@ -46,6 +46,32 @@ void	read_textures(t_map *map, int fd)
 		free_map(map, "Missing textures or colors in .cub file", 1);
 }
 
+void	fill_with_space(t_map *map)
+{
+	int		row;
+	int		coll;
+	char	*temp;
+
+	row = 0;
+	while (map->map[row])
+	{
+		coll = 0;
+		while (map->map[row][coll])
+			coll++;
+		if (coll < map->max_coll)
+		{
+			temp = ft_realloc(map->map[row], map->max_coll);
+			if (!temp)
+				free_map(map, "Failed to allocate memory for row", 1);
+			map->map[row] = temp;
+			while (coll < map->max_coll)
+				map->map[row][coll++] = ' ';
+			map->map[row][coll] = '\0';
+		}
+		row++;
+	}
+}
+
 void	read_map(t_map *map, int fd)
 {
 	char	*line;

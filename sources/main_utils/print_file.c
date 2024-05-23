@@ -23,7 +23,10 @@ void	print_map(t_map map)
 		j = 0;
 		while (map.map[i][j])
 		{
-			printf("%c", map.map[i][j]);
+			if (map.map[i][j] == ' ')
+				printf(" ");
+			else
+				printf("%c", map.map[i][j]);
 			j++;
 		}
 		printf("\n");

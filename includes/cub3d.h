@@ -3,7 +3,10 @@
 
 # include "./libft/libft.h"
 # include "./minilibx-mac/mlx.h"
-// # include "./minilibx-linux/mlx.h"
+# include "./minilibx-linux/mlx.h"
+# include <stdio.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 
 // Linux
 # define ESC 65307
@@ -31,18 +34,28 @@
 # define VALID_CHARS "NSEW01 \t\n\r\f\v\0"
 # define WS_COMMA " \t\n\r\f\v,"
 
-# define NORTH 80
-# define SOUTH 81
-# define EAST 82
-# define WEST 83
+# define NORTH 78
+# define SOUTH 83
+# define EAST 69
+# define WEST 87
 
 # define PLAYER "NSEW"
 # define WALL 49
 # define VISITED 85
 # define ENEMY 88
 # define EMPTY 48
-# define WON 87
+# define WON 89
 # define SCALE 50
+# define WIDTH 1080
+# define HEIGHT 720
+
+# define RED 0xFF0000
+# define GREEN 0x00FF00
+# define BLUE 0x0000FF
+# define YELLOW 0xFFFF00
+# define CYAN 0x00FFFF
+# define MAGENTA 0xFF00FF
+# define BLACK 0x000000
 
 typedef struct	s_rgb
 {
@@ -84,7 +97,7 @@ typedef struct	s_game
 	struct s_map	*map;
 	struct s_img	img;
 	int				width;
-	int				heigth;
+	int				height;
 }					t_game;
 
 typedef struct s_player
@@ -103,6 +116,7 @@ void	get_texture(char *line, char type, t_map *map);
 void	assign_color(int i, char *num, char type, t_map *map);
 void	get_color(char *line, char type, t_map *map);
 bool	assigned_all(t_map *map);
+void	init_map(t_map *map);
 
 /* ----------------------------- Validade map ------------------------------ */
 void	validate_map(t_map *map);
@@ -118,12 +132,14 @@ bool	valid_upside(t_map *map, int *coll, int *row, bool *last_dir);
 bool	valid_rightside(t_map *map, int *coll, int *row, bool *last_dir);
 bool	valid_downside(t_map *map, int *coll, int *row, bool *last_dir);
 bool	valid_leftside(t_map *map, int *coll, int *row, bool *last_dir);
+void	fill_with_space(t_map *map);
 
 /* ------------------------------- Mlx Init -------------------------------- */
-void	init_map(t_map *map);
 void	start_game(t_map *map);
 int		close_window(t_game *game, int status, int exit);
-int		key_press(int key, t_game *game);
+int		key_press(int keysym, t_game *game);
+int		mouse_hook(int button, int x, int y, t_game *game);
+void	init_mlx(t_game *game, t_map *map);
 
 /* -------------------------------- Utils ---------------------------------- */
 void	print_textures(t_map *map_info);

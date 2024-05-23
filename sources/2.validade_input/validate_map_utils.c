@@ -42,6 +42,7 @@ bool	invalid_characters(t_map *map)
 	}
 	if (!player_found)
 		free_map(map, "There is no player in this map", 1);
+	fill_with_space(map);
 	return (false);
 }
 
