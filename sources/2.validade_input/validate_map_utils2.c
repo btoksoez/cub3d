@@ -76,11 +76,7 @@ bool	valid_rightside(t_map *map, int *coll, int *row, bool *last_dir)
 			(*coll)--;
 		}
 		else
-		{
-			printf("x: %d y: %d\n", *row, *coll - 1);
-			printf("x: %d y: %d\n", *row + 1, *coll);
 			return (false);
-		}
 	}
 	return (true);
 }
