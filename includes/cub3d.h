@@ -54,8 +54,8 @@ typedef struct	s_game
 
 typedef struct s_player
 {
-	int				u_d;
-	int				l_r;
+	int				up_down;
+	int				left_right;
 	int				rot;
 	float			pos_x;
 	float			pos_y;
@@ -76,7 +76,7 @@ void	get_color(char *line, char type, t_map *map);
 bool	assigned_all(t_map *map);
 void	init_map(t_map *map);
 
-/* ----------------------------- Validade map ------------------------------ */
+/* ----------------------------- Validate map ------------------------------ */
 /* ------------------------------------------------------------------------- */
 void	validate_map(t_map *map);
 bool	valid_color(int color);
@@ -112,6 +112,8 @@ int		render(t_game *game);
 void	render_image(t_game *game, int start_x, int start_y, int color);
 void	put_pixel_to_img(t_game *game, int x, int y, int color);
 void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
+void	move_player(t_game *game, float move_x, float move_y);
+void	hook_player(t_game *game);
 
 /* -------------------------------- Utils ---------------------------------- */
 /* ------------------------------------------------------------------------- */

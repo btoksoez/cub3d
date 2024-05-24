@@ -4,27 +4,9 @@
 #ifdef LINUX
 /* ----------------- Linux---------------- */
 # include "./minilibx-linux/mlx.h"
-# define ESC 65307
-# define W 119
-# define A 97
-# define S 115
-# define D 100
-# define UP 65362
-# define LEFT 65361
-# define RIGHT 65363
-# define DOWN 65364
 #else
 /* ------------------ Mac ----------------- */
 # include "./minilibx-mac/mlx.h"
-# define ESC 53
-# define W 13
-# define A 0
-# define S 1
-# define D 2
-# define UP 126
-# define LEFT 123
-# define RIGHT 124
-# define DOWN 125
 #endif
 
 //we should use keysym instead, more portable
@@ -33,6 +15,7 @@
 # define WHITESPACE " \t\n\r\f\v"
 # define VALID_CHARS "NSEW01 \t\n\r\f\v\0"
 # define WS_COMMA " \t\n\r\f\v,"
+# define QUIT 1
 /* -------------- PI Values -------------- */
 # define PI 3.141592653f
 # define PI_05 (PI / 2.0)
@@ -42,17 +25,25 @@
 # define SOUTH PI_05
 # define EAST 0
 # define WEST PI
+/* -------------- Movements ------------- */
+# define UP 1
+# define RIGHT 1
+# define LEFT -1
+# define DOWN -1
+# define RESET 0
 /* ----------------- Game ---------------- */
 # define PLAYER "NSEW"
 # define SCALE 50
-# define MOVE 10
+# define PSIZE SCALE / 4
+# define PCENTER PSIZE / 2
+# define MOVE 2
+# define ROT_SPEED 0.05
 # define BUFFER 10
 # define WALL 49
 # define VISITED 85
 # define ENEMY 88
 # define EMPTY 48
 # define WON 89
-# define PSIZE 15
 # define WIDTH 1080
 # define HEIGHT 720
 /* ---------------- Colors --------------- */

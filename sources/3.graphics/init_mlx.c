@@ -14,12 +14,13 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 	game->width = map->max_coll * SCALE;
 	game->height = map->rows * SCALE;
 	game->map = map;
-	player->l_r = 0;
-	player->u_d = 0;
+	player->left_right = 0;
+	player->up_down = 0;
 	player->rot = 0;
 	player->p_angle = map->player_dir;
-	player->pos_x = map->player_x * SCALE + (SCALE / 3);
-	player->pos_y = map->player_y * SCALE + (SCALE / 3);
+	player->pos_x = map->player_x * SCALE + 3 * (PSIZE / 2);
+	player->pos_y = map->player_y * SCALE + 3 * (PSIZE / 2);
+	printf("Pos: %f %f\n", player->pos_x, player->pos_y);
 	game->player = player;
 }
 

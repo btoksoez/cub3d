@@ -1,30 +1,7 @@
 #include "../../includes/cub3d.h"
 
 /* checks whether move is possible and calculates new player->pos_x/y with given move X/Y*/
-void	move_player(t_game *game, float move_x, float move_y)
-{
-	if (key == W)
-		if (game->map->map[(y - BUFFER) / SCALE][x / SCALE] != WALL)
-			player->pos_y -= MOVE;				// we need to move the player a minimum amount
-	if (key == A)								// if it isn't touching the wall yet
-		if (game->map->map[y / SCALE][(x - BUFFER) / SCALE] != WALL)
-			player->pos_x -= MOVE;
-	if (key == S)
-		if (game->map->map[(y + PSIZE) / SCALE][x / SCALE] != WALL)
-			player->pos_y += MOVE;
-	if (key == D)
-		if (game->map->map[y / SCALE][(x + PSIZE) / SCALE] != WALL)
-			player->pos_x += MOVE;
-	if (key == LEFT)
-		player->p_angle = fmod(player->p_angle - 0.1, 2.0 * PI);
-	if (key == RIGHT)
-		player->p_angle = fmod(player->p_angle + 0.1, 2.0 * PI);
-}
-
-// add shooting, space, reload ...
-// fix corners of walls
-// this should set u_l and l_r and rot flags based on pressed keys
-int	key_press(int key, t_game *game)
+void	move_player(t_game *game, float new_x, float new_y)
 {
 	int			x;
 	int			y;
@@ -33,34 +10,59 @@ int	key_press(int key, t_game *game)
 	player = game->player;
 	x = player->pos_x;
 	y = player->pos_y;
-	if (key == ESC)
-		close_window(game, 0, ESC);
-	if (key == W)
-		if (game->map->map[(y - BUFFER) / SCALE][x / SCALE] != WALL)
-			player->pos_y -= MOVE;				// we need to move the player a minimum amount
-	if (key == A)								// if it isn't touching the wall yet
-		if (game->map->map[y / SCALE][(x - BUFFER) / SCALE] != WALL)
-			player->pos_x -= MOVE;
-	if (key == S)
-		if (game->map->map[(y + PSIZE) / SCALE][x / SCALE] != WALL)
-			player->pos_y += MOVE;
-	if (key == D)
-		if (game->map->map[y / SCALE][(x + PSIZE) / SCALE] != WALL)
-			player->pos_x += MOVE;
-	if (key == LEFT)
-		player->p_angle = fmod(player->p_angle - 0.1, 2.0 * PI);
-	if (key == RIGHT)
-		player->p_angle = fmod(player->p_angle + 0.1, 2.0 * PI);
-	render_2dgame(game);
+
+	if (game->map->map[(int)(new_y) / SCALE][(int)new_x / SCALE] != WALL
+		&& game->map->map[(int)(new_y + PSIZE) / SCALE][(int)new_x + PSIZE / SCALE] != WALL)
+		//need to check for all four points that they don't hit the wall
+		{
+			player->pos_y = new_y;
+			player->pos_x = new_x;
+		}
+}
+
+// add shooting, space, reload ...
+// fix corners of walls
+// this should set u_l and l_r and rot flags based on pressed keys
+int	key_press(int key, t_game *game)
+{
+	t_player	*player;
+
+	player = game->player;
+	if (key == XK_Escape)
+		close_window(game, 0, QUIT);
+	if (key == XK_w)
+		player->up_down = UP;
+	if (key == XK_a)
+		player->left_right = LEFT;
+	if (key == XK_s)
+		player->up_down = DOWN;
+	if (key == XK_d)
+		player->left_right = RIGHT;
+	if (key == XK_Left)
+		player->rot = LEFT;
+	if (key == XK_Right)
+		player->rot = RIGHT;
 	return (0);
 }
 
 // this should set u_l and l_r and rot flags
-int key_release(int keysym, t_game *game)
+int key_release(int key, t_game *game)
 {
-	//set vars to 0
-	(void)keysym;
-	(void)game;
+	t_player	*player;
+
+	player = game->player;
+	if (key == XK_w)
+		player->up_down = RESET;
+	if (key == XK_a)
+		player->left_right = RESET;
+	if (key == XK_s)
+		player->left_right = RESET;
+	if (key == XK_d)
+		player->left_right = RESET;
+	if (key == XK_Left)
+		player->rot = RESET;
+	if (key == XK_Right)
+		player->rot = RESET;
 	return (0);
 
 }

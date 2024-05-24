@@ -13,18 +13,48 @@ void	start_game(t_map *map)
 /* this should calculate the move based on flags and call move and rotoate functions */
 void	hook_player(t_game *game)
 {
-	//if u_l == 1 ...
-	//if r_l == 1...
-		// pos_x = ...
-	//if rot == ...
-		// rotate_player()
-	// move_player()
+	t_player	*player;
+	float		new_x;
+	float		new_y;
+
+	player = game->player;
+	new_x = player->pos_x;
+	new_y = player->pos_y;
+	printf("Pos2: %f %f\n", player->pos_x, player->pos_y);
+	if (player->rot == LEFT)
+		player->p_angle = fmod(player->p_angle - ROT_SPEED, 2.0 * PI);
+	if (player->rot == RIGHT)
+		player->p_angle = fmod(player->p_angle + ROT_SPEED, 2.0 * PI);
+	if (player->up_down == UP)
+	{
+		new_x = player->pos_x + (MOVE * cos(player->p_angle));
+		new_y = player->pos_y + (MOVE * sin(player->p_angle));
+	}
+	if (player->up_down == DOWN)
+	{
+		new_x = player->pos_x + (MOVE * cos(player->p_angle + PI));
+		new_y = player->pos_y + (MOVE * sin(player->p_angle + PI));
+	}
+	if (player->left_right == LEFT)
+	{
+		new_x = player->pos_x + (MOVE * cos(player->p_angle - PI_05));
+		new_y = player->pos_y + (MOVE * sin(player->p_angle - PI_05));
+	}
+	if (player->left_right == RIGHT)
+	{
+		new_x = player->pos_x + (MOVE * cos(player->p_angle + PI_05));
+		new_y = player->pos_y + (MOVE * sin(player->p_angle + PI_05));
+	}
+	printf("angle: %f", player->p_angle - PI_05);
+	printf("Pos3: %f %f\n", player->pos_x, player->pos_y);
+	printf("Old: %f, %f\nNew: %f, %f", player->pos_x, player->pos_y, new_x, new_y);
+	move_player(game, new_x, new_y);
 }
 
 int	render(t_game *game)
 {
 	// delete_image?
-	// hook_player();	//sets new pos of player based on u_d, l_r
+	hook_player(game);	//sets new pos of player based on u_d, l_r
 	render_2dgame(game);
 	// cast_rays()
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
@@ -60,7 +90,7 @@ void	render_2dgame(t_game *game)
 void	render_image(t_game *game, int start_x, int start_y, int color)
 {
 	int	width;
-	int	heigth;
+	int	height;
 	int	line_length;
 	int	end_x;
 	int	end_y;
@@ -68,26 +98,31 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 	if (color == SCREEN)
 	{
 		width = game->width;
-		heigth = game->height;
+		height = game->height;
 	}
 	else if (color == PLAYER_)
 	{
 		line_length = SCALE;					// Change this to control the length of the line
-		end_x = (start_x + PSIZE / 2) + (line_length * cos(game->player->p_angle));
-		end_y = (start_y + PSIZE / 2) + (line_length * sin(game->player->p_angle));
-		draw_line(game, (start_x + PSIZE / 2), (start_y + PSIZE / 2), end_x, end_y, color);
+		end_x = (start_x + PCENTER) + (line_length * cos(game->player->p_angle));
+		end_y = (start_y + PCENTER) + (line_length * sin(game->player->p_angle));
+		draw_line(game, (start_x + PCENTER), (start_y + PCENTER), end_x, end_y, color);
 		width = PSIZE;
-		heigth = PSIZE;
+		height = PSIZE;
 	}
 	else
 	{
 		width = SCALE;
-		heigth = SCALE;
+		height = SCALE;
 	}
 	for (int y = start_y; y < start_y + width; y++)
 	{
-		for (int x = start_x; x < start_x + heigth; x++)
-			put_pixel_to_img(game, x, y, color);
+		for (int x = start_x; x < start_x + height; x++)
+		{
+			if (x == start_x || x == start_x + width - 1 || y == start_y || y == start_y + height - 1)
+				put_pixel_to_img(game, x, y, BLACK);
+			else
+				put_pixel_to_img(game, x, y, color);
+		}
 	}
 }
 
