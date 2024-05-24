@@ -12,17 +12,20 @@ SRC_DIRS = $(wildcard $(SRC_DIR)/*)
 SRC = $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/*/*.c)
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
-# # Mac
-MLX_DIR = includes/minilibx-mac
-MLX_LIB = $(MLX_DIR)/libmlx.a
-MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/libmlx
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+UNAME_S := $(shell uname -s)
 
-# Linux
-#MLX_DIR = includes/minilibx-linux
-#MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
-#MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/linux
-#MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
+ifeq ($(UNAME_S),Linux)
+    MLX_DIR = includes/minilibx-linux
+    MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
+    MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/linux
+    MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
+	CFLAGS += -DLINUX
+else
+    MLX_DIR = includes/minilibx-mac
+    MLX_LIB = $(MLX_DIR)/libmlx.a
+    MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/libmlx
+    MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+endif
 
 # Colours
 GREEN = \033[1;32m

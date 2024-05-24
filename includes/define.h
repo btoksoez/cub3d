@@ -1,17 +1,19 @@
 #ifndef DEFINE_H
 # define DEFINE_H
 
+#ifdef LINUX
 /* ----------------- Linux---------------- */
-// # include "./minilibx-linux/mlx.h"
-// # define ESC 65307
-// # define W 119
-// # define A 97
-// # define S 115
-// # define D 100
-// # define UP 65362
-// # define LEFT 65361
-// # define RIGHT 65363
-// # define DOWN 65364
+# include "./minilibx-linux/mlx.h"
+# define ESC 65307
+# define W 119
+# define A 97
+# define S 115
+# define D 100
+# define UP 65362
+# define LEFT 65361
+# define RIGHT 65363
+# define DOWN 65364
+#else
 /* ------------------ Mac ----------------- */
 # include "./minilibx-mac/mlx.h"
 # define ESC 53
@@ -23,6 +25,9 @@
 # define LEFT 123
 # define RIGHT 124
 # define DOWN 125
+#endif
+
+//we should use keysym instead, more portable
 
 /* --------------- General --------------- */
 # define WHITESPACE " \t\n\r\f\v"
@@ -37,11 +42,6 @@
 # define SOUTH PI_05
 # define EAST 0
 # define WEST PI
-/* ----------------- Hooks --------------- */
-# define KeyPress 2
-# define DestroyNotify 17
-# define KeyPressMask 1L << 0
-# define StructureNotifyMask 1L << 17
 /* ----------------- Game ---------------- */
 # define PLAYER "NSEW"
 # define SCALE 50

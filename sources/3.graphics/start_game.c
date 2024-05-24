@@ -2,19 +2,43 @@
 
 void	start_game(t_map *map)
 {
-	t_game	game;
+	t_game		game;
+	t_player	player;
 
-	init_mlx(&game, map);
-	render_2dgame(&game);
+	init_mlx(&game, &player, map);
+	mlx_loop_hook(game.mlx, &render, &game);
 	mlx_loop(game.mlx);
+}
+
+/* this should calculate the move based on flags and call move and rotoate functions */
+void	hook_player(t_game *game)
+{
+	//if u_l == 1 ...
+	//if r_l == 1...
+		// pos_x = ...
+	//if rot == ...
+		// rotate_player()
+	// move_player()
+}
+
+int	render(t_game *game)
+{
+	// delete_image?
+	// hook_player();	//sets new pos of player based on u_d, l_r
+	render_2dgame(game);
+	// cast_rays()
+	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
+	return (0);
 }
 
 // Somehow need to scale map to screensize, so that for any map, the screensize if still 1080 x 720
 void	render_2dgame(t_game *game)
 {
-	int	y;
-	int	x;
+	int			y;
+	int			x;
+	t_player	*player;
 
+	player = game->player;
 	render_image(game, 0, 0, SCREEN);
 	y = 0;
 	while (y < game->map->rows)
@@ -26,12 +50,11 @@ void	render_2dgame(t_game *game)
 				render_image(game, x * SCALE, y * SCALE, WALLS);
 			if (game->map->map[y][x] == EMPTY)
 				render_image(game, x * SCALE, y * SCALE, SPACE);
-			render_image(game, game->player_x, game->player_y, PLAYER_);
+			render_image(game, player->pos_x, player->pos_y, PLAYER_);
 			x++;
 		}
 		y++;
 	}
-	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
 }
 
 void	render_image(t_game *game, int start_x, int start_y, int color)
@@ -50,8 +73,8 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 	else if (color == PLAYER_)
 	{
 		line_length = SCALE;					// Change this to control the length of the line
-		end_x = (start_x + PSIZE / 2) + (line_length * cos(game->player_angle));
-		end_y = (start_y + PSIZE / 2) + (line_length * sin(game->player_angle));
+		end_x = (start_x + PSIZE / 2) + (line_length * cos(game->player->p_angle));
+		end_y = (start_y + PSIZE / 2) + (line_length * sin(game->player->p_angle));
 		draw_line(game, (start_x + PSIZE / 2), (start_y + PSIZE / 2), end_x, end_y, color);
 		width = PSIZE;
 		heigth = PSIZE;

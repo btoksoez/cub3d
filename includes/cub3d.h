@@ -3,6 +3,8 @@
 
 # include "./libft/libft.h"
 # include "define.h"
+# include <X11/keysym.h>
+# include <X11/X.h>
 
 /* -------------------------------- Structs -------------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -47,10 +49,18 @@ typedef struct	s_game
 	struct s_img	img;
 	int				width;
 	int				height;
-	float			player_x;
-	float			player_y;
-	float			player_angle;
+	struct s_player	*player;
 }					t_game;
+
+typedef struct s_player
+{
+	int				u_d;
+	int				l_r;
+	int				rot;
+	float			pos_x;
+	float			pos_y;
+	float			p_angle;
+}					t_player;
 
 /* ------------------------------- Read Input ------------------------------ */
 /* ------------------------------------------------------------------------- */
@@ -86,17 +96,19 @@ void	fill_with_space(t_map *map);
 /* ------------------------------- Mlx Init -------------------------------- */
 /* ------------------------------------------------------------------------- */
 void	start_game(t_map *map);
-void	init_mlx(t_game *game, t_map *map);
-void	init_game_struct(t_game *game, t_map *map);
+void	init_mlx(t_game *game, t_player *player, t_map *map);
+void	init_game_struct(t_game *game, t_player *player, t_map *map);
 void	init_window(t_game *game, t_map *map);
 void	init_image(t_game *game);
 void	init_events(t_game *game);
 int		key_press(int keysym, t_game *game);
+int		key_release(int keysym, t_game *game);
 int		mouse_hook(int button, int x, int y, t_game *game);
 
 /* ------------------------------- Rendering ------------------------------- */
 /* ------------------------------------------------------------------------- */
 void	render_2dgame(t_game *game);
+int		render(t_game *game);
 void	render_image(t_game *game, int start_x, int start_y, int color);
 void	put_pixel_to_img(t_game *game, int x, int y, int color);
 void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
