@@ -20,7 +20,6 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 	player->p_angle = map->player_dir;
 	player->pos_x = map->player_x * SCALE + 3 * (PSIZE / 2);
 	player->pos_y = map->player_y * SCALE + 3 * (PSIZE / 2);
-	printf("Pos: %f %f\n", player->pos_x, player->pos_y);
 	game->player = player;
 }
 

@@ -12,8 +12,10 @@ void	move_player(t_game *game, float new_x, float new_y)
 	y = player->pos_y;
 
 	if (game->map->map[(int)(new_y) / SCALE][(int)new_x / SCALE] != WALL
-		&& game->map->map[(int)(new_y + PSIZE) / SCALE][(int)new_x + PSIZE / SCALE] != WALL)
-		//need to check for all four points that they don't hit the wall
+		&& game->map->map[(int)(new_y + PSIZE) / SCALE][((int)new_x + PSIZE) / SCALE] != WALL
+		&& game->map->map[(int)(new_y + PSIZE) / SCALE][(int)new_x / SCALE] != WALL
+		&& game->map->map[(int)(new_y) / SCALE][((int)new_x + PSIZE) / SCALE] != WALL)
+		//maybe add margin for the wall
 		{
 			player->pos_y = new_y;
 			player->pos_x = new_x;
@@ -56,7 +58,7 @@ int key_release(int key, t_game *game)
 	if (key == XK_a)
 		player->left_right = RESET;
 	if (key == XK_s)
-		player->left_right = RESET;
+		player->up_down = RESET;
 	if (key == XK_d)
 		player->left_right = RESET;
 	if (key == XK_Left)

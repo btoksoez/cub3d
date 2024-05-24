@@ -114,6 +114,7 @@ void	put_pixel_to_img(t_game *game, int x, int y, int color);
 void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
 void	move_player(t_game *game, float move_x, float move_y);
 void	hook_player(t_game *game);
+void	draw_point(t_game *game, int x, int y, int color);
 
 /* -------------------------------- Utils ---------------------------------- */
 /* ------------------------------------------------------------------------- */

@@ -36,7 +36,7 @@
 # define SCALE 50
 # define PSIZE SCALE / 4
 # define PCENTER PSIZE / 2
-# define MOVE 2
+# define MOVE 3
 # define ROT_SPEED 0.05
 # define BUFFER 10
 # define WALL 49
@@ -56,8 +56,9 @@
 # define BLACK 0x000000
 # define WHITE 0xFFFFFF
 # define ORANGE 0xFF4500
+# define GREY 0xFF8080
 /* ---------------- Images --------------- */
-# define SCREEN BLACK
+# define SCREEN GREY
 # define SPACE WHITE
 # define WALLS ORANGE
 # define PLAYER_ BLUE

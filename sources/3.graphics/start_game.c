@@ -20,7 +20,6 @@ void	hook_player(t_game *game)
 	player = game->player;
 	new_x = player->pos_x;
 	new_y = player->pos_y;
-	printf("Pos2: %f %f\n", player->pos_x, player->pos_y);
 	if (player->rot == LEFT)
 		player->p_angle = fmod(player->p_angle - ROT_SPEED, 2.0 * PI);
 	if (player->rot == RIGHT)
@@ -45,10 +44,94 @@ void	hook_player(t_game *game)
 		new_x = player->pos_x + (MOVE * cos(player->p_angle + PI_05));
 		new_y = player->pos_y + (MOVE * sin(player->p_angle + PI_05));
 	}
-	printf("angle: %f", player->p_angle - PI_05);
-	printf("Pos3: %f %f\n", player->pos_x, player->pos_y);
-	printf("Old: %f, %f\nNew: %f, %f", player->pos_x, player->pos_y, new_x, new_y);
 	move_player(game, new_x, new_y);
+}
+
+void	cast_rays(t_game *game)
+{
+	float		rx;
+	float		ry;
+	float 		next_vert;
+	float 		next_hori;
+	float		slope;
+	float		intercept;
+	float		hit_x_hori;
+	float		hit_y_hori;
+	float		hit_x_vert;
+	float		hit_y_vert;
+	// float		len_hori;
+	// float		len_vert;
+	t_player	*player;
+
+	player = game->player;
+	if (player->p_angle < 2 * PI && player->p_angle >= PI)
+		next_vert = floorf(player->pos_y / SCALE) * SCALE;
+	else
+		next_vert = ceilf(player->pos_y / SCALE) * SCALE;
+	if (player->p_angle < PI_15 && player->p_angle >= PI_05)
+		next_hori = floorf(player->pos_x / SCALE) * SCALE;
+	else
+		next_hori = ceilf(player->pos_x / SCALE) * SCALE;
+
+	rx = player->pos_x + (100 * cos(player->p_angle));
+	ry = player->pos_y + (100 * sin(player->p_angle));
+	slope = (ry - player->pos_y) / (rx - player->pos_x);
+	intercept = player->pos_y - slope * player->pos_x;
+
+	hit_x_hori = (next_hori - intercept) / (slope - 0);
+	hit_y_hori = slope * hit_x_hori + intercept;
+
+	hit_x_vert = (next_vert - intercept) / (slope - 1);
+	hit_y_vert = slope * hit_x_vert + intercept;
+
+	draw_point(game, rx, ry, MAGENTA);
+	draw_point(game, hit_x_vert, hit_y_vert, BLACK);
+	draw_point(game, hit_x_hori, hit_y_hori, BLACK);
+
+	// if (player->p_angle > 0 && player->p_angle <= PI_05)	//looking north east
+	// {
+	// 	len_hori = fabs(player->pos_y - next_hori) / cos(fabs(PI_05 - player->p_angle));
+	// 	len_vert = fabs(player->pos_x - next_vert) / cos(fabs(player->p_angle));
+	// }
+	// if (player->p_angle > PI_05 && player->p_angle <= PI)	//looking north west
+	// {
+	// 	len_hori = fabs(player->pos_y - next_hori) / cos(fabs(player->p_angle - PI_05));
+	// 	len_vert = fabs(player->pos_x - next_vert) / cos(fabs(PI - player->p_angle));
+	// }
+	// if (player->p_angle > PI && player->p_angle <= PI_15)	//looking south west
+	// {
+	// 	len_hori = fabs(player->pos_y - next_hori) / cos(fabs(PI_15 - player->p_angle));
+	// 	len_vert = fabs(player->pos_x - next_vert) / cos(fabs(player->p_angle - PI));
+	// }
+	// if (player->p_angle > PI_15 && player->p_angle <= 2 * PI)	//looking south east
+	// {
+	// 	len_hori = fabs(player->pos_y - next_hori) / cos(fabs(player->p_angle - PI_15));
+	// 	len_vert = fabs(player->pos_x - next_vert) / cos(fabs(2 * PI - player->p_angle));
+	// }
+
+	// printf("lens: %f, %f\n", len_hori, len_vert);
+
+	// if (len_hori < len_vert)
+	// {
+	// 	if (game->map->map[(int)hit_y_hori / SCALE][(int)hit_x_hori / SCALE] == WALL)
+	// 		printf("hort\n");
+	// 		//draw_line(game, player->pos_x, player->pos_y, hit_x_hori, hit_y_hori, MAGENTA); //after stop, send this to raycaster
+	// }
+	// if (len_hori >= len_vert)
+	// {
+	// 	if (game->map->map[(int)hit_y_vert / SCALE][(int)hit_x_vert / SCALE] == WALL)
+	// 		printf("vert\n");
+	// 		// draw_line(game, player->pos_x, player->pos_y, hit_x_vert, hit_y_vert, MAGENTA); //after stop, send this to raycaster
+	// }
+
+
+	// if (rx % SCALE != 0)
+
+	// ry = player->pos_y + (MOVE * sin(player->p_angle));
+	// game->map->map[(int)(new_y) / SCALE][(int)new_x / SCALE] != WALL
+	// 	&& game->map->map[(int)(new_y + PSIZE) / SCALE][((int)new_x + PSIZE) / SCALE] != WALL
+	// 	&& game->map->map[(int)(new_y + PSIZE) / SCALE][(int)new_x / SCALE] != WALL
+	// 	&& game->map->map[(int)(new_y) / SCALE][((int)new_x + PSIZE) / SCALE] != WALL)
 }
 
 int	render(t_game *game)
@@ -56,7 +139,7 @@ int	render(t_game *game)
 	// delete_image?
 	hook_player(game);	//sets new pos of player based on u_d, l_r
 	render_2dgame(game);
-	// cast_rays()
+	cast_rays(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
 	return (0);
 }
@@ -161,4 +244,14 @@ void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int
 			start_y += sy;
 		}
 	}
+}
+
+void draw_point(t_game *game, int x, int y, int color)
+{
+    int size = 10; // Size of the point
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            put_pixel_to_img(game, x + i, y + j, color);
+        }
+    }
 }
