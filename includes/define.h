@@ -58,7 +58,7 @@
 # define ORANGE 0xFF4500
 # define GREY 0xFF8080
 /* ---------------- Images --------------- */
-# define SCREEN GREY
+# define SCREEN BLACK
 # define SPACE WHITE
 # define WALLS ORANGE
 # define PLAYER_ BLUE

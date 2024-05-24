@@ -23,8 +23,6 @@ void	move_player(t_game *game, float new_x, float new_y)
 }
 
 // add shooting, space, reload ...
-// fix corners of walls
-// this should set u_l and l_r and rot flags based on pressed keys
 int	key_press(int key, t_game *game)
 {
 	t_player	*player;
@@ -47,7 +45,6 @@ int	key_press(int key, t_game *game)
 	return (0);
 }
 
-// this should set u_l and l_r and rot flags
 int key_release(int key, t_game *game)
 {
 	t_player	*player;

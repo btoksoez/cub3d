@@ -73,20 +73,25 @@ void	cast_rays(t_game *game)
 	else
 		next_hori = ceilf(player->pos_x / SCALE) * SCALE;
 
-	rx = player->pos_x + (100 * cos(player->p_angle));
-	ry = player->pos_y + (100 * sin(player->p_angle));
+	rx = player->pos_x + (SCALE * cos(player->p_angle));
+	ry = player->pos_y + (SCALE * sin(player->p_angle));
 	slope = (ry - player->pos_y) / (rx - player->pos_x);
 	intercept = player->pos_y - slope * player->pos_x;
 
-	hit_x_hori = (next_hori - intercept) / (slope - 0);
+	hit_x_hori = (next_hori - intercept) / slope;
 	hit_y_hori = slope * hit_x_hori + intercept;
 
 	hit_x_vert = (next_vert - intercept) / (slope - 1);
 	hit_y_vert = slope * hit_x_vert + intercept;
 
-	draw_point(game, rx, ry, MAGENTA);
-	draw_point(game, hit_x_vert, hit_y_vert, BLACK);
-	draw_point(game, hit_x_hori, hit_y_hori, BLACK);
+	printf("hitx_hori: %f\n", hit_x_hori);
+	printf("hity_hori: %f\n", hit_y_hori);
+	printf("hitx_vert: %f\n", hit_x_vert);
+	printf("hity_vert: %f\n", hit_y_vert);
+
+	// draw_point(game, rx, ry, MAGENTA);
+	// draw_point(game, hit_x_vert, hit_y_vert, YELLOW);
+	// draw_point(game, hit_x_hori, hit_y_hori, YELLOW);
 
 	// if (player->p_angle > 0 && player->p_angle <= PI_05)	//looking north east
 	// {
@@ -152,8 +157,8 @@ void	render_2dgame(t_game *game)
 	t_player	*player;
 
 	player = game->player;
-	render_image(game, 0, 0, SCREEN);
 	y = 0;
+	render_image(game, 0, 0, SCREEN);
 	while (y < game->map->rows)
 	{
 		x = 0;
@@ -185,7 +190,7 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 	}
 	else if (color == PLAYER_)
 	{
-		line_length = SCALE;					// Change this to control the length of the line
+		line_length = SCALE;
 		end_x = (start_x + PCENTER) + (line_length * cos(game->player->p_angle));
 		end_y = (start_y + PCENTER) + (line_length * sin(game->player->p_angle));
 		draw_line(game, (start_x + PCENTER), (start_y + PCENTER), end_x, end_y, color);
@@ -220,7 +225,7 @@ void	put_pixel_to_img(t_game *game, int x, int y, int color)
 
 void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color)
 {
-	// Bresenham's line algorithm
+	// Mr.Benian's algorithm
 	int dx = abs(end_x - start_x);
 	int dy = abs(end_y - start_y);
 	int sx = (start_x < end_x) ? 1 : -1;
@@ -246,12 +251,14 @@ void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int
 	}
 }
 
-void draw_point(t_game *game, int x, int y, int color)
+void	draw_point(t_game *game, int x, int y, int color)
 {
-    int size = 10; // Size of the point
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-            put_pixel_to_img(game, x + i, y + j, color);
-        }
-    }
+	int	size;
+
+	size = 10;
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+			put_pixel_to_img(game, x + i, y + j, color);
+	}
 }
