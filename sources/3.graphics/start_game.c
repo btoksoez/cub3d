@@ -60,104 +60,126 @@ void	hook_player(t_game *game)
 	move_player(game, new_x, new_y);
 }
 
-void	cast_rays(t_game *game)
+void	init_raycaster(t_raycaster *ray)
 {
-	float		rx;
-	float		ry;
-	float 		next_vert;
-	float 		next_hori;
-	float		slope;
-	float		intercept;
-	float		hit_x_hori;
-	float		hit_y_hori;
-	float		hit_x_vert;
-	float		hit_y_vert;
-	float		len_hori;
-	float		len_vert;
-	t_player	*player;
+	ray->x = 0;
+	ray->y = 0;
+	ray->next_grid_x = 0;
+	ray->next_grid_y = 0;
+	ray->slope = 0;
+	ray->intercept_y_axis = 0;
+	ray->hit_x_hori = 0;
+	ray->hit_y_hori = 0;
+	ray->hit_x_vert = 0;
+	ray->hit_y_vert = 0;
+	ray->dist_to_grid_y = 0;
+	ray->dist_to_grid_x = 0;
+}
 
-	player = game->player;
+void	get_next_grid(t_player *player, t_raycaster *ray)
+{
 	if (player->p_angle < 2 * PI && player->p_angle >= PI)
-		next_hori = floorf(player->pos_y / SCALE) * SCALE;
+		ray->next_grid_y = floorf(player->pos_y / SCALE) * SCALE;
 	else
-		next_hori = ceilf(player->pos_y / SCALE) * SCALE;
+		ray->next_grid_y = ceilf(player->pos_y / SCALE) * SCALE;
 	if (player->p_angle < PI_15 && player->p_angle >= PI_05)
-		next_vert = floorf(player->pos_x / SCALE) * SCALE;
+		ray->next_grid_x = floorf(player->pos_x / SCALE) * SCALE;
 	else
-		next_vert = ceilf(player->pos_x / SCALE) * SCALE;
-	rx = player->pos_x + (SCALE * cos(player->p_angle));
-	ry = player->pos_y + (SCALE * sin(player->p_angle));
-	slope = (ry - player->pos_y) / (rx - player->pos_x);
-	if (slope == 0)
-		slope = 1e-6f;
-	intercept = player->pos_y - slope * player->pos_x;
+		ray->next_grid_x = ceilf(player->pos_x / SCALE) * SCALE;
+}
 
-	hit_x_hori = (next_hori - intercept) / slope;	//is -inf if slope == 0
-	hit_y_hori = slope * hit_x_hori + intercept;
+void	get_grid_ray_intersection(t_player *player, t_raycaster *ray)
+{
+	// get a second point to get a line
+	ray->x = player->pos_x + (SCALE * cos(player->p_angle));
+	ray->y = player->pos_y + (SCALE * sin(player->p_angle));
 
-	hit_x_vert = next_vert;
-	hit_y_vert = slope * hit_x_vert + intercept;
+	// m
+	ray->slope = (ray->y - player->pos_y) / (ray->x - player->pos_x);
+	if (ray->slope == 0)
+		ray->slope = 1e-6f;
 
-	draw_point(game, rx, ry, MAGENTA);
-	draw_point(game, hit_x_vert, hit_y_vert, YELLOW);
-	draw_point(game, hit_x_hori, hit_y_hori, YELLOW);
+	// c = y - mx
+	ray->intercept_y_axis = player->pos_y - (ray->slope * player->pos_x);
 
+	// point at which the rayline intercepts (x,y) in the Y axis
+	ray->hit_x_hori = (ray->next_grid_y - ray->intercept_y_axis) / ray->slope;
+	ray->hit_y_hori = ray->slope * ray->hit_x_hori + ray->intercept_y_axis;
+
+	// point at which the rayline intercepts (x,y) in the X axis
+	ray->hit_x_vert = ray->next_grid_x;
+	ray->hit_y_vert = ray->slope * ray->hit_x_vert + ray->intercept_y_axis;
+}
+
+//vert is x
+
+void	get_distance_to_grid(t_player *player, t_raycaster *ray, t_game *game)
+{
 	if (player->p_angle > 0 && player->p_angle <= PI_05)	//looking south east
 	{
-		len_hori = fabs(player->pos_y - next_hori) / cos(fabs(PI_05 - player->p_angle));
-		len_vert = fabs(player->pos_x - next_vert) / cos(fabs(player->p_angle));
+		ray->dist_to_grid_y = fabs(player->pos_y - ray->next_grid_y) / cos(fabs(PI_05 - player->p_angle));
+		ray->dist_to_grid_x = fabs(player->pos_x - ray->next_grid_x) / cos(fabs(player->p_angle));
 		player->look_dir = SE;
 	}
 	if (player->p_angle > PI_05 && player->p_angle <= PI)	//looking south west
 	{
-		len_hori = fabs(player->pos_y - next_hori) / cos(fabs(player->p_angle - PI_05));
-		len_vert = fabs(player->pos_x - next_vert) / cos(fabs(PI - player->p_angle));
+		ray->dist_to_grid_y = fabs(player->pos_y - ray->next_grid_y) / cos(fabs(player->p_angle - PI_05));
+		ray->dist_to_grid_x = fabs(player->pos_x - ray->next_grid_x) / cos(fabs(PI - player->p_angle));
 		player->look_dir = SW;
 	}
 	if (player->p_angle > PI && player->p_angle <= PI_15)	//looking north west
 	{
-		len_hori = fabs(player->pos_y - next_hori) / cos(fabs(PI_15 - player->p_angle));
-		len_vert = fabs(player->pos_x - next_vert) / cos(fabs(player->p_angle - PI));
+		ray->dist_to_grid_y = fabs(player->pos_y - ray->next_grid_y) / cos(fabs(PI_15 - player->p_angle));
+		ray->dist_to_grid_x = fabs(player->pos_x - ray->next_grid_x) / cos(fabs(player->p_angle - PI));
 		player->look_dir = NW;
 	}
 	if (player->p_angle > PI_15 && player->p_angle <= 2 * PI)	//looking north east
 	{
-		len_hori = fabs(player->pos_y - next_hori) / cos(fabs(player->p_angle - PI_15));
-		len_vert = fabs(player->pos_x - next_vert) / cos(fabs(2 * PI - player->p_angle));
+		ray->dist_to_grid_y = fabs(player->pos_y - ray->next_grid_y) / cos(fabs(player->p_angle - PI_15));
+		ray->dist_to_grid_x = fabs(player->pos_x - ray->next_grid_x) / cos(fabs(2 * PI - player->p_angle));
 		player->look_dir = NE;
 	}
+	if (fabs(ray->dist_to_grid_y) > SCALE * game->map->max_coll)
+		ray->dist_to_grid_y = SCALE * game->map->max_coll;
+	if (fabs(ray->dist_to_grid_x) > SCALE * game->map->rows)
+		ray->dist_to_grid_x = SCALE * game->map->rows;
+}
 
-	if (fabs(len_hori) > SCALE * game->map->max_coll)
-		len_hori = SCALE * game->map->max_coll;
-	if (fabs(len_vert) > SCALE * game->map->rows)
-		len_vert = SCALE * game->map->rows;
-	printf("lens: %f, %f\n", len_hori, len_vert);
-	printf("hit_y_hori: %f, hit_x_hori %f\n", hit_y_hori, hit_x_hori);
-
-	printf("Map: (%d, %d)\n", (int)hit_y_hori / SCALE, (int)hit_x_hori / SCALE);
-	printf("Look dir: %d\n", player->look_dir);
-	if (len_hori < len_vert)
+void	draw_shortest_distance(t_player *player, t_raycaster *ray, t_game *game)
+{
+	if (ray->dist_to_grid_y < ray->dist_to_grid_x)
 	{
 		if (player->look_dir == NE || player->look_dir == NW)
 		{
-			if (game->map->map[(int)hit_y_hori / SCALE - 1][(int)hit_x_hori / SCALE] != EMPTY)
-				draw_line(game, player->pos_x, player->pos_y, hit_x_hori, hit_y_hori, MAGENTA);
+			if (game->map->map[(int)ray->hit_y_hori / SCALE - 1][(int)ray->hit_x_hori / SCALE] != EMPTY)
+				draw_line(game, player->pos_x, player->pos_y, ray->hit_x_hori, ray->hit_y_hori, MAGENTA);
 		}
-		// printf("Map: (%d, %d): %c\n", (int)hit_y_hori / SCALE, (int)hit_x_hori / SCALE, game->map->map[(int)hit_y_hori / SCALE][(int)hit_x_hori / SCALE]);
-		else if (game->map->map[(int)hit_y_hori / SCALE][(int)hit_x_hori / SCALE] != EMPTY)
-			draw_line(game, player->pos_x, player->pos_y, hit_x_hori, hit_y_hori, MAGENTA); //after stop, send this to raycaster
+		else if (game->map->map[(int)ray->hit_y_hori / SCALE][(int)ray->hit_x_hori / SCALE] != EMPTY)
+			draw_line(game, player->pos_x, player->pos_y, ray->hit_x_hori, ray->hit_y_hori, MAGENTA); //after stop, send this to raycaster
 	}
-	if (len_hori >= len_vert)
+	else if (ray->dist_to_grid_y >= ray->dist_to_grid_x)
 	{
 		if (player->look_dir == NW || player->look_dir == SW)
 		{
-			if (game->map->map[(int)hit_y_vert / SCALE][(int)hit_x_vert / SCALE - 1] != EMPTY)
-				draw_line(game, player->pos_x, player->pos_y, hit_x_vert, hit_y_vert, MAGENTA);
+			if (game->map->map[(int)ray->hit_y_vert / SCALE][(int)ray->hit_x_vert / SCALE - 1] != EMPTY)
+				draw_line(game, player->pos_x, player->pos_y, ray->hit_x_vert, ray->hit_y_vert, MAGENTA);
 		}
-		else if (game->map->map[(int)hit_y_vert / SCALE][(int)hit_x_vert / SCALE] != EMPTY)
-			draw_line(game, player->pos_x, player->pos_y, hit_x_vert, hit_y_vert, MAGENTA); //after stop, send this to raycaster
+		else if (game->map->map[(int)ray->hit_y_vert / SCALE][(int)ray->hit_x_vert / SCALE] != EMPTY)
+			draw_line(game, player->pos_x, player->pos_y, ray->hit_x_vert, ray->hit_y_vert, MAGENTA); //after stop, send this to raycaster
 	}
+}
 
+void	cast_rays(t_game *game)
+{
+	t_player	*player;
+	t_raycaster	ray;
+
+	player = game->player;
+	init_raycaster(&ray);
+	get_next_grid(player, &ray);
+	get_grid_ray_intersection(player, &ray);
+	get_distance_to_grid(player, &ray, game);
+	draw_shortest_distance(player, &ray, game);
 
 	// if (rx % SCALE != 0)
 

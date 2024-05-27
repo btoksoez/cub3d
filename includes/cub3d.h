@@ -63,6 +63,22 @@ typedef struct s_player
 	int				look_dir;
 }					t_player;
 
+typedef struct s_raycaster
+{
+	float		x;
+	float		y;
+	float 		next_grid_x;
+	float 		next_grid_y;
+	float		slope;
+	float		intercept_y_axis;
+	float		hit_x_hori;
+	float		hit_y_hori;
+	float		hit_x_vert;
+	float		hit_y_vert;
+	float		dist_to_grid_y;
+	float		dist_to_grid_x;
+}					t_raycaster;
+
 /* ------------------------------- Read Input ------------------------------ */
 /* ------------------------------------------------------------------------- */
 void	read_input(int argc, char *argv[], t_map *map);

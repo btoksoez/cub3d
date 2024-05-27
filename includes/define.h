@@ -8,9 +8,6 @@
 /* ------------------ Mac ----------------- */
 # include "./minilibx-mac/mlx.h"
 #endif
-
-//we should use keysym instead, more portable
-
 /* --------------- General --------------- */
 # define WHITESPACE " \t\n\r\f\v"
 # define VALID_CHARS "NSEW01 \t\n\r\f\v\0"
