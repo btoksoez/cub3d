@@ -28,7 +28,6 @@ void	create_pixel_map(t_game *game, t_map *map)
 			game->pixel_map[row_pixel + (row * SCALE)] = (char *)malloc(sizeof(char) * (map->cols * SCALE) + 1);
 			if (!game->pixel_map[row_pixel + (row * SCALE)])
 				free_map(map, "Failed to allocate memory for pixel map", 1); // add freeing the pixel map
-
 			coll = 0;
 			while (coll < map->cols)
 			{
