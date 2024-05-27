@@ -4,11 +4,11 @@ void	init_minimap(t_game *game, t_minimap *mm)
 {
 	mm->start.x = game->width - MM_WIDTH;
 	mm->start.y = game->height - MM_HEIGHT;
-	mm->pos_player.x = (int)game->player->pos_x;
-	mm->pos_player.y = (int)game->player->pos_y;
+	mm->pos_player.x = (int)game->player->pos.x;
+	mm->pos_player.y = (int)game->player->pos.y;
 	mm->start_map.x = max(0, mm->pos_player.x - MM_WIDTH / 2);
 	mm->start_map.y = max(0, mm->pos_player.y - MM_HEIGHT/ 2);
-	mm->end_map.x = min(game->map->max_coll, mm->pos_player.x + MM_WIDTH / 2);
+	mm->end_map.x = min(game->map->cols, mm->pos_player.x + MM_WIDTH / 2);
 	mm->end_map.x = min(game->map->rows, mm->pos_player.y + MM_HEIGHT / 2);
 }
 

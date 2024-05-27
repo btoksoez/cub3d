@@ -2,8 +2,8 @@
 
 void	get_player_coordinates(t_map *map, int rows, int coll)
 {
-	map->player_x = coll;
-	map->player_y = rows;
+	map->player.x = coll;
+	map->player.y = rows;
 	if (map->map[rows][coll] == 'N')
 		map->player_dir = NORTH;
 	if (map->map[rows][coll] == 'S')
@@ -39,8 +39,8 @@ bool	invalid_characters(t_map *map)
 				return (true);
 			coll++;
 		}
-		if (map->max_coll < coll)
-			map->max_coll = coll;
+		if (map->cols < coll)
+			map->cols = coll;
 		rows++;
 	}
 	if (!player_found)
@@ -66,7 +66,7 @@ bool	found_leaking_space(t_map *map, int row, int coll)
 		if (map->map[row][coll - 1] != WALL && !ft_isspace(map->map[row][coll - 1]))
 			return (true);
 	}
-	if (coll != map->max_coll - 1)
+	if (coll != map->cols - 1)
 	{
 		if (map->map[row][coll + 1] != WALL && !ft_isspace(map->map[row][coll + 1]))
 			return (true);

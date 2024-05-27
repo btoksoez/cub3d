@@ -58,13 +58,13 @@ void	fill_with_space(t_map *map)
 		coll = 0;
 		while (map->map[row][coll])
 			coll++;
-		if (coll < map->max_coll)
+		if (coll < map->cols)
 		{
-			temp = ft_realloc(map->map[row], map->max_coll);
+			temp = ft_realloc(map->map[row], map->cols);
 			if (!temp)
 				free_map(map, "Failed to allocate memory for row", 1);
 			map->map[row] = temp;
-			while (coll < map->max_coll)
+			while (coll < map->cols)
 				map->map[row][coll++] = ' ';
 			map->map[row][coll] = '\0';
 		}

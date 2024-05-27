@@ -6,10 +6,10 @@ void init_map(t_map *map)
 		return;
 	map->map = NULL;
 	map->rows = 0;
-	map->player_x = 0;
-	map->player_y = 0;
+	map->player.x = 0;
+	map->player.y = 0;
 	map->player_dir = 0;
-	map->max_coll = 0;
+	map->cols = 0;
 	map->no_texture = NULL;
 	map->so_texture = NULL;
 	map->we_texture = NULL;

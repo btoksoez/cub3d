@@ -15,13 +15,18 @@ typedef struct	s_rgb
 	int	blue;
 }				t_rgb;
 
+typedef struct s_point
+{
+	float			x;
+	float			y;
+}					t_point;
+
 typedef struct	s_map
 {
 	char			**map;
 	int				rows;
-	int				max_coll;
-	int				player_x;
-	int				player_y;	//maybe use different variable type
+	int				cols;
+	t_point			player;
 	float			player_dir;
 	char			*no_texture;
 	char			*so_texture;
@@ -45,6 +50,7 @@ typedef struct	s_game
 {
 	void			*mlx;
 	void			*win;
+	char			**pixel_map;
 	struct s_map	*map;
 	struct s_img	img;
 	int				width;
@@ -57,43 +63,37 @@ typedef struct s_player
 	int				up_down;
 	int				left_right;
 	int				rot;
-	float			pos_x;
-	float			pos_y;
+	t_point			pos;
 	float			p_angle;
 	int				look_dir;
 }					t_player;
 
 typedef struct s_raycaster
 {
-	float		x;
-	float		y;
+	t_point		r;
 	float 		next_grid_x;
 	float 		next_grid_y;
 	float		slope;
 	float		intercept_y_axis;
-	float		hit_x_hori;
-	float		hit_y_hori;
-	float		hit_x_vert;
-	float		hit_y_vert;
-	float		dist_to_grid_y;
-	float		dist_to_grid_x;
+	t_point		hit_grid_x;
+	t_point		hit_grid_y;
+	t_point		dist_to_grid;
 	bool		wall;
-	float		current_pos_x;
-	float		current_pos_y;
+	t_point		current_pos;
 }					t_raycaster;
 
-typedef struct s_point
+typedef struct s_point_i
 {
 	int				x;
 	int				y;
-}					t_point;
+}					t_point_i;
 
 typedef struct s_minimap
 {
-	t_point			start;
-	t_point			start_map;
-	t_point			end_map;
-	t_point			pos_player;
+	t_point_i		start;
+	t_point_i		start_map;
+	t_point_i		end_map;
+	t_point_i		pos_player;
 }					t_minimap;
 
 /* ------------------------------- Read Input ------------------------------ */

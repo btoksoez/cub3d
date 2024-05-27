@@ -29,7 +29,7 @@ bool	surrounded_by_walls(t_map *map)
 
 bool	valid_upside(t_map *map, int *coll, int *row, bool *last_dir)
 {
-	while (*coll < (map->max_coll - 1))
+	while (*coll < (map->cols - 1))
 	{
 		if (*row != 0 && map->map[*row - 1][*coll] == WALL && !*last_dir)
 		{
@@ -58,7 +58,7 @@ bool	valid_rightside(t_map *map, int *coll, int *row, bool *last_dir)
 {
 	while (*row < (map->rows - 1))
 	{
-		if (*coll != (map->max_coll - 1) && map->map[*row][*coll + 1] == WALL && !*last_dir)
+		if (*coll != (map->cols - 1) && map->map[*row][*coll + 1] == WALL && !*last_dir)
 		{
 			*last_dir = false;
 			(*coll)++;

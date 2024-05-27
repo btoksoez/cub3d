@@ -1,0 +1,17 @@
+S ./textures/pillar.xpm
+	R 900 600
+
+H ./textures/health.xpm
+
+
+	NO ./textures/north.xpm
+           SO ./textures/south.xpm
+WE ./textures/west.xpm
+EA 	./textures/east.xpm
+
+		F	 220,100,0
+   C 			  			235,30,0
+
+111
+1N1
+111

@@ -21,6 +21,7 @@ int	close_window(t_game *game, int status, int exit)
 
 void	free_map(t_map *map, char *str, int status)
 {
+	// we should add the mlx here
 	int	rows;
 
 	rows = 0;

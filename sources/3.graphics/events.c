@@ -1,6 +1,6 @@
 #include "../../includes/cub3d.h"
 
-/* checks whether move is possible and calculates new player->pos_x/y with given move X/Y*/
+/* checks whether move is possible and calculates new player->pos.x/y with given move X/Y*/
 void	move_player(t_game *game, float new_x, float new_y)
 {
 	int			x;
@@ -8,8 +8,8 @@ void	move_player(t_game *game, float new_x, float new_y)
 	t_player	*player;
 
 	player = game->player;
-	x = player->pos_x;
-	y = player->pos_y;
+	x = player->pos.x;
+	y = player->pos.y;
 
 	if (game->map->map[(int)(new_y) / SCALE][(int)new_x / SCALE] != WALL
 		&& game->map->map[(int)(new_y + PSIZE) / SCALE][((int)new_x + PSIZE) / SCALE] != WALL
@@ -17,8 +17,8 @@ void	move_player(t_game *game, float new_x, float new_y)
 		&& game->map->map[(int)(new_y) / SCALE][((int)new_x + PSIZE) / SCALE] != WALL)
 		//maybe add margin for the wall
 		{
-			player->pos_y = new_y;
-			player->pos_x = new_x;
+			player->pos.y = new_y;
+			player->pos.x = new_x;
 		}
 }
 

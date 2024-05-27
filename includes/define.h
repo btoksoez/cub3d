@@ -34,7 +34,7 @@
 # define RESET 0
 /* ----------------- Game ---------------- */
 # define PLAYER "NSEW"
-# define SCALE 50
+# define SCALE 5
 # define PSIZE SCALE / 4
 # define PCENTER PSIZE / 2
 # define MOVE 3

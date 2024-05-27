@@ -9,19 +9,61 @@ void	init_mlx(t_game *game, t_player *player, t_map *map)
 	init_events(game);
 }
 
+void	create_pixel_map(t_game *game, t_map *map)
+{
+	int	row;
+	int	coll;
+	int	row_pixel;
+	int	coll_pixel;
+
+	game->pixel_map = (char **)malloc(sizeof(char *) * (map->rows * SCALE) + 1);
+	if (!game->pixel_map)
+		free_map(map, "Failed to allocate memory for pixel map", 1); //add freeing mlx in map too
+	row = 0;
+	while (row < map->rows)
+	{
+		row_pixel = 0;
+		while (row_pixel < SCALE)
+		{
+			game->pixel_map[row_pixel + (row * SCALE)] = (char *)malloc(sizeof(char) * (map->cols * SCALE) + 1);
+			if (!game->pixel_map[row_pixel + (row * SCALE)])
+				free_map(map, "Failed to allocate memory for pixel map", 1); // add freeing the pixel map
+
+			coll = 0;
+			while (coll < map->cols)
+			{
+				coll_pixel = 0;
+				while (coll_pixel < SCALE)
+				{
+					game->pixel_map[row_pixel + (row * SCALE)][(coll * SCALE) + coll_pixel] = map->map[row][coll];
+					printf("%c", game->pixel_map[row_pixel + (row * SCALE)][(coll * SCALE) + coll_pixel]);
+					coll_pixel++;
+				}
+				coll++;
+			}
+			row_pixel++;
+		}
+		printf("\n");
+		row++;
+	}
+	game->pixel_map[(map->rows * SCALE) + row_pixel] = NULL;
+	printf("here\n");
+}
+
 void	init_game_struct(t_game *game, t_player *player, t_map *map)
 {
-	game->width = map->max_coll * SCALE;
+	game->width = map->cols * SCALE;
 	game->height = map->rows * SCALE;
 	game->map = map;
+	game->player = player;
 	player->left_right = 0;
 	player->up_down = 0;
 	player->rot = 0;
 	player->p_angle = map->player_dir;
-	player->pos_x = map->player_x * SCALE + 3 * (PSIZE / 2);
-	player->pos_y = map->player_y * SCALE + 3 * (PSIZE / 2);
+	player->pos.x = map->player.x * SCALE + 3 * (PSIZE / 2);
+	player->pos.y = map->player.y * SCALE + 3 * (PSIZE / 2);
 	player->look_dir = 0;
-	game->player = player;
+	create_pixel_map(game, map);
 }
 
 void	init_window(t_game *game, t_map *map)
