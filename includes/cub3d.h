@@ -77,6 +77,9 @@ typedef struct s_raycaster
 	float		hit_y_vert;
 	float		dist_to_grid_y;
 	float		dist_to_grid_x;
+	bool		wall;
+	float		current_pos_x;
+	float		current_pos_y;
 }					t_raycaster;
 
 typedef struct s_point

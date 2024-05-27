@@ -13,7 +13,6 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 {
 	game->width = map->max_coll * SCALE;
 	game->height = map->rows * SCALE;
-	printf("max col: %d, rows: %d\n", map->max_coll, map->rows);
 	game->map = map;
 	player->left_right = 0;
 	player->up_down = 0;

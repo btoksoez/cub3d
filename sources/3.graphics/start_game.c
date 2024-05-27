@@ -60,7 +60,7 @@ void	hook_player(t_game *game)
 	move_player(game, new_x, new_y);
 }
 
-void	init_raycaster(t_raycaster *ray)
+void	init_raycaster(t_raycaster *ray, t_player *player)
 {
 	ray->x = 0;
 	ray->y = 0;
@@ -68,24 +68,42 @@ void	init_raycaster(t_raycaster *ray)
 	ray->next_grid_y = 0;
 	ray->slope = 0;
 	ray->intercept_y_axis = 0;
+	ray->current_pos_x = player->pos_x;
+	ray->current_pos_y = player->pos_y;
 	ray->hit_x_hori = 0;
 	ray->hit_y_hori = 0;
 	ray->hit_x_vert = 0;
 	ray->hit_y_vert = 0;
 	ray->dist_to_grid_y = 0;
 	ray->dist_to_grid_x = 0;
+	ray->wall = false;
 }
 
 void	get_next_grid(t_player *player, t_raycaster *ray)
 {
-	if (player->p_angle < 2 * PI && player->p_angle >= PI)
-		ray->next_grid_y = floorf(player->pos_y / SCALE) * SCALE;
+	if (ray->current_pos_x == player->pos_x && ray->current_pos_y == player->pos_y)
+	{
+		if (player->p_angle < 2 * PI && player->p_angle >= PI)
+			ray->next_grid_y = floorf(ray->current_pos_y / SCALE) * SCALE;
+		else
+			ray->next_grid_y = ceilf(ray->current_pos_y / SCALE) * SCALE;
+		if (player->p_angle < PI_15 && player->p_angle >= PI_05)
+			ray->next_grid_x = floorf(ray->current_pos_x / SCALE) * SCALE;
+		else
+			ray->next_grid_x = ceilf(ray->current_pos_x / SCALE) * SCALE;
+	}
 	else
-		ray->next_grid_y = ceilf(player->pos_y / SCALE) * SCALE;
-	if (player->p_angle < PI_15 && player->p_angle >= PI_05)
-		ray->next_grid_x = floorf(player->pos_x / SCALE) * SCALE;
-	else
-		ray->next_grid_x = ceilf(player->pos_x / SCALE) * SCALE;
+	{
+		if (player->p_angle < 2 * PI && player->p_angle >= PI)
+			ray->next_grid_y = floorf((ray->current_pos_y - 1) / SCALE) * SCALE;
+		else
+			ray->next_grid_y = ceilf((ray->current_pos_y + 1) / SCALE) * SCALE;
+		if (player->p_angle < PI_15 && player->p_angle >= PI_05)
+			ray->next_grid_x = floorf((ray->current_pos_x - 1) / SCALE) * SCALE;
+		else
+			ray->next_grid_x = ceilf((ray->current_pos_x + 1) / SCALE) * SCALE;
+	}
+	printf("next grid Y: %f. next grid x: %f\n", ray->next_grid_y, ray->next_grid_x);
 }
 
 void	get_grid_ray_intersection(t_player *player, t_raycaster *ray)
@@ -106,9 +124,14 @@ void	get_grid_ray_intersection(t_player *player, t_raycaster *ray)
 	ray->hit_x_hori = (ray->next_grid_y - ray->intercept_y_axis) / ray->slope;
 	ray->hit_y_hori = ray->slope * ray->hit_x_hori + ray->intercept_y_axis;
 
+
 	// point at which the rayline intercepts (x,y) in the X axis
 	ray->hit_x_vert = ray->next_grid_x;
 	ray->hit_y_vert = ray->slope * ray->hit_x_vert + ray->intercept_y_axis;
+
+	printf("hit_x_hori: %f\n hit_y_hori: %f\n", ray->hit_x_hori, ray->hit_y_hori);
+	printf("hit_x_vert: %f\n hit_y_vert: %f\n", ray->hit_x_vert, ray->hit_y_vert);
+
 }
 
 //vert is x
@@ -145,28 +168,33 @@ void	get_distance_to_grid(t_player *player, t_raycaster *ray, t_game *game)
 		ray->dist_to_grid_x = SCALE * game->map->rows;
 }
 
-void	draw_shortest_distance(t_player *player, t_raycaster *ray, t_game *game)
+bool	is_wall(t_player *player, t_raycaster *ray, t_game *game)
 {
 	if (ray->dist_to_grid_y < ray->dist_to_grid_x)
 	{
+		ray->current_pos_x = ray->hit_x_hori;
+		ray->current_pos_y = ray->hit_y_hori;
 		if (player->look_dir == NE || player->look_dir == NW)
 		{
 			if (game->map->map[(int)ray->hit_y_hori / SCALE - 1][(int)ray->hit_x_hori / SCALE] != EMPTY)
-				draw_line(game, player->pos_x + PCENTER, player->pos_y + PCENTER, ray->hit_x_hori, ray->hit_y_hori, MAGENTA);
+				return (draw_line(game, player->pos_x + PCENTER, player->pos_y + PCENTER, ray->current_pos_x, ray->current_pos_y, BLUE), true);
 		}
 		else if (game->map->map[(int)ray->hit_y_hori / SCALE][(int)ray->hit_x_hori / SCALE] != EMPTY)
-			draw_line(game, player->pos_x + PCENTER, player->pos_y + PCENTER, ray->hit_x_hori, ray->hit_y_hori, MAGENTA); //after stop, send this to raycaster
+			return (draw_line(game, player->pos_x + PCENTER, player->pos_y + PCENTER, ray->current_pos_x, ray->current_pos_y, BLUE), true); //after stop, send this to raycaster
 	}
 	else if (ray->dist_to_grid_y >= ray->dist_to_grid_x)
 	{
+		ray->current_pos_x = ray->hit_x_vert;
+		ray->current_pos_y = ray->hit_y_vert;
 		if (player->look_dir == NW || player->look_dir == SW)
 		{
 			if (game->map->map[(int)ray->hit_y_vert / SCALE][(int)ray->hit_x_vert / SCALE - 1] != EMPTY)
-				draw_line(game, player->pos_x + PCENTER, player->pos_y + PCENTER, ray->hit_x_vert, ray->hit_y_vert, MAGENTA);
+				return (draw_line(game, player->pos_x + PCENTER, player->pos_y + PCENTER, ray->hit_x_vert, ray->hit_y_vert, BLUE), true);
 		}
 		else if (game->map->map[(int)ray->hit_y_vert / SCALE][(int)ray->hit_x_vert / SCALE] != EMPTY)
-			draw_line(game, player->pos_x + PCENTER, player->pos_y + PCENTER, ray->hit_x_vert, ray->hit_y_vert, MAGENTA); //after stop, send this to raycaster
+			return (draw_line(game, player->pos_x + PCENTER, player->pos_y + PCENTER, ray->hit_x_vert, ray->hit_y_vert, BLUE), true); //after stop, send this to raycaster
 	}
+	return (false);
 }
 
 void	cast_rays(t_game *game)
@@ -175,11 +203,15 @@ void	cast_rays(t_game *game)
 	t_raycaster	ray;
 
 	player = game->player;
-	init_raycaster(&ray);
-	get_next_grid(player, &ray);
-	get_grid_ray_intersection(player, &ray);
-	get_distance_to_grid(player, &ray, game);
-	draw_shortest_distance(player, &ray, game);
+	init_raycaster(&ray, player);
+	while (true)
+	{
+		get_next_grid(player, &ray);
+		get_grid_ray_intersection(player, &ray);
+		get_distance_to_grid(player, &ray, game);
+		if (is_wall(player, &ray, game))
+			break ;
+	}
 
 	// if (rx % SCALE != 0)
 
@@ -196,7 +228,7 @@ int	render(t_game *game)
 	hook_player(game);	//sets new pos of player based on u_d, l_r
 	render_2dgame(game);
 	cast_rays(game);
-	minimap(game);
+	// minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
 	return (0);
 }
@@ -239,14 +271,13 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 	{
 		width = game->width;
 		height = game->height;
-		// printf("w: %d h: %d\n", width, height);
 	}
 	else if (color == PLAYER_)
 	{
 		line_length = SCALE;
 		end_x = (start_x + PCENTER) + (line_length * cos(game->player->p_angle));
 		end_y = (start_y + PCENTER) + (line_length * sin(game->player->p_angle));
-		draw_line(game, (start_x + PCENTER), (start_y + PCENTER), end_x, end_y, color);
+		// draw_line(game, (start_x + PCENTER), (start_y + PCENTER), end_x, end_y, color);
 		width = PSIZE;
 		height = PSIZE;
 	}
