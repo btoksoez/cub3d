@@ -288,9 +288,9 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 {
 	int	width;
 	int	height;
-	int	line_length;
-	int	end_x;
-	int	end_y;
+	// int	line_length;
+	// int	end_x;
+	// int	end_y;
 
 	if (color == SCREEN)
 	{
@@ -299,9 +299,9 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 	}
 	else if (color == PLAYER_)
 	{
-		line_length = SCALE;
-		end_x = (start_x + PCENTER) + (line_length * cos(game->player->p_angle));
-		end_y = (start_y + PCENTER) + (line_length * sin(game->player->p_angle));
+		// line_length = SCALE;
+		// end_x = (start_x + PCENTER) + (line_length * cos(game->player->p_angle));
+		// end_y = (start_y + PCENTER) + (line_length * sin(game->player->p_angle));
 		// draw_line(game, (start_x + PCENTER), (start_y + PCENTER), end_x, end_y, color);
 		width = PSIZE;
 		height = PSIZE;

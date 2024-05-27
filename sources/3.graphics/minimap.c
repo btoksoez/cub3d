@@ -15,11 +15,11 @@ void	init_minimap(t_game *game, t_minimap *mm)
 void	minimap(t_game *game)
 {
 	t_minimap	mm;
-	t_player	*player;
+	// t_player	*player;
 	int			x;
 	int			y;
 
-	player = game->player;
+	// player = game->player;
 	init_minimap(game, &mm);
 	render_minimap(game, mm.start.x, mm.start.y, MM_SCREEN);
 	y = mm.start_map.y;
