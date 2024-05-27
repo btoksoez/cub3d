@@ -63,6 +63,20 @@ typedef struct s_player
 	int				look_dir;
 }					t_player;
 
+typedef struct s_point
+{
+	int				x;
+	int				y;
+}					t_point;
+
+typedef struct s_minimap
+{
+	t_point			start;
+	t_point			start_map;
+	t_point			end_map;
+	t_point			pos_player;
+}					t_minimap;
+
 /* ------------------------------- Read Input ------------------------------ */
 /* ------------------------------------------------------------------------- */
 void	read_input(int argc, char *argv[], t_map *map);
@@ -116,6 +130,11 @@ void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int
 void	move_player(t_game *game, float move_x, float move_y);
 void	hook_player(t_game *game);
 void	draw_point(t_game *game, int x, int y, int color);
+
+/* ------------------------------- Mini Map -------------------------------- */
+/* ------------------------------------------------------------------------- */
+void	minimap(t_game *game);
+void	render_minimap(t_game *game, int start_x, int start_y, int color);
 
 /* -------------------------------- Utils ---------------------------------- */
 /* ------------------------------------------------------------------------- */
