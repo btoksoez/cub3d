@@ -10,6 +10,22 @@ void	start_game(t_map *map)
 	mlx_loop(game.mlx);
 }
 
+void	rotate_player(t_player *player)
+{
+	if (player->rot == LEFT)
+	{
+		player->p_angle -= ROT_SPEED;
+		if (player->p_angle < 0)
+			player->p_angle += 2 * PI;
+	}
+	if (player->rot == RIGHT)
+	{
+		player->p_angle += ROT_SPEED;
+		if (player->p_angle > 2 * PI)
+			player->p_angle -= 2 * PI;
+	}
+}
+
 /* this should calculate the move based on flags and call move and rotoate functions */
 void	hook_player(t_game *game)
 {
@@ -20,10 +36,7 @@ void	hook_player(t_game *game)
 	player = game->player;
 	new_x = player->pos_x;
 	new_y = player->pos_y;
-	if (player->rot == LEFT)
-		player->p_angle = fmod(player->p_angle - ROT_SPEED, 2.0 * PI);
-	if (player->rot == RIGHT)
-		player->p_angle = fmod(player->p_angle + ROT_SPEED, 2.0 * PI);
+	rotate_player(player);
 	if (player->up_down == UP)
 	{
 		new_x = player->pos_x + (MOVE * cos(player->p_angle));
@@ -59,75 +72,91 @@ void	cast_rays(t_game *game)
 	float		hit_y_hori;
 	float		hit_x_vert;
 	float		hit_y_vert;
-	// float		len_hori;
-	// float		len_vert;
+	float		len_hori;
+	float		len_vert;
 	t_player	*player;
 
 	player = game->player;
 	if (player->p_angle < 2 * PI && player->p_angle >= PI)
-		next_vert = floorf(player->pos_y / SCALE) * SCALE;
+		next_hori = floorf(player->pos_y / SCALE) * SCALE;
 	else
-		next_vert = ceilf(player->pos_y / SCALE) * SCALE;
+		next_hori = ceilf(player->pos_y / SCALE) * SCALE;
 	if (player->p_angle < PI_15 && player->p_angle >= PI_05)
-		next_hori = floorf(player->pos_x / SCALE) * SCALE;
+		next_vert = floorf(player->pos_x / SCALE) * SCALE;
 	else
-		next_hori = ceilf(player->pos_x / SCALE) * SCALE;
-
+		next_vert = ceilf(player->pos_x / SCALE) * SCALE;
 	rx = player->pos_x + (SCALE * cos(player->p_angle));
 	ry = player->pos_y + (SCALE * sin(player->p_angle));
 	slope = (ry - player->pos_y) / (rx - player->pos_x);
+	if (slope == 0)
+		slope = 1e-6f;
 	intercept = player->pos_y - slope * player->pos_x;
 
-	hit_x_hori = (next_hori - intercept) / slope;
+	hit_x_hori = (next_hori - intercept) / slope;	//is -inf if slope == 0
 	hit_y_hori = slope * hit_x_hori + intercept;
 
-	hit_x_vert = (next_vert - intercept) / (slope - 1);
+	hit_x_vert = next_vert;
 	hit_y_vert = slope * hit_x_vert + intercept;
 
-	printf("hitx_hori: %f\n", hit_x_hori);
-	printf("hity_hori: %f\n", hit_y_hori);
-	printf("hitx_vert: %f\n", hit_x_vert);
-	printf("hity_vert: %f\n", hit_y_vert);
+	draw_point(game, rx, ry, MAGENTA);
+	draw_point(game, hit_x_vert, hit_y_vert, YELLOW);
+	draw_point(game, hit_x_hori, hit_y_hori, YELLOW);
 
-	// draw_point(game, rx, ry, MAGENTA);
-	// draw_point(game, hit_x_vert, hit_y_vert, YELLOW);
-	// draw_point(game, hit_x_hori, hit_y_hori, YELLOW);
+	if (player->p_angle > 0 && player->p_angle <= PI_05)	//looking south east
+	{
+		len_hori = fabs(player->pos_y - next_hori) / cos(fabs(PI_05 - player->p_angle));
+		len_vert = fabs(player->pos_x - next_vert) / cos(fabs(player->p_angle));
+		player->look_dir = SE;
+	}
+	if (player->p_angle > PI_05 && player->p_angle <= PI)	//looking south west
+	{
+		len_hori = fabs(player->pos_y - next_hori) / cos(fabs(player->p_angle - PI_05));
+		len_vert = fabs(player->pos_x - next_vert) / cos(fabs(PI - player->p_angle));
+		player->look_dir = SW;
+	}
+	if (player->p_angle > PI && player->p_angle <= PI_15)	//looking north west
+	{
+		len_hori = fabs(player->pos_y - next_hori) / cos(fabs(PI_15 - player->p_angle));
+		len_vert = fabs(player->pos_x - next_vert) / cos(fabs(player->p_angle - PI));
+		player->look_dir = NW;
+	}
+	if (player->p_angle > PI_15 && player->p_angle <= 2 * PI)	//looking north east
+	{
+		len_hori = fabs(player->pos_y - next_hori) / cos(fabs(player->p_angle - PI_15));
+		len_vert = fabs(player->pos_x - next_vert) / cos(fabs(2 * PI - player->p_angle));
+		player->look_dir = NE;
+	}
 
-	// if (player->p_angle > 0 && player->p_angle <= PI_05)	//looking north east
-	// {
-	// 	len_hori = fabs(player->pos_y - next_hori) / cos(fabs(PI_05 - player->p_angle));
-	// 	len_vert = fabs(player->pos_x - next_vert) / cos(fabs(player->p_angle));
-	// }
-	// if (player->p_angle > PI_05 && player->p_angle <= PI)	//looking north west
-	// {
-	// 	len_hori = fabs(player->pos_y - next_hori) / cos(fabs(player->p_angle - PI_05));
-	// 	len_vert = fabs(player->pos_x - next_vert) / cos(fabs(PI - player->p_angle));
-	// }
-	// if (player->p_angle > PI && player->p_angle <= PI_15)	//looking south west
-	// {
-	// 	len_hori = fabs(player->pos_y - next_hori) / cos(fabs(PI_15 - player->p_angle));
-	// 	len_vert = fabs(player->pos_x - next_vert) / cos(fabs(player->p_angle - PI));
-	// }
-	// if (player->p_angle > PI_15 && player->p_angle <= 2 * PI)	//looking south east
-	// {
-	// 	len_hori = fabs(player->pos_y - next_hori) / cos(fabs(player->p_angle - PI_15));
-	// 	len_vert = fabs(player->pos_x - next_vert) / cos(fabs(2 * PI - player->p_angle));
-	// }
+	if (fabs(len_hori) > SCALE * game->map->max_coll)
+		len_hori = SCALE * game->map->max_coll;
+	if (fabs(len_vert) > SCALE * game->map->rows)
+		len_vert = SCALE * game->map->rows;
+	printf("lens: %f, %f\n", len_hori, len_vert);
+	printf("hit_y_hori: %f, hit_x_hori %f\n", hit_y_hori, hit_x_hori);
 
-	// printf("lens: %f, %f\n", len_hori, len_vert);
-
-	// if (len_hori < len_vert)
-	// {
-	// 	if (game->map->map[(int)hit_y_hori / SCALE][(int)hit_x_hori / SCALE] == WALL)
-	// 		printf("hort\n");
-	// 		//draw_line(game, player->pos_x, player->pos_y, hit_x_hori, hit_y_hori, MAGENTA); //after stop, send this to raycaster
-	// }
-	// if (len_hori >= len_vert)
-	// {
-	// 	if (game->map->map[(int)hit_y_vert / SCALE][(int)hit_x_vert / SCALE] == WALL)
-	// 		printf("vert\n");
-	// 		// draw_line(game, player->pos_x, player->pos_y, hit_x_vert, hit_y_vert, MAGENTA); //after stop, send this to raycaster
-	// }
+	printf("Map: (%d, %d)\n", (int)hit_y_hori / SCALE, (int)hit_x_hori / SCALE);
+	printf("Look dir: %d\n", player->look_dir);
+	if (len_hori < len_vert)
+	{
+		if (player->look_dir == NE || player->look_dir == NW)
+		{
+			if (game->map->map[(int)hit_y_hori / SCALE - 1][(int)hit_x_hori / SCALE] != EMPTY)
+				draw_line(game, player->pos_x, player->pos_y, hit_x_hori, hit_y_hori, MAGENTA);
+		}
+		// printf("Map: (%d, %d): %c\n", (int)hit_y_hori / SCALE, (int)hit_x_hori / SCALE, game->map->map[(int)hit_y_hori / SCALE][(int)hit_x_hori / SCALE]);
+		else if (game->map->map[(int)hit_y_hori / SCALE][(int)hit_x_hori / SCALE] != EMPTY)
+			draw_line(game, player->pos_x, player->pos_y, hit_x_hori, hit_y_hori, MAGENTA); //after stop, send this to raycaster
+	}
+	if (len_hori >= len_vert)
+	{
+		if (player->look_dir == NW || player->look_dir == SW)
+		{
+			if (game->map->map[(int)hit_y_vert / SCALE][(int)hit_x_vert / SCALE - 1] != EMPTY)
+				draw_line(game, player->pos_x, player->pos_y, hit_x_vert, hit_y_vert, MAGENTA);
+		}
+		else if (game->map->map[(int)hit_y_vert / SCALE][(int)hit_x_vert / SCALE] != EMPTY)
+			draw_line(game, player->pos_x, player->pos_y, hit_x_vert, hit_y_vert, MAGENTA); //after stop, send this to raycaster
+	}
 
 
 	// if (rx % SCALE != 0)
@@ -159,6 +188,7 @@ void	render_2dgame(t_game *game)
 	player = game->player;
 	y = 0;
 	render_image(game, 0, 0, SCREEN);
+	//fix: paint empty parts in map
 	while (y < game->map->rows)
 	{
 		x = 0;

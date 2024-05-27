@@ -60,6 +60,7 @@ typedef struct s_player
 	float			pos_x;
 	float			pos_y;
 	float			p_angle;
+	int				look_dir;
 }					t_player;
 
 /* ------------------------------- Read Input ------------------------------ */

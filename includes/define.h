@@ -25,6 +25,10 @@
 # define SOUTH PI_05
 # define EAST 0
 # define WEST PI
+# define NW 1
+# define NE 2
+# define SW 3
+# define SE 4
 /* -------------- Movements ------------- */
 # define UP 1
 # define RIGHT 1
