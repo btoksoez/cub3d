@@ -196,11 +196,11 @@ int	render(t_game *game)
 	hook_player(game);	//sets new pos of player based on u_d, l_r
 	render_2dgame(game);
 	cast_rays(game);
+	minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
 	return (0);
 }
 
-// Somehow need to scale map to screensize, so that for any map, the screensize if still 1080 x 720
 void	render_2dgame(t_game *game)
 {
 	int			y;
@@ -210,7 +210,6 @@ void	render_2dgame(t_game *game)
 	player = game->player;
 	y = 0;
 	render_image(game, 0, 0, SCREEN);
-	//fix: paint empty parts in map
 	while (y < game->map->rows)
 	{
 		x = 0;
@@ -226,6 +225,7 @@ void	render_2dgame(t_game *game)
 		y++;
 	}
 }
+// Somehow need to scale map to screensize, so that for any map, the screensize if still 1080 x 720
 
 void	render_image(t_game *game, int start_x, int start_y, int color)
 {
@@ -239,6 +239,7 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 	{
 		width = game->width;
 		height = game->height;
+		// printf("w: %d h: %d\n", width, height);
 	}
 	else if (color == PLAYER_)
 	{
@@ -254,9 +255,9 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 		width = SCALE;
 		height = SCALE;
 	}
-	for (int y = start_y; y < start_y + width; y++)
+	for (int y = start_y; y < start_y + height; y++)
 	{
-		for (int x = start_x; x < start_x + height; x++)
+		for (int x = start_x; x < start_x + width; x++)
 		{
 			if (x == start_x || x == start_x + width - 1 || y == start_y || y == start_y + height - 1)
 				put_pixel_to_img(game, x, y, BLACK);
@@ -307,7 +308,7 @@ void	draw_point(t_game *game, int x, int y, int color)
 {
 	int	size;
 
-	size = 10;
+	size = 6;
 	for (int i = 0; i < size; i++)
 	{
 		for (int j = 0; j < size; j++)
