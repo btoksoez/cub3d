@@ -91,16 +91,16 @@ void	get_next_grid(t_player *player, t_raycaster *ray)
 void	get_grid_ray_intersection(t_player *player, t_raycaster *ray)
 {
 	// get a second point to get a line
-	ray->x = player->pos_x + (SCALE * cos(player->p_angle));
-	ray->y = player->pos_y + (SCALE * sin(player->p_angle));
+	ray->x = player->pos_x + PCENTER + (SCALE * cos(player->p_angle));
+	ray->y = player->pos_y + PCENTER + (SCALE * sin(player->p_angle));
 
 	// m
-	ray->slope = (ray->y - player->pos_y) / (ray->x - player->pos_x);
+	ray->slope = (ray->y - (player->pos_y + PCENTER)) / (ray->x - (player->pos_x + PCENTER));
 	if (ray->slope == 0)
 		ray->slope = 1e-6f;
 
 	// c = y - mx
-	ray->intercept_y_axis = player->pos_y - (ray->slope * player->pos_x);
+	ray->intercept_y_axis = (player->pos_y + PCENTER) - (ray->slope * (player->pos_x + PCENTER));
 
 	// point at which the rayline intercepts (x,y) in the Y axis
 	ray->hit_x_hori = (ray->next_grid_y - ray->intercept_y_axis) / ray->slope;
@@ -152,20 +152,20 @@ void	draw_shortest_distance(t_player *player, t_raycaster *ray, t_game *game)
 		if (player->look_dir == NE || player->look_dir == NW)
 		{
 			if (game->map->map[(int)ray->hit_y_hori / SCALE - 1][(int)ray->hit_x_hori / SCALE] != EMPTY)
-				draw_line(game, player->pos_x, player->pos_y, ray->hit_x_hori, ray->hit_y_hori, MAGENTA);
+				draw_line(game, player->pos_x + PCENTER, player->pos_y + PCENTER, ray->hit_x_hori, ray->hit_y_hori, MAGENTA);
 		}
 		else if (game->map->map[(int)ray->hit_y_hori / SCALE][(int)ray->hit_x_hori / SCALE] != EMPTY)
-			draw_line(game, player->pos_x, player->pos_y, ray->hit_x_hori, ray->hit_y_hori, MAGENTA); //after stop, send this to raycaster
+			draw_line(game, player->pos_x + PCENTER, player->pos_y + PCENTER, ray->hit_x_hori, ray->hit_y_hori, MAGENTA); //after stop, send this to raycaster
 	}
 	else if (ray->dist_to_grid_y >= ray->dist_to_grid_x)
 	{
 		if (player->look_dir == NW || player->look_dir == SW)
 		{
 			if (game->map->map[(int)ray->hit_y_vert / SCALE][(int)ray->hit_x_vert / SCALE - 1] != EMPTY)
-				draw_line(game, player->pos_x, player->pos_y, ray->hit_x_vert, ray->hit_y_vert, MAGENTA);
+				draw_line(game, player->pos_x + PCENTER, player->pos_y + PCENTER, ray->hit_x_vert, ray->hit_y_vert, MAGENTA);
 		}
 		else if (game->map->map[(int)ray->hit_y_vert / SCALE][(int)ray->hit_x_vert / SCALE] != EMPTY)
-			draw_line(game, player->pos_x, player->pos_y, ray->hit_x_vert, ray->hit_y_vert, MAGENTA); //after stop, send this to raycaster
+			draw_line(game, player->pos_x + PCENTER, player->pos_y + PCENTER, ray->hit_x_vert, ray->hit_y_vert, MAGENTA); //after stop, send this to raycaster
 	}
 }
 
