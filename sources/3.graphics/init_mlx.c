@@ -36,18 +36,15 @@ void	create_pixel_map(t_game *game, t_map *map)
 				while (coll_pixel < SCALE)
 				{
 					game->pixel_map[row_pixel + (row * SCALE)][(coll * SCALE) + coll_pixel] = map->map[row][coll];
-					printf("%c", game->pixel_map[row_pixel + (row * SCALE)][(coll * SCALE) + coll_pixel]);
 					coll_pixel++;
 				}
 				coll++;
 			}
 			row_pixel++;
 		}
-		printf("\n");
 		row++;
 	}
 	game->pixel_map[(map->rows * SCALE) + row_pixel] = NULL;
-	printf("here\n");
 }
 
 void	init_game_struct(t_game *game, t_player *player, t_map *map)

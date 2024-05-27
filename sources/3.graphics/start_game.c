@@ -84,25 +84,27 @@ void	get_next_grid(t_player *player, t_raycaster *ray)
 	if (ray->current_pos.x == player->pos.x && ray->current_pos.y == player->pos.y)
 	{
 		if (player->p_angle < 2 * PI && player->p_angle >= PI)
-			ray->next_grid_y = floorf(ray->current_pos.y / SCALE) * SCALE;
+			ray->next_grid_y = floorf(ray->current_pos.y);
 		else
-			ray->next_grid_y = ceilf(ray->current_pos.y / SCALE) * SCALE;
+			ray->next_grid_y = ceilf(ray->current_pos.y);
 		if (player->p_angle < PI_15 && player->p_angle >= PI_05)
-			ray->next_grid_x = floorf(ray->current_pos.x / SCALE) * SCALE;
+			ray->next_grid_x = floorf(ray->current_pos.x);
 		else
-			ray->next_grid_x = ceilf(ray->current_pos.x / SCALE) * SCALE;
+			ray->next_grid_x = ceilf(ray->current_pos.x);
 	}
 	else
 	{
 		if (player->p_angle < 2 * PI && player->p_angle >= PI)
-			ray->next_grid_y = floorf((ray->current_pos.y - 1) / SCALE) * SCALE;
+			ray->next_grid_y = floorf(ray->current_pos.y - 1);
 		else
-			ray->next_grid_y = ceilf((ray->current_pos.y + 1) / SCALE) * SCALE;
+			ray->next_grid_y = ceilf(ray->current_pos.y + 1);
 		if (player->p_angle < PI_15 && player->p_angle >= PI_05)
-			ray->next_grid_x = floorf((ray->current_pos.x - 1) / SCALE) * SCALE;
+			ray->next_grid_x = floorf(ray->current_pos.x - 1);
 		else
-			ray->next_grid_x = ceilf((ray->current_pos.x + 1) / SCALE) * SCALE;
+			ray->next_grid_x = ceilf(ray->current_pos.x + 1);
 	}
+	printf("next grid y: %f\n", ray->next_grid_y);
+	printf("next grid x: %f\n", ray->next_grid_x);
 }
 
 void	get_grid_ray_intersection(t_player *player, t_raycaster *ray)
@@ -171,10 +173,10 @@ bool	is_wall(t_player *player, t_raycaster *ray, t_game *game)
 		ray->current_pos.y = ray->hit_grid_x.y;
 		if (player->look_dir == NE || player->look_dir == NW)
 		{
-			if (game->map->map[(int)ray->hit_grid_x.y / SCALE - 1][(int)ray->hit_grid_x.x / SCALE] != EMPTY)
+			if (game->pixel_map[(int)ray->hit_grid_x.y - 1][(int)ray->hit_grid_x.x] != EMPTY)
 				return (draw_line(game, player->pos.x + PCENTER, player->pos.y + PCENTER, ray->current_pos.x, ray->current_pos.y, BLUE), true);
 		}
-		else if (game->map->map[(int)ray->hit_grid_x.y / SCALE][(int)ray->hit_grid_x.x / SCALE] != EMPTY)
+		else if (game->pixel_map[(int)ray->hit_grid_x.y][(int)ray->hit_grid_x.x] != EMPTY)
 			return (draw_line(game, player->pos.x + PCENTER, player->pos.y + PCENTER, ray->current_pos.x, ray->current_pos.y, BLUE), true);
 	}
 	else if (ray->dist_to_grid.y >= ray->dist_to_grid.x)
@@ -183,10 +185,10 @@ bool	is_wall(t_player *player, t_raycaster *ray, t_game *game)
 		ray->current_pos.y = ray->hit_grid_y.y;
 		if (player->look_dir == NW || player->look_dir == SW)
 		{
-			if (game->map->map[(int)ray->hit_grid_y.y / SCALE][(int)ray->hit_grid_y.x / SCALE - 1] != EMPTY)
+			if (game->pixel_map[(int)ray->hit_grid_y.y][(int)ray->hit_grid_y.x - 1] != EMPTY)
 				return (draw_line(game, player->pos.x + PCENTER, player->pos.y + PCENTER, ray->hit_grid_y.x, ray->hit_grid_y.y, BLUE), true);
 		}
-		else if (game->map->map[(int)ray->hit_grid_y.y / SCALE][(int)ray->hit_grid_y.x / SCALE] != EMPTY)
+		else if (game->pixel_map[(int)ray->hit_grid_y.y][(int)ray->hit_grid_y.x] != EMPTY)
 			return (draw_line(game, player->pos.x + PCENTER, player->pos.y + PCENTER, ray->hit_grid_y.x, ray->hit_grid_y.y, BLUE), true);
 	}
 	return (false);
