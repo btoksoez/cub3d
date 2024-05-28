@@ -3,8 +3,8 @@
 
 # include "./libft/libft.h"
 # include "define.h"
-# include <X11/keysym.h>
-# include <X11/X.h>
+// # include <X11/keysym.h>
+// # include <X11/X.h>
 
 /* -------------------------------- Structs -------------------------------- */
 /* ------------------------------------------------------------------------- */

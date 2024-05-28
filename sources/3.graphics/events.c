@@ -3,13 +3,9 @@
 /* checks whether move is possible and calculates new player->pos.x/y with given move X/Y*/
 void	move_player(t_game *game, float new_x, float new_y)
 {
-	// int			x;
-	// int			y;
 	t_player	*player;
 
 	player = game->player;
-	// x = player->pos.x;
-	// y = player->pos.y;
 	if (game->map->map[(int)(new_y) / SCALE][(int)new_x / SCALE] != WALL
 		&& game->map->map[(int)(new_y + PSIZE) / SCALE][((int)new_x + PSIZE) / SCALE] != WALL
 		&& game->map->map[(int)(new_y + PSIZE) / SCALE][(int)new_x / SCALE] != WALL
@@ -27,19 +23,19 @@ int	key_press(int key, t_game *game)
 	t_player	*player;
 
 	player = game->player;
-	if (key == XK_Escape || key == ESC)
+	if (key == ESC)
 		close_window(game, 0, QUIT);
-	if (key == XK_w || key == W)
+	if (key == W)
 		player->up_down = UP;
-	if (key == XK_a || key == A)
+	if (key == A)
 		player->left_right = LEFT;
-	if (key == XK_s || key == S)
+	if (key == S)
 		player->up_down = DOWN;
-	if (key == XK_d || key == D)
+	if (key == D)
 		player->left_right = RIGHT;
-	if (key == XK_Left || key == LEFT_KEY)
+	if (key == LEFT_KEY)
 		player->rot = LEFT;
-	if (key == XK_Right || key == RIGHT_KEY)
+	if (key == RIGHT_KEY)
 		player->rot = RIGHT;
 	return (0);
 }
@@ -49,17 +45,17 @@ int key_release(int key, t_game *game)
 	t_player	*player;
 
 	player = game->player;
-	if (key == XK_w || key == W)
+	if (key == W)
 		player->up_down = RESET;
-	if (key == XK_a || key == A)
+	if (key == A)
 		player->left_right = RESET;
-	if (key == XK_s || key == S)
+	if (key == S)
 		player->up_down = RESET;
-	if (key == XK_d || key == D)
+	if (key == D)
 		player->left_right = RESET;
-	if (key == XK_Left || key == LEFT_KEY)
+	if (key == LEFT_KEY)
 		player->rot = RESET;
-	if (key == XK_Right || key == RIGHT_KEY)
+	if (key == RIGHT_KEY)
 		player->rot = RESET;
 	return (0);
 

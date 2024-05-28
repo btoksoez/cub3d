@@ -1,6 +1,6 @@
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g 
 LIBFT_DIR = includes/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 COMPRESS = ar rcs
