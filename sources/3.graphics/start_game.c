@@ -83,17 +83,7 @@ void	get_next_grid(t_player *player, t_raycaster *ray)
 {
 	if ((ray->current_pos.x == player->pos.x) && (ray->current_pos.y == player->pos.y))
 	{
-		if ((player->p_angle < PI_2) && player->p_angle >= PI)
-		{
-			ray->next_grid_y = floorf(ray->current_pos.y);
-			ray->next_grid_y = floorf(ray->next_grid_y / SCALE) * SCALE;
-		}
-		else
-		{
-			ray->next_grid_y = ceilf(ray->current_pos.y);
-			ray->next_grid_y = ceilf(ray->next_grid_y / SCALE) * SCALE;
-		}
-		if ((player->p_angle < PI_15) && (player->p_angle >= PI_05))
+		if ((player->p_angle <= NORTH) && (player->p_angle >= SOUTH))
 		{
 			ray->next_grid_x = floorf(ray->current_pos.x);
 			ray->next_grid_x = floorf(ray->next_grid_x / SCALE) * SCALE;
@@ -103,20 +93,20 @@ void	get_next_grid(t_player *player, t_raycaster *ray)
 			ray->next_grid_x = ceilf(ray->current_pos.x);
 			ray->next_grid_x = ceilf(ray->next_grid_x / SCALE) * SCALE;
 		}
-	}
-	else
-	{
-		if ((player->p_angle < PI_2) && (player->p_angle >= PI))
+		if ((player->p_angle <= EAST) && player->p_angle >= WEST)
 		{
-			ray->next_grid_y = floorf(ray->current_pos.y - 1);
+			ray->next_grid_y = floorf(ray->current_pos.y);
 			ray->next_grid_y = floorf(ray->next_grid_y / SCALE) * SCALE;
 		}
 		else
 		{
-			ray->next_grid_y = ceilf(ray->current_pos.y + 1);
+			ray->next_grid_y = ceilf(ray->current_pos.y);
 			ray->next_grid_y = ceilf(ray->next_grid_y / SCALE) * SCALE;
 		}
-		if ((player->p_angle < PI_15) && (player->p_angle >= PI_05))
+	}
+	else
+	{
+		if ((player->p_angle <= NORTH) && (player->p_angle >= SOUTH))
 		{
 			ray->next_grid_x = floorf(ray->current_pos.x - 1);
 			ray->next_grid_x = floorf(ray->next_grid_x / SCALE) * SCALE;
@@ -125,6 +115,16 @@ void	get_next_grid(t_player *player, t_raycaster *ray)
 		{
 			ray->next_grid_x = ceilf(ray->current_pos.x + 1);
 			ray->next_grid_x = ceilf(ray->next_grid_x / SCALE) * SCALE;
+		}
+		if ((player->p_angle <= EAST) && (player->p_angle >= WEST))
+		{
+			ray->next_grid_y = floorf(ray->current_pos.y - 1);
+			ray->next_grid_y = floorf(ray->next_grid_y / SCALE) * SCALE;
+		}
+		else
+		{
+			ray->next_grid_y = ceilf(ray->current_pos.y + 1);
+			ray->next_grid_y = ceilf(ray->next_grid_y / SCALE) * SCALE;
 		}
 	}
 }
@@ -146,59 +146,65 @@ void	get_grid_ray_intersection(t_player *player, t_raycaster *ray)
 	// point at which the rayline intercepts (x,y) in the Y axis
 	ray->hit_grid_x.x = (ray->next_grid_y - ray->intercept_y_axis) / ray->slope;
 	ray->hit_grid_x.y = ray->slope * ray->hit_grid_x.x + ray->intercept_y_axis;
-
+	ray->hit_grid_x.y = round(ray->hit_grid_x.y / SCALE) * SCALE;
 
 	// point at which the rayline intercepts (x,y) in the X axis
 	ray->hit_grid_y.x = ray->next_grid_x;
 	ray->hit_grid_y.y = ray->slope * ray->hit_grid_y.x + ray->intercept_y_axis;
 }
 
-// # define NORTH PI_15
-// # define SOUTH PI_05
-// # define EAST PI_2
-// # define WEST PI
-
 void	get_distance_to_grid(t_player *player, t_raycaster *ray, t_game *game)
 {
+	float	true_angle;
+
 	(void)game;
-	if (player->p_angle >= NORTH && player->p_angle < EAST)	//looking north east
+	true_angle = fabs(player->p_angle - PI_2);
+	if (player->p_angle >= NORTH && player->p_angle < EAST)
 	{
 		printf("\nLOOKING NORTH EAST\n");
-		ray->dist_to_grid.x = fabs((ray->next_grid_x - player->pos.x) / cos(player->p_angle));				// Alpha
-		ray->dist_to_grid.y = fabs((player->pos.y - ray->next_grid_y) / cos(PI_05 - player->p_angle));		// Betha
+		ray->dist_to_grid.x = fabs((ray->next_grid_x - player->pos.x) / cos(true_angle));				// Alpha
+		ray->dist_to_grid.y = fabs((player->pos.y - ray->next_grid_y) / cos(PI_05 - true_angle));		// Betha
+		printf("angle: %f\n", player->p_angle);
+		printf("angle: %f\n", true_angle);
 		printf("next x: %f\n", ray->next_grid_x);
 		printf("next y: %f\n", ray->next_grid_y);
 		printf("distance x: %f\n", ray->dist_to_grid.x);
 		printf("distance y: %f\n", ray->dist_to_grid.y);
 		player->look_dir = NE;
 	}
-	else if (player->p_angle <= NORTH && player->p_angle > WEST)		//looking north west
+	else if (player->p_angle <= NORTH && player->p_angle > WEST)
 	{
 		printf("\nLOOKING NORTH WEST\n");
-		ray->dist_to_grid.x = fabs((player->pos.x - ray->next_grid_x) / cos(PI - player->p_angle));			// Alpha
-		ray->dist_to_grid.y = fabs((player->pos.y - ray->next_grid_y) / cos(player->p_angle - PI_05));		// Betha
+		ray->dist_to_grid.x = fabs((player->pos.x - ray->next_grid_x) / cos(PI - true_angle));			// Alpha
+		ray->dist_to_grid.y = fabs((player->pos.y - ray->next_grid_y) / cos(true_angle - PI_05));		// Betha
+		printf("angle: %f\n", player->p_angle);
+		printf("angle: %f\n", true_angle);
 		printf("next x: %f\n", ray->next_grid_x);
 		printf("next y: %f\n", ray->next_grid_y);
 		printf("distance x: %f\n", ray->dist_to_grid.x);
 		printf("distance y: %f\n", ray->dist_to_grid.y);
 		player->look_dir = NW;
 	}
-	else if (player->p_angle <= SOUTH && player->p_angle > EAST_)		//looking south east
+	else if (player->p_angle <= SOUTH && player->p_angle > EAST_)
 	{
 		printf("\nLOOKING SOUTH EAST\n");
-		ray->dist_to_grid.x = fabs((ray->next_grid_x - player->pos.x) / cos(PI_2 - player->p_angle));		// Alpha
-		ray->dist_to_grid.y = fabs((ray->next_grid_y - player->pos.y) / cos(player->p_angle - PI_15));		// Betha
+		ray->dist_to_grid.x = fabs((ray->next_grid_x - player->pos.x) / cos(PI_2 - true_angle));		// Alpha
+		ray->dist_to_grid.y = fabs((ray->next_grid_y - player->pos.y) / cos(true_angle - PI_15));		// Betha
+		printf("angle: %f\n", player->p_angle);
+		printf("angle: %f\n", true_angle);
 		printf("next x: %f\n", ray->next_grid_x);
 		printf("next y: %f\n", ray->next_grid_y);
 		printf("distance x: %f\n", ray->dist_to_grid.x);
 		printf("distance y: %f\n", ray->dist_to_grid.y);
 		player->look_dir = SE;
 	}
-	else if (player->p_angle >= SOUTH && player->p_angle < WEST)		//looking south west
+	else if (player->p_angle >= SOUTH && player->p_angle < WEST)
 	{
 		printf("\nLOOKING SOUTH WEST\n");
-		ray->dist_to_grid.x = fabs((ray->next_grid_y - player->pos.y) / cos(player->p_angle - PI));			// Alpha
-		ray->dist_to_grid.y = fabs((player->pos.x - ray->next_grid_x) / cos(PI_15 - player->p_angle));		// Betha
+		ray->dist_to_grid.x = fabs((ray->next_grid_y - player->pos.y) / cos(true_angle - PI));			// Alpha
+		ray->dist_to_grid.y = fabs((player->pos.x - ray->next_grid_x) / cos(PI_15 - true_angle));		// Betha
+		printf("angle: %f\n", player->p_angle);
+		printf("angle: %f\n", true_angle);
 		printf("next x: %f\n", ray->next_grid_x);
 		printf("next y: %f\n", ray->next_grid_y);
 		printf("distance x: %f\n", ray->dist_to_grid.x);
@@ -219,7 +225,6 @@ bool	is_wall(t_player *player, t_raycaster *ray, t_game *game)
 		printf("\nSMALLER Y\n");
 		printf("next x: %f\n", ray->next_grid_x);
 		printf("next y: %f\n", ray->next_grid_y);
-		printf("angle: %f\n", player->p_angle);
 		printf("distance x: %f\n", ray->dist_to_grid.x);
 		printf("distance y: %f\n", ray->dist_to_grid.y);
 		ray->current_pos.x = ray->hit_grid_x.x;
