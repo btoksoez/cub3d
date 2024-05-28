@@ -7,6 +7,13 @@
 #else
 /* ------------------ Mac ----------------- */
 # include "./minilibx-mac/mlx.h"
+#define ESC			0x35
+#define W			0x0D
+#define A			0x00
+#define S			0x01
+#define D			0x02
+#define LEFT_KEY	0x7B
+#define RIGHT_KEY	0x7C
 #endif
 /* --------------- General --------------- */
 # define WHITESPACE " \t\n\r\f\v"

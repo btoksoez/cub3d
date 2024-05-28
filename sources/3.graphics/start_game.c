@@ -85,29 +85,23 @@ void	get_next_grid(t_player *player, t_raycaster *ray)
 	{
 		if ((player->p_angle < (2 * PI)) && player->p_angle >= PI)
 		{
-			printf("1: %f\n", ray->current_pos.y);
 			ray->next_grid_y = floorf(ray->current_pos.y);
-			printf("2: %f\n", ray->next_grid_y);
-			ray->next_grid_y = floorf(ray->next_grid_y / SCALE) * SCALE;
-			printf("3: %f\n", ray->next_grid_y);
-
-			// ray->next_grid_y = floorf(ray->current_pos.y / SCALE) * SCALE;
-			// printf("4: %f\n", ray->current_pos.y); OLD VERSION
+			ray->next_grid_y = floorf(ray->next_grid_y / SCALE) * SCALE - 1;
 		}
 		else
 		{
 			ray->next_grid_y = ceilf(ray->current_pos.y);
-			ray->next_grid_y = ceilf(ray->next_grid_y / SCALE) * SCALE;
+			ray->next_grid_y = ceilf(ray->next_grid_y / SCALE) * SCALE - 1;
 		}
 		if ((player->p_angle < PI_15) && (player->p_angle >= PI_05))
 		{
 			ray->next_grid_x = floorf(ray->current_pos.x);
-			ray->next_grid_x = floorf(ray->next_grid_x / SCALE) * SCALE;
+			ray->next_grid_x = floorf(ray->next_grid_x / SCALE) * SCALE - 1;
 		}
 		else
 		{
 			ray->next_grid_x = ceilf(ray->current_pos.x);
-			ray->next_grid_x = ceilf(ray->next_grid_x / SCALE) * SCALE;
+			ray->next_grid_x = ceilf(ray->next_grid_x / SCALE) * SCALE - 1;
 		}
 	}
 	else
@@ -115,22 +109,22 @@ void	get_next_grid(t_player *player, t_raycaster *ray)
 		if ((player->p_angle < (2 * PI)) && (player->p_angle >= PI))
 		{
 			ray->next_grid_y = floorf(ray->current_pos.y - 1);
-			ray->next_grid_y = floorf(ray->next_grid_y / SCALE) * SCALE;
+			ray->next_grid_y = floorf(ray->next_grid_y / SCALE) * SCALE - 1;
 		}
 		else
 		{
 			ray->next_grid_y = ceilf(ray->current_pos.y + 1);
-			ray->next_grid_y = ceilf(ray->next_grid_y / SCALE) * SCALE;
+			ray->next_grid_y = ceilf(ray->next_grid_y / SCALE) * SCALE - 1;
 		}
 		if ((player->p_angle < PI_15) && (player->p_angle >= PI_05))
 		{
 			ray->next_grid_x = floorf(ray->current_pos.x - 1);
-			ray->next_grid_x = floorf(ray->next_grid_x / SCALE) * SCALE;
+			ray->next_grid_x = floorf(ray->next_grid_x / SCALE) * SCALE - 1;
 		}
 		else
 		{
 			ray->next_grid_x = ceilf(ray->current_pos.x + 1);
-			ray->next_grid_x = ceilf(ray->next_grid_x / SCALE) * SCALE;
+			ray->next_grid_x = ceilf(ray->next_grid_x / SCALE) * SCALE - 1;
 		}
 	}
 }

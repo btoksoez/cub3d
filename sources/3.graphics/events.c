@@ -27,19 +27,19 @@ int	key_press(int key, t_game *game)
 	t_player	*player;
 
 	player = game->player;
-	if (key == XK_Escape)
+	if (key == XK_Escape || key == ESC)
 		close_window(game, 0, QUIT);
-	if (key == XK_w)
+	if (key == XK_w || key == W)
 		player->up_down = UP;
-	if (key == XK_a)
+	if (key == XK_a || key == A)
 		player->left_right = LEFT;
-	if (key == XK_s)
+	if (key == XK_s || key == S)
 		player->up_down = DOWN;
-	if (key == XK_d)
+	if (key == XK_d || key == D)
 		player->left_right = RIGHT;
-	if (key == XK_Left)
+	if (key == XK_Left || key == LEFT_KEY)
 		player->rot = LEFT;
-	if (key == XK_Right)
+	if (key == XK_Right || key == RIGHT_KEY)
 		player->rot = RIGHT;
 	return (0);
 }
@@ -49,17 +49,17 @@ int key_release(int key, t_game *game)
 	t_player	*player;
 
 	player = game->player;
-	if (key == XK_w)
+	if (key == XK_w || key == W)
 		player->up_down = RESET;
-	if (key == XK_a)
+	if (key == XK_a || key == A)
 		player->left_right = RESET;
-	if (key == XK_s)
+	if (key == XK_s || key == S)
 		player->up_down = RESET;
-	if (key == XK_d)
+	if (key == XK_d || key == D)
 		player->left_right = RESET;
-	if (key == XK_Left)
+	if (key == XK_Left || key == LEFT_KEY)
 		player->rot = RESET;
-	if (key == XK_Right)
+	if (key == XK_Right || key == RIGHT_KEY)
 		player->rot = RESET;
 	return (0);
 
