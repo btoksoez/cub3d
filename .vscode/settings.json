@@ -4,7 +4,8 @@
 		"math.h": "c",
 		"keysym.h": "c",
 		"x.h": "c",
-		"keysymdef.h": "c"
+		"keysymdef.h": "c",
+		"complex": "c"
 	},
 	"C_Cpp.errorSquiggles": "enabled"
 }

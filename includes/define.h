@@ -78,5 +78,12 @@
 # define SPACE WHITE
 # define WALLS ORANGE
 # define PLAYER_ BLUE
+/* ----------------- Keys ---------------- */
+# define KeyPress 2
+# define KeyPressMask 1L<<0
+# define KeyRelease 3
+# define KeyReleaseMask 1L<<1
+# define DestroyNotify 17
+# define StructureNotifyMask 1L<<17
 
 #endif

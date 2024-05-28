@@ -33,3 +33,15 @@ void	print_map(t_map map)
 		i++;
 	}
 }
+
+void	print_pixel_map(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (game->pixel_map[i])
+	{
+		printf("%s\n", game->pixel_map[i]);
+		i++;
+	}
+}

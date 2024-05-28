@@ -86,22 +86,22 @@ void	get_next_grid(t_player *player, t_raycaster *ray)
 		if ((player->p_angle < (2 * PI)) && player->p_angle >= PI)
 		{
 			ray->next_grid_y = floorf(ray->current_pos.y);
-			ray->next_grid_y = floorf(ray->next_grid_y / SCALE) * SCALE - 1;
+			ray->next_grid_y = floorf(ray->next_grid_y / SCALE) * SCALE;
 		}
 		else
 		{
 			ray->next_grid_y = ceilf(ray->current_pos.y);
-			ray->next_grid_y = ceilf(ray->next_grid_y / SCALE) * SCALE - 1;
+			ray->next_grid_y = ceilf(ray->next_grid_y / SCALE) * SCALE;
 		}
 		if ((player->p_angle < PI_15) && (player->p_angle >= PI_05))
 		{
 			ray->next_grid_x = floorf(ray->current_pos.x);
-			ray->next_grid_x = floorf(ray->next_grid_x / SCALE) * SCALE - 1;
+			ray->next_grid_x = floorf(ray->next_grid_x / SCALE) * SCALE;
 		}
 		else
 		{
 			ray->next_grid_x = ceilf(ray->current_pos.x);
-			ray->next_grid_x = ceilf(ray->next_grid_x / SCALE) * SCALE - 1;
+			ray->next_grid_x = ceilf(ray->next_grid_x / SCALE) * SCALE;
 		}
 	}
 	else
@@ -109,12 +109,12 @@ void	get_next_grid(t_player *player, t_raycaster *ray)
 		if ((player->p_angle < (2 * PI)) && (player->p_angle >= PI))
 		{
 			ray->next_grid_y = floorf(ray->current_pos.y - 1);
-			ray->next_grid_y = floorf(ray->next_grid_y / SCALE) * SCALE - 1;
+			ray->next_grid_y = floorf(ray->next_grid_y / SCALE) * SCALE;
 		}
 		else
 		{
 			ray->next_grid_y = ceilf(ray->current_pos.y + 1);
-			ray->next_grid_y = ceilf(ray->next_grid_y / SCALE) * SCALE - 1;
+			ray->next_grid_y = ceilf(ray->next_grid_y / SCALE) * SCALE;
 		}
 		if ((player->p_angle < PI_15) && (player->p_angle >= PI_05))
 		{

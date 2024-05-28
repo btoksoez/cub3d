@@ -3,8 +3,8 @@
 
 # include "./libft/libft.h"
 # include "define.h"
-# include <X11/keysym.h>
-# include <X11/X.h>
+// # include <X11/keysym.h>
+// # include <X11/X.h>
 
 /* -------------------------------- Structs -------------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -20,6 +20,12 @@ typedef struct s_point
 	float			x;
 	float			y;
 }					t_point;
+
+typedef struct s_point_i
+{
+	int				x;
+	int				y;
+}					t_point_i;
 
 typedef struct	s_map
 {
@@ -70,7 +76,13 @@ typedef struct s_player
 
 typedef struct s_raycaster
 {
-	t_point		r;
+	t_point		dir;
+	t_point		stepsize;
+	t_point_i	tile_map;
+	t_point		ray_len;
+	t_point_i	step;
+	float		len;
+	t_point		intersection;
 	float 		next_grid_x;
 	float 		next_grid_y;
 	float		slope;
@@ -82,11 +94,6 @@ typedef struct s_raycaster
 	t_point		current_pos;
 }					t_raycaster;
 
-typedef struct s_point_i
-{
-	int				x;
-	int				y;
-}					t_point_i;
 
 typedef struct s_minimap
 {
@@ -150,6 +157,10 @@ void	move_player(t_game *game, float move_x, float move_y);
 void	hook_player(t_game *game);
 void	draw_point(t_game *game, int x, int y, int color);
 
+/* ------------------------------ Ray Caster ------------------------------- */
+/* ------------------------------------------------------------------------- */
+void	cast_rays(t_game *game);
+
 /* ------------------------------- Mini Map -------------------------------- */
 /* ------------------------------------------------------------------------- */
 void	minimap(t_game *game);
@@ -159,6 +170,7 @@ void	render_minimap(t_game *game, int start_x, int start_y, int color);
 /* ------------------------------------------------------------------------- */
 void	print_textures(t_map *map_info);
 void	print_map(t_map map);
+void	print_pixel_map(t_game *game);
 
 /* ----------------------------- Close Program ----------------------------- */
 /* ------------------------------------------------------------------------- */
