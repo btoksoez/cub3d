@@ -16,7 +16,7 @@ void	create_pixel_map(t_game *game, t_map *map)
 	int	row_pixel;
 	int	coll_pixel;
 
-	game->pixel_map = (char **)malloc(sizeof(char *) * (map->rows * SCALE) + 1);
+	game->pixel_map = (char **)malloc(sizeof(char *) * ((map->rows * SCALE) + 1));
 	if (!game->pixel_map)
 		free_map(map, "Failed to allocate memory for pixel map", 1); //add freeing mlx in map too
 	row = 0;
@@ -25,7 +25,7 @@ void	create_pixel_map(t_game *game, t_map *map)
 		row_pixel = 0;
 		while (row_pixel < SCALE)
 		{
-			game->pixel_map[row_pixel + (row * SCALE)] = (char *)malloc(sizeof(char) * (map->cols * SCALE) + 1);
+			game->pixel_map[row_pixel + (row * SCALE)] = (char *)malloc(sizeof(char) * ((map->cols * SCALE) + 1));
 			if (!game->pixel_map[row_pixel + (row * SCALE)])
 				free_map(map, "Failed to allocate memory for pixel map", 1); // add freeing the pixel map
 			coll = 0;
@@ -43,7 +43,7 @@ void	create_pixel_map(t_game *game, t_map *map)
 		}
 		row++;
 	}
-	game->pixel_map[(map->rows * SCALE) + row_pixel] = NULL;
+	game->pixel_map[map->rows * SCALE] = NULL;
 }
 
 void	init_game_struct(t_game *game, t_player *player, t_map *map)
