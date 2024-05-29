@@ -226,12 +226,15 @@ bool	is_wall(t_player *player, t_raycaster *ray, t_game *game)
 		printf("current y:  %f\n", ray->current_pos.y);
 		printf("distance x: %f\n", ray->dist_to_grid.x);
 		printf("distance y: %f\n", ray->dist_to_grid.y);
-		if (player->look_dir == NW || player->look_dir == SW)
-		{
-			if (game->pixel_map[(int)ray->current_pos.y][(int)ray->current_pos.x - 1] != EMPTY)
-				return (draw_line(game, player->pos.x + PCENTER, player->pos.y + PCENTER, ray->current_pos.x, ray->current_pos.y, BLUE), true);
-		}
-		else if (game->pixel_map[(int)ray->current_pos.y][(int)ray->current_pos.x] != EMPTY)
+		if (game->pixel_map[(int)ray->current_pos.y][(int)ray->current_pos.x] != EMPTY ||
+			game->pixel_map[(int)ray->current_pos.y + 1][(int)ray->current_pos.x + 1] != EMPTY ||
+			game->pixel_map[(int)ray->current_pos.y + 1][(int)ray->current_pos.x] != EMPTY ||
+			game->pixel_map[(int)ray->current_pos.y][(int)ray->current_pos.x + 1] != EMPTY ||
+			game->pixel_map[(int)ray->current_pos.y + 1][(int)ray->current_pos.x - 1] != EMPTY ||
+			game->pixel_map[(int)ray->current_pos.y - 1][(int)ray->current_pos.x + 1] != EMPTY ||
+			game->pixel_map[(int)ray->current_pos.y - 1][(int)ray->current_pos.x - 1] != EMPTY ||
+			game->pixel_map[(int)ray->current_pos.y - 1][(int)ray->current_pos.x] != EMPTY ||
+			game->pixel_map[(int)ray->current_pos.y][(int)ray->current_pos.x - 1] != EMPTY)
 			return (draw_line(game, player->pos.x + PCENTER, player->pos.y + PCENTER, ray->current_pos.x, ray->current_pos.y, BLUE), true);
 	}
 	return (false);

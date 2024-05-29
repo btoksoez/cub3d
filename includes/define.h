@@ -4,6 +4,13 @@
 #ifdef LINUX
 /* ----------------- Linux---------------- */
 # include "./minilibx-linux/mlx.h"
+#define ESC         65307
+#define W           119
+#define A           97
+#define S           115
+#define D           100
+#define LEFT_KEY    65361
+#define RIGHT_KEY   65363
 #else
 /* ------------------ Mac ----------------- */
 # include "./minilibx-mac/mlx.h"
