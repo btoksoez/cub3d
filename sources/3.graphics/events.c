@@ -3,13 +3,9 @@
 /* checks whether move is possible and calculates new player->pos.x/y with given move X/Y*/
 void	move_player(t_game *game, float new_x, float new_y)
 {
-	// int			x;
-	// int			y;
 	t_player	*player;
 
 	player = game->player;
-	// x = player->pos.x;
-	// y = player->pos.y;
 	if (game->pixel_map[(int)(new_y)][(int)new_x] != WALL
 		&& game->pixel_map[(int)(new_y + PSIZE)][((int)new_x + PSIZE)] != WALL
 		&& game->pixel_map[(int)(new_y + PSIZE)][(int)new_x] != WALL

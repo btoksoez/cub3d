@@ -4,6 +4,13 @@
 #ifdef LINUX
 /* ----------------- Linux---------------- */
 # include "./minilibx-linux/mlx.h"
+#define ESC			65307
+#define W			119
+#define A			97
+#define S			115
+#define D			100
+#define LEFT_KEY	65361
+#define RIGHT_KEY	65363
 #else
 /* ------------------ Mac ----------------- */
 # include "./minilibx-mac/mlx.h"
@@ -24,11 +31,12 @@
 # define PI 3.141592653f
 # define PI_05 (PI / 2.0)
 # define PI_15 (3.0 * PI / 2.0)
+# define PI_2 (2.0 * PI)
 /* -------------- Directions ------------- */
-# define NORTH PI_15
-# define SOUTH PI_05
-# define EAST 0
-# define WEST PI
+# define NORTH 0
+# define SOUTH 1
+# define EAST 1
+# define WEST 0
 # define NW 1
 # define NE 2
 # define SW 3

@@ -51,9 +51,6 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 {
 	int	width;
 	int	height;
-	// int	line_length;
-	// int	end_x;
-	// int	end_y;
 
 	if (color == SCREEN)
 	{
@@ -62,10 +59,6 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 	}
 	else if (color == PLAYER_)
 	{
-		// line_length = SCALE;
-		// end_x = (start_x + PCENTER) + (line_length * cos(game->player->p_angle));
-		// end_y = (start_y + PCENTER) + (line_length * sin(game->player->p_angle));
-		// draw_line(game, (start_x + PCENTER), (start_y + PCENTER), end_x, end_y, color);
 		width = PSIZE;
 		height = PSIZE;
 	}
@@ -97,7 +90,6 @@ void	put_pixel_to_img(t_game *game, int x, int y, int color)
 
 void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color)
 {
-	// Mr.Benian's algorithm
 	int dx = abs(end_x - start_x);
 	int dy = abs(end_y - start_y);
 	int sx = (start_x < end_x) ? 1 : -1;

@@ -77,10 +77,10 @@ typedef struct s_player
 typedef struct s_raycaster
 {
 	t_point		dir;
-	t_point		stepsize;
-	t_point_i	tile_map;
+	t_point		scalingf;
 	t_point		ray_len;
-	t_point_i	step;
+	t_point_i	map_loc;
+	t_point_i	map_step;
 	float		len;
 	t_point		intersection;
 	float 		next_grid_x;
