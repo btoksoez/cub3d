@@ -2,8 +2,8 @@
 
 void	init_minimap(t_game *game, t_minimap *mm)
 {
-	mm->start.x = game->width - MM_WIDTH;
-	mm->start.y = game->height - MM_HEIGHT;
+	mm->start.x = WIDTH - MM_WIDTH;
+	mm->start.y = HEIGHT - MM_HEIGHT;
 	mm->pos_player.x = (int)game->player->pos.x;
 	mm->pos_player.y = (int)game->player->pos.y;
 	mm->start_map.x = max(0, mm->pos_player.x - MM_WIDTH / 2);
@@ -27,14 +27,14 @@ void	minimap(t_game *game)
 		while (x < mm.end_map.x)
 		{
 			if (game->map->map[y][x] == WALL)
-				render_image(game, mm.start.x + (x - mm.start_map.x) * MM_SCALE, mm.start.y + (y - mm.start_map.y) * MM_SCALE, WALLS);
+				render_minimap(game, mm.start.x + (x - mm.start_map.x) * MM_SCALE, mm.start.y + (y - mm.start_map.y) * MM_SCALE, WALLS);
 			if (game->map->map[y][x] == EMPTY)
-				render_image(game, mm.start.x + (x - mm.start_map.x) * MM_SCALE, mm.start.y + (y - mm.start_map.y) * MM_SCALE, SPACE);
+				render_minimap(game, mm.start.x + (x - mm.start_map.x) * MM_SCALE, mm.start.y + (y - mm.start_map.y) * MM_SCALE, SPACE);
 			x++;
 		}
 		y++;
 	}
-	render_image(game, mm.start.x + (mm.pos_player.x - mm.start_map.x) * MM_SCALE, mm.start.y + (mm.pos_player.y - mm.start_map.y) * MM_SCALE, PLAYER_);
+	render_minimap(game, mm.start.x + (mm.pos_player.x - mm.start_map.x) * MM_SCALE, mm.start.y + (mm.pos_player.y - mm.start_map.y) * MM_SCALE, PLAYER_);
 }
 
 void	render_minimap(t_game *game, int start_x, int start_y, int color)

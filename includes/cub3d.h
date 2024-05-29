@@ -152,6 +152,8 @@ void	draw_point(t_game *game, int x, int y, int color);
 
 /* ------------------------------ Ray Caster ------------------------------- */
 /* ------------------------------------------------------------------------- */
+void	init_ray(t_raycaster *ray, t_player *player, float angle);
+float	cast_ray(t_game *game, float angle);
 void	cast_rays(t_game *game);
 
 /* ------------------------------- Mini Map -------------------------------- */

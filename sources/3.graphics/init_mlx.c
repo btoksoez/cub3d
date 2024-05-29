@@ -67,7 +67,7 @@ void	init_window(t_game *game, t_map *map)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		free_map(map, "Mlx initialization failed", 1);
-	game->win = mlx_new_window(game->mlx, game->width, game->height, "cub3D");
+	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3D");
 	if (!game->win)
 	{
 		// mlx_destroy_display(game->mlx);

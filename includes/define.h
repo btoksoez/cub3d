@@ -52,7 +52,7 @@
 # define SCALE 50
 # define PSIZE SCALE / 4
 # define PCENTER PSIZE / 2
-# define MOVE 3
+# define MOVE 2
 # define ROT_SPEED 0.05
 # define BUFFER 10
 # define WALL 49
@@ -62,6 +62,8 @@
 # define WON 89
 # define WIDTH 1080
 # define HEIGHT 720
+# define PLAYER_VISION (PI / 3)
+# define RAY_DENSITY 1000
 /* --------------- Minimap -------------- */
 # define MM_WIDTH WIDTH / 5
 # define MM_HEIGHT HEIGHT / 5

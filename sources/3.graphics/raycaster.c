@@ -1,66 +1,81 @@
-// #include "../../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
-// void	init_raycaster(t_raycaster *ray, t_player *player)
-// {
-// 	ray->dir.x = cos(player->p_angle);
-// 	ray->dir.y = sin(player->p_angle);
-// 	ray->scalingf.x = sqrt(1 + (ray->dir.y / ray->dir.x) * (ray->dir.y / ray->dir.x));
-// 	ray->scalingf.y = sqrt(1 + (ray->dir.x / ray->dir.y) * (ray->dir.x / ray->dir.y));
-// 	ray->map_loc.x = (int)player->pos.x;
-// 	ray->map_loc.y = (int)player->pos.y;
-// 	if (ray->dir.x < 0)
-// 	{
-// 		ray->map_step.x = -1;
-// 		ray->ray_len.x = (player->pos.x - (float)ray->map_loc.x) * ray->scalingf.x;	//to calculate first map_step
-// 	}
-// 	else
-// 	{
-// 		ray->map_step.x = 1;
-// 		ray->ray_len.x = ((float)(ray->map_loc.x + 1) - player->pos.x) * ray->scalingf.x;	//to calculate first map_step
-// 	}
-// 	if (ray->dir.y < 0)
-// 	{
-// 		ray->map_step.y = -1;
-// 		ray->ray_len.y = (player->pos.y - (float)ray->map_loc.y) * ray->scalingf.y;	//to calculate first map_step
-// 	}
-// 	else
-// 	{
-// 		ray->map_step.y = 1;
-// 		ray->ray_len.y = ((float)(ray->map_loc.y + 1) - player->pos.y) * ray->scalingf.y;	//to calculate first map_step
-// 	}
-// 	ray->len = 0;
-// 	ray->wall = false;
-// }
+void	init_ray(t_raycaster *ray, t_player *player, float angle)
+{
+	ray->dir.x = cos(angle);
+	ray->dir.y = sin(angle);
+	ray->scalingf.x = sqrt(1 + (ray->dir.y / ray->dir.x) * (ray->dir.y / ray->dir.x));
+	ray->scalingf.y = sqrt(1 + (ray->dir.x / ray->dir.y) * (ray->dir.x / ray->dir.y));
+	ray->map_loc.x = (int)player->pos.x / SCALE;
+	ray->map_loc.y = (int)player->pos.y / SCALE;
+	ray->start.x = player->pos.x + PCENTER;
+	ray->start.y = player->pos.y + PCENTER;
+	if (ray->dir.y < NORTH)
+	{
+		ray->map_step.y = -1;
+		ray->ray_len.y = (ray->start.y - ray->map_loc.y * SCALE) * ray->scalingf.y;
+	}
+	else
+	{
+		ray->map_step.y = 1;
+		ray->ray_len.y = ((ray->map_loc.y + 1) * SCALE - ray->start.y) * ray->scalingf.y;
+	}
+	if (ray->dir.x < WEST)
+	{
+		ray->map_step.x = -1;
+		ray->ray_len.x = (ray->start.x - ray->map_loc.x * SCALE) * ray->scalingf.x;
+	}
+	else
+	{
+		ray->map_step.x = 1;
+		ray->ray_len.x = ((ray->map_loc.x + 1) * SCALE - ray->start.x) * ray->scalingf.x;
+	}
+	ray->wall = false;
+	ray->len = 0;
+}
 
-// void	cast_rays(t_game *game)
-// {
-// 	t_player	*player;
-// 	t_raycaster	ray;
+float	cast_ray(t_game *game, float angle)
+{
+	t_raycaster	ray;
+	t_player	*player;
 
-// 	player = game->player;
-// 	init_raycaster(&ray, player);
-// 	while (!ray.wall)
-// 	{
-// 		if (ray.ray_len.x < ray.ray_len.y)
-// 		{
-// 			ray.map_loc.x += ray.map_step.x;
-// 			ray.len = ray.ray_len.x;
-// 			ray.ray_len.x += ray.scalingf.x;
-// 		}
-// 		else
-// 		{
-// 			ray.map_loc.y += ray.map_step.y;
-// 			ray.len = ray.ray_len.y;
-// 			ray.ray_len.y += ray.scalingf.y;
-// 		}
-// 		printf("ray tile map y: %d, tile map x: %d\n", ray.map_loc.y, ray.map_loc.x);
-// 		if (game->map->map[ray.map_loc.y / SCALE][ray.map_loc.x / SCALE] == WALL)
-// 			ray.wall = true;
-// 	}
-// 	if (ray.wall)
-// 	{
-// 		ray.intersection.x = player->pos.x + ray.dir.x * ray.len;
-// 		ray.intersection.y = player->pos.y + ray.dir.y * ray.len;
-// 		draw_line(game, player->pos.x + PCENTER, player->pos.y + PCENTER, ray.intersection.x, ray.intersection.y, MAGENTA);
-// 	}
-// }
+	player = game->player;
+	init_ray(&ray, player, angle);
+	while (!ray.wall)
+	{
+		if (ray.ray_len.x < ray.ray_len.y)
+		{
+			ray.len = ray.ray_len.x;
+			ray.ray_len.x += ray.scalingf.x * SCALE;
+			ray.map_loc.x += ray.map_step.x;
+		}
+		else
+		{
+			ray.len = ray.ray_len.y;
+			ray.ray_len.y += ray.scalingf.y * SCALE;
+			ray.map_loc.y += ray.map_step.y;
+		}
+		if (game->map->map[ray.map_loc.y][ray.map_loc.x] == WALL)
+			ray.wall = true;
+	}
+	// draw_line(game, ray.start.x, ray.start.y, ray.start.x + ray.dir.x * ray.len, ray.start.y + ray.dir.y * ray.len, BLUE);
+	return (ray.len);
+}
+
+void	cast_rays(t_game *game)
+{
+	t_player	*player;
+	float		distance;
+	t_point		top;
+	float		angle;
+
+	player = game->player;
+	angle = player->p_angle - (PLAYER_VISION / 2);
+	while (angle < player->p_angle + (PLAYER_VISION / 2))
+	{
+		distance = cast_ray(game, angle);
+		top.y = WIDTH / 2 + distance / tan(PI / 6);
+		draw_line(game, WIDTH / 2, HEIGHT / 2, WIDTH / 2, top.y, BLUE);
+		angle += (PLAYER_VISION / RAY_DENSITY);
+	}
+}
