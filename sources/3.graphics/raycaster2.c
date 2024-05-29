@@ -8,34 +8,31 @@ void	init_raycaster(t_raycaster *ray, t_player *player)
 	ray->scalingf.y = sqrt(1 + (ray->dir.x / ray->dir.y) * (ray->dir.x / ray->dir.y));
 	ray->map_loc.x = (int)player->pos.x;
 	ray->map_loc.y = (int)player->pos.y;
+	ray->start.x = player->pos.x + PCENTER;
+	ray->start.y = player->pos.y + PCENTER;
 
-	printf("maplocx: %d, maplocy: %d\n", ray->map_loc.x, ray->map_loc.y);
 	if (ray->dir.y < NORTH)
 	{
 		ray->map_step.y = -1;
-		ray->ray_len.y = (player->pos.y - ray->map_loc.y) * ray->scalingf.y;
+		ray->ray_len.y = (ray->start.y - ray->map_loc.y) * ray->scalingf.y;
 	}
 	else
 	{
 		ray->map_step.y = 1;
-		ray->ray_len.y = (ray->map_loc.y + 1 - player->pos.y) * ray->scalingf.y;
+		ray->ray_len.y = (ray->map_loc.y + 1 - ray->start.y) * ray->scalingf.y;
 	}
 	if (ray->dir.x < WEST)
 	{
 		ray->map_step.x = -1;
-		ray->ray_len.x = (player->pos.x - ray->map_loc.x) * ray->scalingf.x;
+		ray->ray_len.x = (ray->start.x - ray->map_loc.x) * ray->scalingf.x;
 	}
 	else
 	{
 		ray->map_step.x = 1;
-		ray->ray_len.x = (ray->map_loc.x + 1 - player->pos.x) * ray->scalingf.x;
+		ray->ray_len.x = (ray->map_loc.x + 1 - ray->start.x) * ray->scalingf.x;
 	}
 	ray->wall = false;
 	ray->len = 0;
-}
-
-int round_to_nearest_50(int num) {
-    return round(num / 50.0) * 50;
 }
 
 void	cast_rays(t_game *game)
@@ -59,10 +56,8 @@ void	cast_rays(t_game *game)
 			ray.ray_len.y += ray.scalingf.y;
 			ray.map_loc.y += ray.map_step.y;
 		}
-		printf("Ray len x: %f Ray Len Y: %f\nmap loc x: %d, map loc y: %d\n", ray.ray_len.x, ray.ray_len.y, ray.map_loc.x, ray.map_loc.y);
-		printf("PLayer pos: %f %f\n\n", player->pos.x, player->pos.y);
 		if (game->map->map[(ray.map_loc.y) / SCALE][(ray.map_loc.x) / SCALE] == WALL)
 			ray.wall = true;
 	}
-	draw_line(game, player->pos.x + PCENTER, player->pos.y + PCENTER, player->pos.x + ray.dir.x * ray.len, player->pos.y + ray.dir.y * ray.len, MAGENTA);
+	draw_line(game, ray.start.x, ray.start.y, ray.start.x + ray.dir.x * ray.len, ray.start.y + ray.dir.y * ray.len, MAGENTA);
 }

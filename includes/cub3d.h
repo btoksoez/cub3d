@@ -83,15 +83,8 @@ typedef struct s_raycaster
 	t_point_i	map_step;
 	float		len;
 	t_point		intersection;
-	float 		next_grid_x;
-	float 		next_grid_y;
-	float		slope;
-	float		intercept_y_axis;
-	t_point		hit_grid_x;
-	t_point		hit_grid_y;
-	t_point		dist_to_grid;
+	t_point		start;
 	bool		wall;
-	t_point		current_pos;
 }					t_raycaster;
 
 
