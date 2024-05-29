@@ -17,7 +17,7 @@ int	render(t_game *game)
 	render_image(game, 0, 0, SCREEN);
 	// render_2dgame(game);
 	cast_rays(game);
-	// minimap(game);
+	minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
 	return (0);
 }
