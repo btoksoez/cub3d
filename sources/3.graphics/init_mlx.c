@@ -78,7 +78,7 @@ void	init_window(t_game *game, t_map *map)
 
 void	init_image(t_game *game)
 {
-	game->img.img_ptr = mlx_new_image(game->mlx, game->width, game->height);
+	game->img.img_ptr = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	if (!game->img.img_ptr)
 	{
 		mlx_destroy_window(game->mlx, game->win);

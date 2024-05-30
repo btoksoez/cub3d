@@ -14,7 +14,7 @@ int	render(t_game *game)
 {
 	// delete_image?
 	hook_player(game);	//sets new pos of player based on u_d, l_r
-	render_image(game, 0, 0, SCREEN);
+	// render_image(game, 0, 0, BLUE);
 	// render_2dgame(game);
 	cast_rays(game);
 	minimap(game);
@@ -55,8 +55,8 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 
 	if (color == SCREEN)
 	{
-		width = game->width;
-		height = game->height;
+		width = WIDTH;
+		height = HEIGHT;
 	}
 	else if (color == PLAYER_)
 	{
@@ -82,7 +82,7 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 
 void	put_pixel_to_img(t_game *game, int x, int y, int color)
 {
-	if (x >= 0 && x < game->width && y >= 0 && y < game->height)
+	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 	{
 		int offset = (y * game->img.line_len) + (x * (game->img.bits_per_pixel / 8));
 		*(unsigned int *)(game->img.pixels_ptr + offset) = color;

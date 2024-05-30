@@ -90,10 +90,10 @@ typedef struct s_raycaster
 
 typedef struct s_minimap
 {
-	t_point_i		start;
-	t_point_i		start_map;
-	t_point_i		end_map;
-	t_point_i		pos_player;
+	t_point			start;
+	t_point			start_map;
+	t_point			end_map;
+	t_point			pos_player;
 }					t_minimap;
 
 /* ------------------------------- Read Input ------------------------------ */
