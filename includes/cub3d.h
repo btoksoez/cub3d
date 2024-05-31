@@ -56,9 +56,11 @@ typedef struct	s_game
 {
 	void			*mlx;
 	void			*win;
+	void			*mapwin;
 	char			**pixel_map;
 	struct s_map	*map;
 	struct s_img	img;
+	struct s_img	mapimg;
 	int				width;
 	int				height;
 	struct s_player	*player;
@@ -149,7 +151,9 @@ void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int
 void	move_player(t_game *game, float move_x, float move_y);
 void	hook_player(t_game *game);
 void	draw_point(t_game *game, int x, int y, int color);
-
+void	put_pixel_to_mapimg(t_game *game, int x, int y, int color);
+void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
+void	render_rayimage(t_game *game, int start_x, int start_y, int color);
 /* ------------------------------ Ray Caster ------------------------------- */
 /* ------------------------------------------------------------------------- */
 void	init_ray(t_raycaster *ray, t_player *player, float angle);

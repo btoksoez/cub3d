@@ -33,10 +33,14 @@
 # define PI_15 (3.0 * PI / 2.0)
 # define PI_2 (2.0 * PI)
 /* -------------- Directions ------------- */
-# define NORTH 0
-# define SOUTH 1
-# define EAST 1
-# define WEST 0
+# define NORTH PI_15
+# define SOUTH PI_05
+# define EAST 0
+# define WEST PI
+# define NORTH_ 0
+# define SOUTH_ 1
+# define EAST_ 1
+# define WEST_ 0
 # define NW 1
 # define NE 2
 # define SW 3
@@ -52,7 +56,7 @@
 # define SCALE 50
 # define PSIZE SCALE / 4
 # define PCENTER PSIZE / 2
-# define MOVE 2
+# define MOVE 3
 # define ROT_SPEED 0.05
 # define BUFFER 10
 # define WALL 49
@@ -63,7 +67,6 @@
 # define WIDTH 1080
 # define HEIGHT 720
 # define PLAYER_VISION (PI / 3)
-# define RAY_DENSITY 1000
 /* --------------- Minimap -------------- */
 # define MM_WIDTH WIDTH / 5
 # define MM_HEIGHT HEIGHT / 5

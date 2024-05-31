@@ -9,43 +9,6 @@ void	init_mlx(t_game *game, t_player *player, t_map *map)
 	init_events(game);
 }
 
-void	create_pixel_map(t_game *game, t_map *map)
-{
-	int	row;
-	int	coll;
-	int	row_pixel;
-	int	coll_pixel;
-
-	game->pixel_map = (char **)malloc(sizeof(char *) * (map->rows * SCALE) + 1);
-	if (!game->pixel_map)
-		free_map(map, "Failed to allocate memory for pixel map", 1); //add freeing mlx in map too
-	row = 0;
-	while (row < map->rows)
-	{
-		row_pixel = 0;
-		while (row_pixel < SCALE)
-		{
-			game->pixel_map[row_pixel + (row * SCALE)] = (char *)malloc(sizeof(char) * (map->cols * SCALE) + 1);
-			if (!game->pixel_map[row_pixel + (row * SCALE)])
-				free_map(map, "Failed to allocate memory for pixel map", 1); // add freeing the pixel map
-			coll = 0;
-			while (coll < map->cols)
-			{
-				coll_pixel = 0;
-				while (coll_pixel < SCALE)
-				{
-					game->pixel_map[row_pixel + (row * SCALE)][(coll * SCALE) + coll_pixel] = map->map[row][coll];
-					coll_pixel++;
-				}
-				coll++;
-			}
-			row_pixel++;
-		}
-		row++;
-	}
-	game->pixel_map[(map->rows * SCALE) + row_pixel] = NULL;
-}
-
 void	init_game_struct(t_game *game, t_player *player, t_map *map)
 {
 	game->width = map->cols * SCALE;
@@ -59,7 +22,6 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 	player->pos.x = map->player.x * SCALE + 3 * (PSIZE / 2);
 	player->pos.y = map->player.y * SCALE + 3 * (PSIZE / 2);
 	player->look_dir = 0;
-	create_pixel_map(game, map);
 }
 
 void	init_window(t_game *game, t_map *map)
@@ -68,6 +30,7 @@ void	init_window(t_game *game, t_map *map)
 	if (!game->mlx)
 		free_map(map, "Mlx initialization failed", 1);
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3D");
+	game->mapwin = mlx_new_window(game->mlx, game->width, game->height, "map");
 	if (!game->win)
 	{
 		// mlx_destroy_display(game->mlx);
@@ -79,6 +42,7 @@ void	init_window(t_game *game, t_map *map)
 void	init_image(t_game *game)
 {
 	game->img.img_ptr = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	game->mapimg.img_ptr = mlx_new_image(game->mlx, game->width, game->height);
 	if (!game->img.img_ptr)
 	{
 		mlx_destroy_window(game->mlx, game->win);
@@ -90,6 +54,10 @@ void	init_image(t_game *game)
 		&game->img.bits_per_pixel,
 		&game->img.line_len,
 		&game->img.endian);
+	game->mapimg.pixels_ptr = mlx_get_data_addr(game->mapimg.img_ptr,
+		&game->mapimg.bits_per_pixel,
+		&game->mapimg.line_len,
+		&game->mapimg.endian);
 }
 
 void	init_game_images()
@@ -101,7 +69,11 @@ void	init_game_images()
 void	init_events(t_game *game)
 {
 	mlx_hook(game->win, KeyPress, KeyPressMask, &key_press, game);
+	mlx_hook(game->mapwin, KeyPress, KeyPressMask, &key_press, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, &key_release, game);
+	mlx_hook(game->mapwin, KeyRelease, KeyReleaseMask, &key_release, game);
 	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, &close_window, game);
+	mlx_hook(game->mapwin, DestroyNotify, StructureNotifyMask, &close_window, game);
 	mlx_mouse_hook(game->win, mouse_hook, game);
+	mlx_mouse_hook(game->mapwin, mouse_hook, game);
 }

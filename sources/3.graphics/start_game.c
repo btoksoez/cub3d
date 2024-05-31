@@ -14,11 +14,12 @@ int	render(t_game *game)
 {
 	// delete_image?
 	hook_player(game);	//sets new pos of player based on u_d, l_r
-	// render_image(game, 0, 0, BLUE);
-	// render_2dgame(game);
+	render_2dgame(game);
+	render_rayimage(game, 0, 0, WHITE);
 	cast_rays(game);
-	minimap(game);
+	// minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->mapwin, game->mapimg.img_ptr, 0, 0);
 	return (0);
 }
 
@@ -48,6 +49,22 @@ void	render_2dgame(t_game *game)
 }
 // Somehow need to scale map to screensize, so that for any map, the screensize if still 1080 x 720
 
+void	render_rayimage(t_game *game, int start_x, int start_y, int color)
+{
+	int	width;
+	int	height;
+
+	width = WIDTH;
+	height = HEIGHT;
+	for (int y = start_y; y < start_y + height; y++)
+	{
+		for (int x = start_x; x < start_x + width; x++)
+		{
+				put_pixel_to_img(game, x, y, color);
+		}
+	}
+}
+
 void	render_image(t_game *game, int start_x, int start_y, int color)
 {
 	int	width;
@@ -55,8 +72,8 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 
 	if (color == SCREEN)
 	{
-		width = WIDTH;
-		height = HEIGHT;
+		width = game->width;
+		height = game->height;
 	}
 	else if (color == PLAYER_)
 	{
@@ -73,9 +90,9 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 		for (int x = start_x; x < start_x + width; x++)
 		{
 			if (x == start_x || x == start_x + width - 1 || y == start_y || y == start_y + height - 1)
-				put_pixel_to_img(game, x, y, BLACK);
+				put_pixel_to_mapimg(game, x, y, BLACK);
 			else
-				put_pixel_to_img(game, x, y, color);
+				put_pixel_to_mapimg(game, x, y, color);
 		}
 	}
 }
@@ -89,7 +106,16 @@ void	put_pixel_to_img(t_game *game, int x, int y, int color)
 	}
 }
 
-void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color)
+void	put_pixel_to_mapimg(t_game *game, int x, int y, int color)
+{
+	if (x >= 0 && x < game->width && y >= 0 && y < game->height)
+	{
+		int offset = (y * game->mapimg.line_len) + (x * (game->mapimg.bits_per_pixel / 8));
+		*(unsigned int *)(game->mapimg.pixels_ptr + offset) = color;
+	}
+}
+
+void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y, int color)
 {
 	int dx = abs(end_x - start_x);
 	int dy = abs(end_y - start_y);
@@ -116,6 +142,33 @@ void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int
 	}
 }
 
+void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color)
+{
+	int dx = abs(end_x - start_x);
+	int dy = abs(end_y - start_y);
+	int sx = (start_x < end_x) ? 1 : -1;
+	int sy = (start_y < end_y) ? 1 : -1;
+	int err = dx - dy;
+
+	while (true)
+	{
+		put_pixel_to_mapimg(game, start_x, start_y, color);
+		if (start_x == end_x && start_y == end_y)
+			break ;
+		int e2 = 2 * err;
+		if (e2 > -dy)
+		{
+			err -= dy;
+			start_x += sx;
+		}
+		if (e2 < dx)
+		{
+			err += dx;
+			start_y += sy;
+		}
+	}
+}
+
 void	draw_point(t_game *game, int x, int y, int color)
 {
 	int	size;
@@ -124,6 +177,6 @@ void	draw_point(t_game *game, int x, int y, int color)
 	for (int i = 0; i < size; i++)
 	{
 		for (int j = 0; j < size; j++)
-			put_pixel_to_img(game, x + i, y + j, color);
+			put_pixel_to_mapimg(game, x + i, y + j, color);
 	}
 }

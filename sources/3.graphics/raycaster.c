@@ -10,7 +10,7 @@ void	init_ray(t_raycaster *ray, t_player *player, float angle)
 	ray->map_loc.y = (int)player->pos.y / SCALE;
 	ray->start.x = player->pos.x + PCENTER;
 	ray->start.y = player->pos.y + PCENTER;
-	if (ray->dir.y < NORTH)
+	if (ray->dir.y < NORTH_)
 	{
 		ray->map_step.y = -1;
 		ray->ray_len.y = (ray->start.y - ray->map_loc.y * SCALE) * ray->scalingf.y;
@@ -20,7 +20,7 @@ void	init_ray(t_raycaster *ray, t_player *player, float angle)
 		ray->map_step.y = 1;
 		ray->ray_len.y = ((ray->map_loc.y + 1) * SCALE - ray->start.y) * ray->scalingf.y;
 	}
-	if (ray->dir.x < WEST)
+	if (ray->dir.x < WEST_)
 	{
 		ray->map_step.x = -1;
 		ray->ray_len.x = (ray->start.x - ray->map_loc.x * SCALE) * ray->scalingf.x;
@@ -58,7 +58,7 @@ float	cast_ray(t_game *game, float angle)
 		if (game->map->map[ray.map_loc.y][ray.map_loc.x] == WALL)
 			ray.wall = true;
 	}
-	// draw_line(game, ray.start.x, ray.start.y, ray.start.x + ray.dir.x * ray.len, ray.start.y + ray.dir.y * ray.len, BLUE);
+	draw_line(game, ray.start.x, ray.start.y, ray.start.x + ray.dir.x * ray.len, ray.start.y + ray.dir.y * ray.len, BLUE);
 	return (ray.len);
 }
 
@@ -66,16 +66,23 @@ void	cast_rays(t_game *game)
 {
 	t_player	*player;
 	float		distance;
+	float		adjusted;
 	t_point		top;
+	t_point		bottom;
+	int			x;
 	float		angle;
 
 	player = game->player;
 	angle = player->p_angle - (PLAYER_VISION / 2);
+	x = 0;
 	while (angle < player->p_angle + (PLAYER_VISION / 2))
 	{
 		distance = cast_ray(game, angle);
-		top.y = WIDTH / 2 + distance / tan(PI / 6);
-		draw_line(game, WIDTH / 2, HEIGHT / 2, WIDTH / 2, top.y, BLUE);
-		angle += (PLAYER_VISION / RAY_DENSITY);
+		adjusted = sin(angle) * distance;
+		top.y = (HEIGHT / 2) - (-0.7 * adjusted + HEIGHT / 2);
+		bottom.y = (HEIGHT / 2) + (-0.7 * adjusted + HEIGHT / 2);
+		draw_vline(game, x, bottom.y, x, top.y, ORANGE);
+		angle += (PLAYER_VISION / WIDTH);
+		x += 1;
 	}
 }
