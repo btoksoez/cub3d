@@ -71,6 +71,7 @@ void	cast_rays(t_game *game)
 	t_point		bottom;
 	int			x;
 	float		angle;
+	int			wall_height;
 
 	player = game->player;
 	angle = player->p_angle - (PLAYER_VISION / 2);
@@ -78,11 +79,12 @@ void	cast_rays(t_game *game)
 	while (angle < player->p_angle + (PLAYER_VISION / 2))
 	{
 		distance = cast_ray(game, angle);
-		adjusted = sin(angle) * distance;
-		top.y = (HEIGHT / 2) - (-0.7 * adjusted + HEIGHT / 2);
-		bottom.y = (HEIGHT / 2) + (-0.7 * adjusted + HEIGHT / 2);
-		draw_vline(game, x, bottom.y, x, top.y, ORANGE);
+		adjusted = distance * cos(angle - player->p_angle);
+		wall_height = (WALL_SCALE / adjusted);
+		top.y = (HEIGHT / 2) - wall_height;
+		bottom.y = (HEIGHT / 2) + wall_height;
+		draw_vline(game, x, top.y, x, bottom.y, ORANGE);
 		angle += (PLAYER_VISION / WIDTH);
-		x += 1;
+		x++;
 	}
 }

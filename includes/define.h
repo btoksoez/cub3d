@@ -67,6 +67,7 @@
 # define WIDTH 1080
 # define HEIGHT 720
 # define PLAYER_VISION (PI / 3)
+# define WALL_SCALE 10000
 /* --------------- Minimap -------------- */
 # define MM_WIDTH WIDTH / 5
 # define MM_HEIGHT HEIGHT / 5
