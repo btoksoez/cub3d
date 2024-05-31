@@ -58,7 +58,7 @@ float	cast_ray(t_game *game, float angle)
 		if (game->map->map[ray.map_loc.y][ray.map_loc.x] == WALL)
 			ray.wall = true;
 	}
-	// draw_line(game, ray.start.x, ray.start.y, ray.start.x + ray.dir.x * ray.len, ray.start.y + ray.dir.y * ray.len, BLUE);
+	draw_line(game, ray.start.x, ray.start.y, ray.start.x + ray.dir.x * ray.len, ray.start.y + ray.dir.y * ray.len, BLUE);
 	return (ray.len);
 }
 
@@ -66,7 +66,7 @@ void	cast_rays(t_game *game)
 {
 	t_player	*player;
 	float		distance;
-	t_point		top;
+	// t_point		top;
 	float		angle;
 
 	player = game->player;
@@ -74,8 +74,9 @@ void	cast_rays(t_game *game)
 	while (angle < player->p_angle + (PLAYER_VISION / 2))
 	{
 		distance = cast_ray(game, angle);
-		top.y = WIDTH / 2 + distance / tan(PI / 6);
-		draw_line(game, WIDTH / 2, HEIGHT / 2, WIDTH / 2, top.y, BLUE);
+		(void)distance;
+		// top.y = WIDTH / 2 + distance / tan(PI / 6);
+		// draw_line(game, WIDTH / 2, HEIGHT / 2, WIDTH / 2, top.y, BLUE);
 		angle += (PLAYER_VISION / RAY_DENSITY);
 	}
 }

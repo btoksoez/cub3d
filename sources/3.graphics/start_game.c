@@ -14,10 +14,9 @@ int	render(t_game *game)
 {
 	// delete_image?
 	hook_player(game);	//sets new pos of player based on u_d, l_r
-	// render_image(game, 0, 0, BLUE);
-	// render_2dgame(game);
+	render_2dgame(game);
 	cast_rays(game);
-	minimap(game);
+	// minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
 	return (0);
 }
@@ -73,7 +72,7 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 		for (int x = start_x; x < start_x + width; x++)
 		{
 			if (x == start_x || x == start_x + width - 1 || y == start_y || y == start_y + height - 1)
-				put_pixel_to_img(game, x, y, BLACK);
+				put_pixel_to_img(game, x, y, SCREEN);
 			else
 				put_pixel_to_img(game, x, y, color);
 		}

@@ -52,6 +52,7 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 	game->height = map->rows * SCALE;
 	game->map = map;
 	game->player = player;
+	// game->scale = SCALE;
 	player->left_right = 0;
 	player->up_down = 0;
 	player->rot = 0;

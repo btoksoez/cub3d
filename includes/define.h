@@ -68,7 +68,7 @@
 # define MM_WIDTH WIDTH / 5
 # define MM_HEIGHT HEIGHT / 5
 # define MM_SCALE SCALE / 3
-# define MM_SCREEN BLUE
+# define MM_SCREEN GREY
 
 #define min(a,b) ((a) < (b) ? (a) : (b))
 #define max(a,b) ((a) > (b) ? (a) : (b))
