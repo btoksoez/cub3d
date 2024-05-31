@@ -14,9 +14,9 @@ int	render(t_game *game)
 {
 	// delete_image?
 	hook_player(game);	//sets new pos of player based on u_d, l_r
-	render_2dgame(game);
+	// render_2dgame(game);
 	cast_rays(game);
-	// minimap(game);
+	minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
 	return (0);
 }
@@ -36,9 +36,9 @@ void	render_2dgame(t_game *game)
 		while (x < game->map->cols)
 		{
 			if (game->map->map[y][x] == WALL)
-				render_image(game, x * SCALE, y * SCALE, WALLS);
+				render_image(game, x * game->xscale, y * game->yscale, WALLS);
 			if (game->map->map[y][x] == EMPTY)
-				render_image(game, x * SCALE, y * SCALE, SPACE);
+				render_image(game, x * game->xscale, y * game->yscale, SPACE);
 			render_image(game, player->pos.x, player->pos.y, PLAYER_);
 			x++;
 		}
@@ -59,8 +59,8 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 	}
 	else if (color == PLAYER_)
 	{
-		width = PSIZE;
-		height = PSIZE;
+		width = game->xscale / 4;
+		height = game->yscale / 4;
 	}
 	else
 	{

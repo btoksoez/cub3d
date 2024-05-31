@@ -59,8 +59,8 @@ typedef struct	s_game
 	char			**pixel_map;
 	struct s_map	*map;
 	struct s_img	img;
-	int				width;
-	int				height;
+	float			xscale;
+	float			yscale;
 	struct s_player	*player;
 }					t_game;
 
@@ -152,7 +152,7 @@ void	draw_point(t_game *game, int x, int y, int color);
 
 /* ------------------------------ Ray Caster ------------------------------- */
 /* ------------------------------------------------------------------------- */
-void	init_ray(t_raycaster *ray, t_player *player, float angle);
+void	init_ray(t_raycaster *ray, t_player *player, float angle, t_game *game);
 float	cast_ray(t_game *game, float angle);
 void	cast_rays(t_game *game);
 

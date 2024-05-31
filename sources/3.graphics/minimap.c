@@ -24,11 +24,11 @@ void	minimap(t_game *game)
 		while (x < game->map->cols)
 		{
 			if (game->map->map[y][x] == WALL)
-				render_minimap(game, mm.start.x + (x * SCALE) / 5, mm.start.y + (y * SCALE) / 5, WALLS);
+				render_minimap(game, mm.start.x + (x * game->xscale) / 5, mm.start.y + (y * game->yscale) / 5, WALLS);
 			else if (game->map->map[y][x] == EMPTY)
-				render_minimap(game, mm.start.x + (x * SCALE) / 5, mm.start.y + (y * SCALE) / 5, SPACE);
+				render_minimap(game, mm.start.x + (x * game->xscale) / 5, mm.start.y + (y * game->yscale) / 5, SPACE);
 			else
-				render_minimap(game, mm.start.x + (x * SCALE) / 5, mm.start.y + (y * SCALE) / 5, SCREEN);
+				render_minimap(game, mm.start.x + (x * game->xscale) / 5, mm.start.y + (y * game->yscale) / 5, SCREEN);
 			render_minimap(game, mm.pos_player.x, mm.pos_player.y, PLAYER_);
 			x++;
 		}
@@ -43,13 +43,13 @@ void	render_minimap(t_game *game, int start_x, int start_y, int color)
 
 	if (color == PLAYER_)
 	{
-		width = PSIZE;
-		height = PSIZE;
+		width = game->xscale / 4;
+		height = game->yscale / 4;
 	}
 	else
 	{
-		width = SCALE;
-		height = SCALE;
+		width = game->xscale;
+		height = game->yscale;
 	}
 	for (int y = start_y; y < start_y + height; y++)
 	{

@@ -48,17 +48,16 @@ void	create_pixel_map(t_game *game, t_map *map)
 
 void	init_game_struct(t_game *game, t_player *player, t_map *map)
 {
-	game->width = map->cols * SCALE;
-	game->height = map->rows * SCALE;
 	game->map = map;
 	game->player = player;
-	// game->scale = SCALE;
+	game->xscale = WIDTH / map->cols;
+	game->yscale = HEIGHT / map->rows;
 	player->left_right = 0;
 	player->up_down = 0;
 	player->rot = 0;
 	player->p_angle = map->player_dir;
-	player->pos.x = map->player.x * SCALE + 3 * (PSIZE / 2);
-	player->pos.y = map->player.y * SCALE + 3 * (PSIZE / 2);
+	player->pos.x = map->player.x * game->xscale + 3 * (game->xscale / 8);
+	player->pos.y = map->player.y * game->yscale + 3 * (game->yscale / 8);
 	player->look_dir = 0;
 	create_pixel_map(game, map);
 }
