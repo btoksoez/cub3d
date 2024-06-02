@@ -61,15 +61,20 @@ float	cast_ray(t_game *game, float angle)
 		}
 		if (game->map->map[ray.map_loc.y][ray.map_loc.x] == WALL)
 		{
-			if (visited == 2 && angle > PI && angle < PI_2)
-				game->dir = N_;
-			else if (visited == 2 && angle < PI && angle > 0)
-				game->dir = S_;
-			else if (visited == 1 && angle < PI_15 && angle > PI_05)
-				game->dir = W_;
-			else if (visited == 1 && angle > PI_15 && angle < PI_05)
-				game->dir = E_;
-			printf("%d\n", game->dir);
+			if (visited == 2)
+			{
+				if (ray.dir.y < NORTH_)
+					game->dir = N_;
+				else
+					game->dir = S_;
+			}
+			else
+			{
+				if (ray.dir.x < WEST_)
+					game->dir = W_;
+				else
+					game->dir = E_;
+			}
 			ray.wall = true;
 		}
 	}
