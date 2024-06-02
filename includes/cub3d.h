@@ -50,21 +50,37 @@ typedef struct s_img
 	int				bits_per_pixel;
 	int				endian;
 	int				line_len;
+	int				width;
+	int				height;
 }					t_img;
+
+typedef struct s_textures
+{
+	struct s_img	north;
+	struct s_img	south;
+	struct s_img	east;
+	struct s_img	west;
+	int				width;
+	int				height;
+}					t_textures;
 
 typedef struct	s_game
 {
-	void			*mlx;
-	void			*win;
-	void			*mapwin;
-	char			**pixel_map;
-	struct s_map	*map;
-	struct s_img	img;
-	struct s_img	mapimg;
-	int				width;
-	int				height;
-	struct s_player	*player;
-}					t_game;
+	void				*mlx;
+	void				*win;
+	void				*mapwin;
+	char				**pixel_map;
+	struct s_map		*map;
+	struct s_img		img;
+	struct s_img		mapimg;
+	int					width;
+	int					height;
+	struct s_player		*player;
+	int					dir;
+	struct s_textures	*textures;
+	int					f_color;
+	int					c_color;
+}						t_game;
 
 typedef struct s_player
 {
@@ -132,7 +148,8 @@ void	fill_with_space(t_map *map);
 /* ------------------------------- Mlx Init -------------------------------- */
 /* ------------------------------------------------------------------------- */
 void	start_game(t_map *map);
-void	init_mlx(t_game *game, t_player *player, t_map *map);
+void	init_mlx(t_game *game, t_textures *textures, t_player *player, t_map *map);
+void	init_game_images(t_game *game, t_textures *textures);
 void	init_game_struct(t_game *game, t_player *player, t_map *map);
 void	init_window(t_game *game, t_map *map);
 void	init_image(t_game *game);

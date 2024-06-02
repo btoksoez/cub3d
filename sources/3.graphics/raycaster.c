@@ -38,25 +38,40 @@ float	cast_ray(t_game *game, float angle)
 {
 	t_raycaster	ray;
 	t_player	*player;
+	int			visited;
 
+	visited = 0;
 	player = game->player;
 	init_ray(&ray, player, angle);
 	while (!ray.wall)
 	{
 		if (ray.ray_len.x < ray.ray_len.y)
 		{
+			visited = 1;
 			ray.len = ray.ray_len.x;
 			ray.ray_len.x += ray.scalingf.x * SCALE;
 			ray.map_loc.x += ray.map_step.x;
 		}
 		else
 		{
+			visited = 2;
 			ray.len = ray.ray_len.y;
 			ray.ray_len.y += ray.scalingf.y * SCALE;
 			ray.map_loc.y += ray.map_step.y;
 		}
 		if (game->map->map[ray.map_loc.y][ray.map_loc.x] == WALL)
+		{
+			if (visited == 2 && angle > PI && angle < PI_2)
+				game->dir = N_;
+			else if (visited == 2 && angle < PI && angle > 0)
+				game->dir = S_;
+			else if (visited == 1 && angle < PI_15 && angle > PI_05)
+				game->dir = W_;
+			else if (visited == 1 && angle > PI_15 && angle < PI_05)
+				game->dir = E_;
+			printf("%d\n", game->dir);
 			ray.wall = true;
+		}
 	}
 	draw_line(game, ray.start.x, ray.start.y, ray.start.x + ray.dir.x * ray.len, ray.start.y + ray.dir.y * ray.len, BLUE);
 	return (ray.len);
@@ -83,7 +98,9 @@ void	cast_rays(t_game *game)
 		wall_height = (WALL_SCALE / adjusted);
 		top.y = (HEIGHT / 2) - wall_height;
 		bottom.y = (HEIGHT / 2) + wall_height;
-		draw_vline(game, x, top.y, x, bottom.y, ORANGE);
+		draw_vline(game, x, top.y, x, bottom.y, game->dir);
+		draw_vline(game, x, bottom.y, x, HEIGHT, game->f_color);
+		draw_vline(game, x, 0, x, top.y, game->c_color);
 		angle += (PLAYER_VISION / WIDTH);
 		x++;
 	}

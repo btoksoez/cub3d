@@ -1,12 +1,17 @@
 #include "../../includes/cub3d.h"
 
-void	init_mlx(t_game *game, t_player *player, t_map *map)
+void	init_mlx(t_game *game, t_textures *textures, t_player *player, t_map *map)
 {
 	init_game_struct(game, player, map);
 	init_window(game, map);
 	init_image(game);
-	// init_game_images();
+	init_game_images(game, textures);
 	init_events(game);
+}
+
+int	convert(t_rgb color)
+{
+	return (color.red << 16 | color.green << 8 | color.blue);
 }
 
 void	init_game_struct(t_game *game, t_player *player, t_map *map)
@@ -15,6 +20,9 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 	game->height = map->rows * SCALE;
 	game->map = map;
 	game->player = player;
+	game->dir = 0;
+	game->f_color = convert(map->f_color);
+	game->c_color = convert(map->c_color);
 	player->left_right = 0;
 	player->up_down = 0;
 	player->rot = 0;
@@ -60,10 +68,59 @@ void	init_image(t_game *game)
 		&game->mapimg.endian);
 }
 
-void	init_game_images()
+void	init_game_images(t_game *game, t_textures *textures)
 {
-	//load images from xpm to img pointers
-	//store them in pointers?
+	textures->north.img_ptr = mlx_xpm_file_to_image(game->mlx, game->map->no_texture, &textures->width, &textures->height);
+	if (!textures->north.img_ptr)
+	{
+		mlx_destroy_window(game->mlx, game->win);
+		// mlx_destroy_display(game->mlx);
+		free(game->mlx);
+		free_map(game->map, "Failed to initialize north texture", 1);
+	}
+	textures->north.pixels_ptr = mlx_get_data_addr(textures->north.img_ptr,
+													&textures->north.bits_per_pixel,
+													&textures->north.line_len,
+													&textures->north.endian);
+
+	textures->south.img_ptr = mlx_xpm_file_to_image(game->mlx, game->map->so_texture, &textures->width, &textures->height);
+	if (!textures->south.img_ptr)
+	{
+		mlx_destroy_window(game->mlx, game->win);
+		// mlx_destroy_display(game->mlx);
+		free(game->mlx);
+		free_map(game->map, "Failed to initialize south texture", 1);
+	}
+	textures->south.pixels_ptr = mlx_get_data_addr(textures->south.img_ptr,
+													&textures->south.bits_per_pixel,
+													&textures->south.line_len,
+													&textures->south.endian);
+
+	textures->west.img_ptr = mlx_xpm_file_to_image(game->mlx, game->map->we_texture, &textures->width, &textures->height);
+	if (!textures->west.img_ptr)
+	{
+		mlx_destroy_window(game->mlx, game->win);
+		// mlx_destroy_display(game->mlx);
+		free(game->mlx);
+		free_map(game->map, "Failed to initialize north texture", 1);
+	}
+	textures->west.pixels_ptr = mlx_get_data_addr(textures->west.img_ptr,
+													&textures->west.bits_per_pixel,
+													&textures->west.line_len,
+													&textures->west.endian);
+	textures->east.img_ptr = mlx_xpm_file_to_image(game->mlx, game->map->ea_texture, &textures->width, &textures->height);
+	if (!textures->east.img_ptr)
+	{
+		mlx_destroy_window(game->mlx, game->win);
+		// mlx_destroy_display(game->mlx);
+		free(game->mlx);
+		free_map(game->map, "Failed to initialize north texture", 1);
+	}
+	textures->east.pixels_ptr = mlx_get_data_addr(textures->east.img_ptr,
+													&textures->east.bits_per_pixel,
+													&textures->east.line_len,
+													&textures->east.endian);
+	game->textures = textures;
 }
 
 void	init_events(t_game *game)

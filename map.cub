@@ -9,8 +9,8 @@ H ./textures/health.xpm
 WE ./textures/west.xpm
 EA 	./textures/east.xpm
 
-		F	 220,100,0
-   C 			  			235,30,0
+		F	 255,0,0
+   C 			  			0,255,0
 
         11111111111 1111111111111
         10000000001 1000000000001

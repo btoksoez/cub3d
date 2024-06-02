@@ -4,8 +4,9 @@ void	start_game(t_map *map)
 {
 	t_game		game;
 	t_player	player;
+	t_textures	textures;
 
-	init_mlx(&game, &player, map);
+	init_mlx(&game, &textures, &player, map);
 	mlx_loop_hook(game.mlx, &render, &game);
 	mlx_loop(game.mlx);
 }

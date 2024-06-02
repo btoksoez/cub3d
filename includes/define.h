@@ -67,7 +67,11 @@
 # define WIDTH 1080
 # define HEIGHT 720
 # define PLAYER_VISION (PI / 3)
-# define WALL_SCALE 10000
+# define WALL_SCALE 8000
+# define N_ 0x000000
+# define S_ 0xFF4500
+# define W_ 0xFFFFFF
+# define E_ 0xD63A00
 /* --------------- Minimap -------------- */
 # define MM_WIDTH WIDTH / 5
 # define MM_HEIGHT HEIGHT / 5
