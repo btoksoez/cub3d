@@ -118,28 +118,71 @@ void	put_pixel_to_mapimg(t_game *game, int x, int y, int color)
 
 void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y, int color)
 {
-	int dx = abs(end_x - start_x);
-	int dy = abs(end_y - start_y);
-	int sx = (start_x < end_x) ? 1 : -1;
-	int sy = (start_y < end_y) ? 1 : -1;
-	int err = dx - dy;
+	int	temp;
 
+	temp = 0;
+	if (start_y > end_y)
+	{
+		temp = start_y;
+		start_y = end_y;
+		end_y = temp;
+	}
 	while (true)
 	{
 		put_pixel_to_img(game, start_x, start_y, color);
 		if (start_x == end_x && start_y == end_y)
 			break ;
-		int e2 = 2 * err;
-		if (e2 > -dy)
-		{
-			err -= dy;
-			start_x += sx;
-		}
-		if (e2 < dx)
-		{
-			err += dx;
-			start_y += sy;
-		}
+		start_y++;
+	}
+}
+
+int	get_texture_color(t_game *game, int pos, int start_y, int end_y)
+{
+    int		color;
+    int		tex_x;
+    float	tex_y;
+    double	scale;
+
+    color = 0;
+    tex_x = game->textures->width * (int)game->fraction_x / SCALE;
+    scale = (pos - start_y) / (end_y - start_y);
+    tex_y = (scale * game->textures->height);
+    if (game->dir == N_)
+        color = game->textures->north.pixels_ptr[tex_x + (int)(tex_y * game->textures->north.line_len)];
+    else if (game->dir == S_)
+        color = game->textures->south.pixels_ptr[tex_x + (int)(tex_y * game->textures->south.line_len)];
+    else if (game->dir == W_)
+        color = game->textures->west.pixels_ptr[tex_x + (int)(tex_y * game->textures->west.line_len)];
+    else
+        color = game->textures->east.pixels_ptr[tex_x + (int)(tex_y * game->textures->east.line_len)];
+    return (color);
+}
+
+void	draw_textures(t_game *game, int start_x, int start_y, int end_x, int end_y)
+{
+	int		temp;
+	int		color;
+	float	pos;
+	float	step;
+
+	temp = 0;
+	if (start_y > end_y)
+	{
+		temp = start_y;
+		start_y = end_y;
+		end_y = temp;
+	}
+	printf("%d, %d\n", game->textures->height, game->textures->width);
+	pos = 0;
+	step = (float)game->textures->height / (end_y - start_y);
+	while (true)
+	{
+		color = get_texture_color(game, pos, start_y, end_y);
+		put_pixel_to_img(game, start_x, start_y, color);
+		if (start_x == end_x && start_y == end_y)
+			break ;
+		start_y++;
+		pos += step;
 	}
 }
 
