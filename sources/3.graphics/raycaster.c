@@ -78,8 +78,8 @@ float	cast_ray(t_game *game, float angle)
 			ray.wall = true;
 		}
 	}
-	game->fraction_x = (int)(ray.start.x + ray.dir.x * ray.len) % SCALE;
-	game->fraction_y = (int)(ray.start.y + ray.dir.y * ray.len) % SCALE;
+	game->fraction_x = fmod((ray.start.x + ray.dir.x * ray.len), (float)SCALE) / (float)SCALE;
+	game->fraction_y = fmod((ray.start.y + ray.dir.y * ray.len), (float)SCALE) / (float)SCALE;
 	draw_line(game, ray.start.x, ray.start.y, ray.start.x + ray.dir.x * ray.len, ray.start.y + ray.dir.y * ray.len, BLUE);
 	return (ray.len);
 }
@@ -107,6 +107,7 @@ void	cast_rays(t_game *game)
 		top.y = (HEIGHT / 2) - wall_height;
 		bottom.y = (HEIGHT / 2) + wall_height;
 		draw_textures(game, x, top.y, x, bottom.y);
+		// draw_vline(game, x, top.y, x, bottom.y, BLACK);
 		draw_vline(game, x, bottom.y, x, HEIGHT, game->f_color);
 		draw_vline(game, x, 0, x, top.y, game->c_color);
 		angle += (PLAYER_VISION / WIDTH);

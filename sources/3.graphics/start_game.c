@@ -136,25 +136,52 @@ void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y, in
 	}
 }
 
-int	get_texture_color(t_game *game, int pos, int start_y, int end_y)
+void print_pixels(t_game *game)
+{
+    int x = 0;
+    int y = 0;
+	int index = y * game->textures->north.line_len + x * 4;
+    unsigned int color = *(unsigned int *)game->textures->east.pixels_ptr[index];
+	fprintf(stderr, "Pixel at %d (%d, %d): %u\n", index, x, y, color);
+	printf("len: %d, bpp: %d\n", game->textures->east.line_len, game->textures->east.bits_per_pixel);
+	int red = (color >> 16) & 0xFF;
+	int green = (color >> 8) & 0xFF;
+	int blue = color & 0xFF;
+	printf("%d %d %d\n", red, green, blue);
+    // while (y < game->textures->east.height) {
+    //     x = 0;
+    //     while (x < game->textures->east.width) {
+    //         int index = y * game->textures->east.line_len + x * (game->textures->east.bits_per_pixel / 8);
+    //         color = game->textures->east.pixels_ptr[index];
+    //         fprintf(stderr, "Pixel at %d (%d, %d): %d\n", index, x, y, color);
+    //         x++;
+    //     }
+    //     y++;
+    // }
+}
+
+int	get_texture_color(t_game *game, int tex_x, int tex_y)
 {
     int		color;
-    int		tex_x;
-    float	tex_y;
-    double	scale;
+	int		bpp;
+	int		len;
+	t_textures *t;
 
     color = 0;
-    tex_x = game->textures->width * (int)game->fraction_x / SCALE;
-    scale = (pos - start_y) / (end_y - start_y);
-    tex_y = (scale * game->textures->height);
+	t = game->textures;
+	bpp = t->north.bits_per_pixel;
+	len = t->north.line_len;
+
+	// printf("Line len: %d, bpp: %d\n", t->north.line_len, t->north.bits_per_pixel);
+	print_pixels(game);
     if (game->dir == N_)
-        color = game->textures->north.pixels_ptr[tex_x + (int)(tex_y * game->textures->north.line_len)];
+        color = t->north.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
     else if (game->dir == S_)
-        color = game->textures->south.pixels_ptr[tex_x + (int)(tex_y * game->textures->south.line_len)];
+        color = t->south.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
     else if (game->dir == W_)
-        color = game->textures->west.pixels_ptr[tex_x + (int)(tex_y * game->textures->west.line_len)];
+        color = t->west.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
     else
-        color = game->textures->east.pixels_ptr[tex_x + (int)(tex_y * game->textures->east.line_len)];
+        color = t->east.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
     return (color);
 }
 
@@ -162,8 +189,10 @@ void	draw_textures(t_game *game, int start_x, int start_y, int end_x, int end_y)
 {
 	int		temp;
 	int		color;
-	float	pos;
+	float	tex_y;
+	float	tex_x;
 	float	step;
+	(void)	end_x;
 
 	temp = 0;
 	if (start_y > end_y)
@@ -172,17 +201,15 @@ void	draw_textures(t_game *game, int start_x, int start_y, int end_x, int end_y)
 		start_y = end_y;
 		end_y = temp;
 	}
-	printf("%d, %d\n", game->textures->height, game->textures->width);
-	pos = 0;
-	step = (float)game->textures->height / (end_y - start_y);
-	while (true)
+	tex_y = 0;
+	tex_x = game->textures->north.width * (game->fraction_x + game->fraction_y);
+	step = (float)game->textures->north.height / (end_y - start_y);
+	while (start_y <= end_y)
 	{
-		color = get_texture_color(game, pos, start_y, end_y);
+		color = get_texture_color(game, tex_x, tex_y);
 		put_pixel_to_img(game, start_x, start_y, color);
-		if (start_x == end_x && start_y == end_y)
-			break ;
 		start_y++;
-		pos += step;
+		tex_y += step;
 	}
 }
 

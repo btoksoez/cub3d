@@ -70,7 +70,7 @@ void	init_image(t_game *game)
 
 void	init_game_images(t_game *game, t_textures *textures)
 {
-	textures->north.img_ptr = mlx_xpm_file_to_image(game->mlx, game->map->no_texture, &textures->width, &textures->height);
+	textures->north.img_ptr = mlx_xpm_file_to_image(game->mlx, game->map->no_texture, &textures->north.width, &textures->north.height);
 	if (!textures->north.img_ptr)
 	{
 		mlx_destroy_window(game->mlx, game->win);
@@ -83,7 +83,7 @@ void	init_game_images(t_game *game, t_textures *textures)
 													&textures->north.line_len,
 													&textures->north.endian);
 
-	textures->south.img_ptr = mlx_xpm_file_to_image(game->mlx, game->map->so_texture, &textures->width, &textures->height);
+	textures->south.img_ptr = mlx_xpm_file_to_image(game->mlx, game->map->so_texture, &textures->south.width, &textures->south.height);
 	if (!textures->south.img_ptr)
 	{
 		mlx_destroy_window(game->mlx, game->win);
@@ -96,7 +96,7 @@ void	init_game_images(t_game *game, t_textures *textures)
 													&textures->south.line_len,
 													&textures->south.endian);
 
-	textures->west.img_ptr = mlx_xpm_file_to_image(game->mlx, game->map->we_texture, &textures->width, &textures->height);
+	textures->west.img_ptr = mlx_xpm_file_to_image(game->mlx, game->map->we_texture, &textures->west.width, &textures->west.height);
 	if (!textures->west.img_ptr)
 	{
 		mlx_destroy_window(game->mlx, game->win);
@@ -108,7 +108,7 @@ void	init_game_images(t_game *game, t_textures *textures)
 													&textures->west.bits_per_pixel,
 													&textures->west.line_len,
 													&textures->west.endian);
-	textures->east.img_ptr = mlx_xpm_file_to_image(game->mlx, game->map->ea_texture, &textures->width, &textures->height);
+	textures->east.img_ptr = mlx_xpm_file_to_image(game->mlx, game->map->ea_texture, &textures->east.width, &textures->east.height);
 	if (!textures->east.img_ptr)
 	{
 		mlx_destroy_window(game->mlx, game->win);
@@ -121,6 +121,7 @@ void	init_game_images(t_game *game, t_textures *textures)
 													&textures->east.line_len,
 													&textures->east.endian);
 	game->textures = textures;
+	print_pixels(game);
 }
 
 void	init_events(t_game *game)

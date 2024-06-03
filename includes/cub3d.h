@@ -60,8 +60,6 @@ typedef struct s_textures
 	struct s_img	south;
 	struct s_img	east;
 	struct s_img	west;
-	int				width;
-	int				height;
 }					t_textures;
 
 typedef struct	s_game
@@ -81,8 +79,8 @@ typedef struct	s_game
 	int					f_color;
 	int					c_color;
 	int					color;
-	int					fraction_x;
-	int					fraction_y;
+	float				fraction_x;
+	float				fraction_y;
 }						t_game;
 
 typedef struct s_player
@@ -174,7 +172,7 @@ void	draw_point(t_game *game, int x, int y, int color);
 void	put_pixel_to_mapimg(t_game *game, int x, int y, int color);
 void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
 void	render_rayimage(t_game *game, int start_x, int start_y, int color);
-int		get_texture_color(t_game *game, int y, int start_y, int end_y);
+int		get_texture_color(t_game *game, int tex_x, int tex_y);
 void	draw_textures(t_game *game, int start_x, int start_y, int end_x, int end_y);
 /* ------------------------------ Ray Caster ------------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -192,6 +190,7 @@ void	render_minimap(t_game *game, int start_x, int start_y, int color);
 void	print_textures(t_map *map_info);
 void	print_map(t_map map);
 void	print_pixel_map(t_game *game);
+void	print_pixels(t_game *game);
 
 /* ----------------------------- Close Program ----------------------------- */
 /* ------------------------------------------------------------------------- */
