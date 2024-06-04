@@ -11,6 +11,8 @@
 #define D			100
 #define LEFT_KEY	65361
 #define RIGHT_KEY	65363
+#define SHIFT		0xFFE1
+#define SPACENAR	0x31
 #else
 /* ------------------ Mac ----------------- */
 # include "./minilibx-mac/mlx.h"
@@ -21,6 +23,8 @@
 #define D			0x02
 #define LEFT_KEY	0x7B
 #define RIGHT_KEY	0x7C
+#define SHIFT		0x101
+#define SPACEBAR	0x31
 #endif
 /* --------------- General --------------- */
 # define WHITESPACE " \t\n\r\f\v"
@@ -56,7 +60,9 @@
 # define SCALE 50
 # define PSIZE SCALE / 4
 # define PCENTER PSIZE / 2
-# define MOVE 3
+# define JUMP_SPEED 10
+# define MAX_JUMP_HEIGHT 140
+# define MAX_JUMP_SPEED 30
 # define ROT_SPEED 0.05
 # define BUFFER 10
 # define WALL 49

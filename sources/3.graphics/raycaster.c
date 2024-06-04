@@ -104,10 +104,9 @@ void	cast_rays(t_game *game)
 		distance = cast_ray(game, angle);
 		adjusted = distance * cos(angle - player->p_angle);
 		wall_height = (WALL_SCALE / adjusted);
-		top.y = (HEIGHT / 2) - wall_height;
-		bottom.y = (HEIGHT / 2) + wall_height;
+		top.y = (HEIGHT / 2) - wall_height + player->jump_height;
+		bottom.y = (HEIGHT / 2) + wall_height + player->jump_height;
 		draw_textures(game, x, top.y, x, bottom.y);
-		// draw_vline(game, x, top.y, x, bottom.y, BLACK);
 		draw_vline(game, x, bottom.y, x, HEIGHT, game->f_color);
 		draw_vline(game, x, 0, x, top.y, game->c_color);
 		angle += (PLAYER_VISION / WIDTH);

@@ -30,6 +30,9 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 	player->pos.x = map->player.x * SCALE + 3 * (PSIZE / 2);
 	player->pos.y = map->player.y * SCALE + 3 * (PSIZE / 2);
 	player->look_dir = 0;
+	player->speed = 2;
+	player->jump_height = 0;
+	player->jumping = false;
 }
 
 void	init_window(t_game *game, t_map *map)
@@ -121,7 +124,7 @@ void	init_game_images(t_game *game, t_textures *textures)
 													&textures->east.line_len,
 													&textures->east.endian);
 	game->textures = textures;
-	print_pixels(game);
+	// print_pixels(game);
 }
 
 void	init_events(t_game *game)

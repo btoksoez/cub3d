@@ -91,6 +91,10 @@ typedef struct s_player
 	t_point			pos;
 	float			p_angle;
 	int				look_dir;
+	int				speed;
+	float			jump_height;
+	bool			jumping;
+	bool			jump_peak;
 }					t_player;
 
 typedef struct s_raycaster
@@ -174,6 +178,7 @@ void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y, in
 void	render_rayimage(t_game *game, int start_x, int start_y, int color);
 int		get_texture_color(t_game *game, int tex_x, int tex_y);
 void	draw_textures(t_game *game, int start_x, int start_y, int end_x, int end_y);
+void	jumping(t_player *player);
 /* ------------------------------ Ray Caster ------------------------------- */
 /* ------------------------------------------------------------------------- */
 void	init_ray(t_raycaster *ray, t_player *player, float angle);

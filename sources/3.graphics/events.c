@@ -37,6 +37,13 @@ int	key_press(int key, t_game *game)
 		player->rot = LEFT;
 	if (key == RIGHT_KEY)
 		player->rot = RIGHT;
+	if (key == SHIFT)
+		player->speed = 6;
+	if (key == SPACEBAR)
+	{
+		player->jumping= true;
+		player->jump_peak = false;
+	}
 	return (0);
 }
 
@@ -57,6 +64,8 @@ int key_release(int key, t_game *game)
 		player->rot = RESET;
 	if (key == RIGHT_KEY)
 		player->rot = RESET;
+	if (key == SHIFT)
+		player->speed = 2;
 	return (0);
 
 }

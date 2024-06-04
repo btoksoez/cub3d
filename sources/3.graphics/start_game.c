@@ -17,6 +17,7 @@ int	render(t_game *game)
 	hook_player(game);	//sets new pos of player based on u_d, l_r
 	render_2dgame(game);
 	render_rayimage(game, 0, 0, WHITE);
+	jumping(game->player);
 	cast_rays(game);
 	// minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
@@ -136,35 +137,11 @@ void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y, in
 	}
 }
 
-void print_pixels(t_game *game)
-{
-    int x = 0;
-    int y = 0;
-	int index = y * game->textures->north.line_len + x * 4;
-    unsigned int color = *(unsigned int *)game->textures->east.pixels_ptr[index];
-	fprintf(stderr, "Pixel at %d (%d, %d): %u\n", index, x, y, color);
-	printf("len: %d, bpp: %d\n", game->textures->east.line_len, game->textures->east.bits_per_pixel);
-	int red = (color >> 16) & 0xFF;
-	int green = (color >> 8) & 0xFF;
-	int blue = color & 0xFF;
-	printf("%d %d %d\n", red, green, blue);
-    // while (y < game->textures->east.height) {
-    //     x = 0;
-    //     while (x < game->textures->east.width) {
-    //         int index = y * game->textures->east.line_len + x * (game->textures->east.bits_per_pixel / 8);
-    //         color = game->textures->east.pixels_ptr[index];
-    //         fprintf(stderr, "Pixel at %d (%d, %d): %d\n", index, x, y, color);
-    //         x++;
-    //     }
-    //     y++;
-    // }
-}
-
 int	get_texture_color(t_game *game, int tex_x, int tex_y)
 {
-    int		color;
-	int		bpp;
-	int		len;
+    int	color;
+	int				bpp;
+	int				len;
 	t_textures *t;
 
     color = 0;
@@ -172,16 +149,14 @@ int	get_texture_color(t_game *game, int tex_x, int tex_y)
 	bpp = t->north.bits_per_pixel;
 	len = t->north.line_len;
 
-	// printf("Line len: %d, bpp: %d\n", t->north.line_len, t->north.bits_per_pixel);
-	print_pixels(game);
     if (game->dir == N_)
-        color = t->north.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+        color = *(int*)&t->north.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
     else if (game->dir == S_)
-        color = t->south.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+        color = *(int*)&t->south.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
     else if (game->dir == W_)
-        color = t->west.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+        color = *(int*)&t->west.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
     else
-        color = t->east.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+        color = *(int*)&t->east.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
     return (color);
 }
 
