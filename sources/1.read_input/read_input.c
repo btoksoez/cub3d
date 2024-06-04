@@ -103,6 +103,7 @@ void	read_map(t_map *map, int fd)
 		line = get_next_line(fd);
 		rows++;
 	}
+	// map->map[rows] = NULL;
 	remove_extra_rows(map, rows, temp);
 }
 

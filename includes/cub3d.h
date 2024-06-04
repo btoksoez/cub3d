@@ -144,6 +144,7 @@ bool	invalid_characters(t_map *map);
 bool	found_leaking_space(t_map *map, int row, int coll);
 bool	leaking_empty_spaces(t_map *map);
 bool	surrounded_by_walls(t_map *map);
+bool	surrounded_by_walls2(t_map *map);
 bool	valid_upside(t_map *map, int *coll, int *row, bool *last_dir);
 bool	valid_rightside(t_map *map, int *coll, int *row, bool *last_dir);
 bool	valid_downside(t_map *map, int *coll, int *row, bool *last_dir);
@@ -193,9 +194,8 @@ void	render_minimap(t_game *game, int start_x, int start_y, int color);
 /* -------------------------------- Utils ---------------------------------- */
 /* ------------------------------------------------------------------------- */
 void	print_textures(t_map *map_info);
-void	print_map(t_map map);
+void	print_map(char **map);
 void	print_pixel_map(t_game *game);
-void	print_pixels(t_game *game);
 
 /* ----------------------------- Close Program ----------------------------- */
 /* ------------------------------------------------------------------------- */

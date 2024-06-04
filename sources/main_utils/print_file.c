@@ -12,26 +12,35 @@ void	print_textures(t_map *map_info)
 	printf("\n");
 }
 
-void	print_map(t_map map)
+void print_map(char **map)
 {
-	int	i;
-	int	j;
+    int i;
+    int j;
 
-	i = 0;
-	while (map.map[i])
-	{
-		j = 0;
-		while (map.map[i][j])
-		{
-			if (map.map[i][j] == ' ')
-				printf(" ");
-			else
-				printf("%c", map.map[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
+    i = 0;
+    while (map[i])
+    {
+        j = 0;
+        while (map[i][j] != '\0')
+        {
+            if (map[i][j] == ' ')
+                printf(" ");
+            else
+                printf("%c", map[i][j]);
+            j++;
+        }
+        if (map[i][j] == '\0')
+            printf(" - This row is null-terminated.\n");
+        else
+            printf(" - This row is not null-terminated.\n");
+        i++;
+    }
+    if (map[i] == NULL)
+        printf("The last row is NULL.\n");
+    else
+        printf("The last row is not NULL.\n");
+
+    printf("\n\n\n");
 }
 
 void	print_pixel_map(t_game *game)
