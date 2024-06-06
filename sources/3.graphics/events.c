@@ -1,21 +1,5 @@
 #include "../../includes/cub3d.h"
 
-/* checks whether move is possible and calculates new player->pos.x/y with given move X/Y*/
-void	move_player(t_game *game, float new_x, float new_y)
-{
-	t_player	*player;
-
-	player = game->player;
-	if (game->map->map[(int)(new_y) / SCALE][(int)new_x / SCALE] != WALL
-		&& game->map->map[(int)(new_y + PSIZE) / SCALE][((int)new_x + PSIZE) / SCALE] != WALL
-		&& game->map->map[(int)(new_y + PSIZE) / SCALE][(int)new_x / SCALE] != WALL
-		&& game->map->map[(int)(new_y) / SCALE][((int)new_x + PSIZE) / SCALE] != WALL)
-		{
-			player->pos.y = new_y;
-			player->pos.x = new_x;
-		}
-}
-
 // add shooting, space, reload ...
 int	key_press(int key, t_game *game)
 {

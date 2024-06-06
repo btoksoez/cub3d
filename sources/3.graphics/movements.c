@@ -1,23 +1,6 @@
 #include "../../includes/cub3d.h"
 
-void	rotate_player(t_player *player)
-{
-	if (player->rot == LEFT)
-	{
-		player->p_angle -= ROT_SPEED;
-		if (player->p_angle < 0)
-			player->p_angle += 2 * PI;
-	}
-	if (player->rot == RIGHT)
-	{
-		player->p_angle += ROT_SPEED;
-		if (player->p_angle > 2 * PI)
-			player->p_angle -= 2 * PI;
-	}
-}
-
-/* this should calculate the move based on flags and call move and rotoate functions */
-void	hook_player(t_game *game)
+void	check_movements(t_game *game)
 {
 	t_player	*player;
 	float		new_x;
@@ -26,7 +9,6 @@ void	hook_player(t_game *game)
 	player = game->player;
 	new_x = player->pos.x;
 	new_y = player->pos.y;
-	rotate_player(player);
 	if (player->up_down == UP)
 	{
 		new_x = player->pos.x + (player->speed * cos(player->p_angle));
@@ -47,7 +29,41 @@ void	hook_player(t_game *game)
 		new_x = player->pos.x + (player->speed * cos(player->p_angle + PI_05));
 		new_y = player->pos.y + (player->speed * sin(player->p_angle + PI_05));
 	}
+	rotate_player(player);
+	jumping(game->player);
 	move_player(game, new_x, new_y);
+}
+
+/* checks whether move is possible and calculates new player->pos.x/y with given move X/Y*/
+void	move_player(t_game *game, float new_x, float new_y)
+{
+	t_player	*player;
+
+	player = game->player;
+	if (game->map->map[(int)(new_y) / SCALE][(int)new_x / SCALE] != WALL
+		&& game->map->map[(int)(new_y + PSIZE) / SCALE][((int)new_x + PSIZE) / SCALE] != WALL
+		&& game->map->map[(int)(new_y + PSIZE) / SCALE][(int)new_x / SCALE] != WALL
+		&& game->map->map[(int)(new_y) / SCALE][((int)new_x + PSIZE) / SCALE] != WALL)
+		{
+			player->pos.y = new_y;
+			player->pos.x = new_x;
+		}
+}
+
+void	rotate_player(t_player *player)
+{
+	if (player->rot == LEFT)
+	{
+		player->p_angle -= ROT_SPEED;
+		if (player->p_angle < 0)
+			player->p_angle += 2 * PI;
+	}
+	if (player->rot == RIGHT)
+	{
+		player->p_angle += ROT_SPEED;
+		if (player->p_angle > 2 * PI)
+			player->p_angle -= 2 * PI;
+	}
 }
 
 void	jumping(t_player *player)
@@ -78,4 +94,3 @@ void	jumping(t_player *player)
 		}
 	}
 }
-

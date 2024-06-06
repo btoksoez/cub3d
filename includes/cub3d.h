@@ -172,19 +172,26 @@ void	render_image(t_game *game, int start_x, int start_y, int color);
 void	put_pixel_to_img(t_game *game, int x, int y, int color);
 void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
 void	move_player(t_game *game, float move_x, float move_y);
-void	hook_player(t_game *game);
-void	draw_point(t_game *game, int x, int y, int color);
+void	check_movements(t_game *game);
 void	put_pixel_to_mapimg(t_game *game, int x, int y, int color);
 void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
 void	render_rayimage(t_game *game, int start_x, int start_y, int color);
 int		get_texture_color(t_game *game, int tex_x, int tex_y);
 void	draw_textures(t_game *game, int start_x, int start_y, int end_x, int end_y);
 void	jumping(t_player *player);
+
 /* ------------------------------ Ray Caster ------------------------------- */
 /* ------------------------------------------------------------------------- */
 void	init_ray(t_raycaster *ray, t_player *player, float angle);
 float	cast_ray(t_game *game, float angle);
-void	cast_rays(t_game *game);
+void	raycast(t_game *game);
+
+/* ------------------------------- Movements ------------------------------- */
+/* ------------------------------------------------------------------------- */
+void	rotate_player(t_player *player);
+void	jumping(t_player *player);
+void	move_player(t_game *game, float new_x, float new_y);
+void	check_movements(t_game *game);
 
 /* ------------------------------- Mini Map -------------------------------- */
 /* ------------------------------------------------------------------------- */
