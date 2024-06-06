@@ -10,12 +10,9 @@ void	init_events(t_game *game)
 
 	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, &close_window, game);
 	mlx_hook(game->mapwin, DestroyNotify, StructureNotifyMask, &close_window, game);
-
-	mlx_mouse_hook(game->win, mouse_hook, game);
-	mlx_mouse_hook(game->mapwin, mouse_hook, game);
 }
 
-// add shooting, space, reload ...
+// add reload ...
 int	key_press(int key, t_game *game)
 {
 	t_player	*player;
@@ -68,18 +65,18 @@ int key_release(int key, t_game *game)
 
 }
 
-int	mouse_hook(int button, int x, int y, t_game *game)
+// need to fix if mouse gets to screen edge
+int	mouse_hook(int x, t_player *player)
 {
-	if (button == LEFT_BTN)
-	{
+	int	delta_x;
 
-		(void)x;
-	}
-	if (button == RIGHT_BTN)
-	{
+	delta_x = x - player->prev_mouse_x;
+	player->prev_mouse_x = x;
+	player->p_angle += delta_x * MOUSE_SENSITIVITY;
 
-		(void)y;
-	}
-	(void)game;
+	if (player->p_angle < 0)
+		player->p_angle += _2PI;
+	else if (player->p_angle > _2PI)
+		player->p_angle -= _2PI;
 	return (0);
 }

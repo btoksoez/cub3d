@@ -35,12 +35,12 @@
 # define QUIT 1
 /* -------------- PI Values -------------- */
 # define PI 3.141592653f
-# define PI_05 (PI / 2.0)
-# define PI_15 (3.0 * PI / 2.0)
-# define PI_2 (2.0 * PI)
+# define _05PI (PI / 2.0)
+# define _15PI (3.0 * PI / 2.0)
+# define _2PI (2.0 * PI)
 /* -------------- Directions ------------- */
-# define NORTH PI_15
-# define SOUTH PI_05
+# define NORTH _15PI
+# define SOUTH _05PI
 # define EAST 0
 # define WEST PI
 # define NORTH_ 0
@@ -57,6 +57,7 @@
 # define LEFT -1
 # define DOWN -1
 # define RESET 0
+# define MOUSE_SENSITIVITY 0.003
 /* ----------------- Game ---------------- */
 # define PLAYER "NSEW"
 # define SCALE 50

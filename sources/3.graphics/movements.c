@@ -21,13 +21,13 @@ void	check_movements(t_game *game)
 	}
 	if (player->left_right == LEFT)
 	{
-		new_x = player->pos.x + (player->speed * cos(player->p_angle - PI_05));
-		new_y = player->pos.y + (player->speed * sin(player->p_angle - PI_05));
+		new_x = player->pos.x + (player->speed * cos(player->p_angle - _05PI));
+		new_y = player->pos.y + (player->speed * sin(player->p_angle - _05PI));
 	}
 	if (player->left_right == RIGHT)
 	{
-		new_x = player->pos.x + (player->speed * cos(player->p_angle + PI_05));
-		new_y = player->pos.y + (player->speed * sin(player->p_angle + PI_05));
+		new_x = player->pos.x + (player->speed * cos(player->p_angle + _05PI));
+		new_y = player->pos.y + (player->speed * sin(player->p_angle + _05PI));
 	}
 	rotate_player(player);
 	jumping(game->player);
@@ -56,13 +56,13 @@ void	rotate_player(t_player *player)
 	{
 		player->p_angle -= ROT_SPEED;
 		if (player->p_angle < 0)
-			player->p_angle += 2 * PI;
+			player->p_angle += _2PI;
 	}
 	if (player->rot == RIGHT)
 	{
 		player->p_angle += ROT_SPEED;
-		if (player->p_angle > 2 * PI)
-			player->p_angle -= 2 * PI;
+		if (player->p_angle > _2PI)
+			player->p_angle -= _2PI;
 	}
 }
 

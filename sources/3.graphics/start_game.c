@@ -15,9 +15,14 @@ int	render(t_game *game)
 {
 	// delete_image?
 	check_movements(game);
-
 	render_2dgame(game);
 	raycast(game);
+
+	int x;
+	int	y;
+	
+	mlx_mouse_get_pos(game->win, &x, &y);
+	mouse_hook(x, game->player);
 
 	// minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);

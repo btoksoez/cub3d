@@ -28,6 +28,7 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 	player->speed = 2;
 	player->jump_height = 0;
 	player->jumping = false;
+	player->prev_mouse_x = 0;
 }
 
 void	init_window(t_game *game, t_map *map)
