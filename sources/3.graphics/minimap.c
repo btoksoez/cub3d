@@ -1,18 +1,39 @@
 #include "../../includes/cub3d.h"
 
+// render player + 3 up, 3 left, 3 down, 3 right
+// if player only has 1 on left, right, up, down, then render 5 on the other direction, same for 2, rander 4
+// will have problems with maps smaller than 7x7
+
 void	render_2dgame(t_game *game)
 {
-	int			y;
-	int			x;
 	t_player	*player;
+	int x;
+	int y;
+	int	end_x;
+	int	end_y;
 
 	player = game->player;
-	y = 0;
 	render_image(game, 0, 0, SCREEN);
-	while (y < game->map->rows)
-	{
+	x = player->pos.x / SCALE;
+	y = player->pos.y / SCALE;
+	if (x - 3 >= 0)
+		x -= 3;
+	else
 		x = 0;
-		while (x < game->map->cols)
+	if (y - 3 >= 0)
+		y -= 3;
+	else
+		y = 0;
+	end_y = y + 7;
+	end_x = x + 7;
+	while (y < end_y)
+	{
+		x = player->pos.x / SCALE;
+		if (x - 3 >= 0)
+			x -= 3;
+		else
+			x = 0;
+		while (x < end_x)
 		{
 			if (game->map->map[y][x] == WALL)
 				render_image(game, x * SCALE, y * SCALE, WALLS);
