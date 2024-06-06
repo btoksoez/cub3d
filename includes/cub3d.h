@@ -60,7 +60,7 @@ typedef struct s_textures
 	struct s_img	south;
 	struct s_img	east;
 	struct s_img	west;
-	struct s_img	weapon[3][5];
+	struct s_img	weapon[4][5];
 }					t_textures;
 
 typedef struct	s_game
