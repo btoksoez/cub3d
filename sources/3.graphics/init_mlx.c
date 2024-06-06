@@ -37,7 +37,6 @@ void	init_window(t_game *game, t_map *map)
 	if (!game->mlx)
 		free_map(map, "Mlx initialization failed", 1);
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3D");
-	game->mapwin = mlx_new_window(game->mlx, game->width, game->height, "map");
 	if (!game->win)
 	{
 		// mlx_destroy_display(game->mlx);
@@ -49,7 +48,6 @@ void	init_window(t_game *game, t_map *map)
 void	init_image(t_game *game)
 {
 	game->img.img_ptr = mlx_new_image(game->mlx, WIDTH, HEIGHT);
-	game->mapimg.img_ptr = mlx_new_image(game->mlx, game->width, game->height);
 	if (!game->img.img_ptr)
 	{
 		mlx_destroy_window(game->mlx, game->win);
@@ -61,10 +59,6 @@ void	init_image(t_game *game)
 		&game->img.bits_per_pixel,
 		&game->img.line_len,
 		&game->img.endian);
-	game->mapimg.pixels_ptr = mlx_get_data_addr(game->mapimg.img_ptr,
-		&game->mapimg.bits_per_pixel,
-		&game->mapimg.line_len,
-		&game->mapimg.endian);
 }
 
 int	convert(t_rgb color)

@@ -3,13 +3,8 @@
 void	init_events(t_game *game)
 {
 	mlx_hook(game->win, KeyPress, KeyPressMask, &key_press, game);
-	mlx_hook(game->mapwin, KeyPress, KeyPressMask, &key_press, game);
-
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, &key_release, game);
-	mlx_hook(game->mapwin, KeyRelease, KeyReleaseMask, &key_release, game);
-
 	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, &close_window, game);
-	mlx_hook(game->mapwin, DestroyNotify, StructureNotifyMask, &close_window, game);
 }
 
 // add reload ...
