@@ -1,7 +1,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "./libft/libft.h"
+# include "../includes/libft/libft.h"
 # include "define.h"
 // # include <X11/keysym.h>
 // # include <X11/X.h>
@@ -27,12 +27,25 @@ typedef struct s_point_i
 	int				y;
 }					t_point_i;
 
+typedef struct s_enemy
+{
+	int				type;
+	int				rot;
+	t_point			pos;
+	float			p_angle;
+	int				look_dir;
+	int				speed;
+	int				shooting;
+}					t_enemy;
+
 typedef struct	s_map
 {
 	char			**map;
 	int				rows;
 	int				cols;
-	t_point			player;
+	t_point_i		player;
+	struct s_enemy	**enemies;
+	int				enemy_count;
 	float			player_dir;
 	char			*no_texture;
 	char			*so_texture;
@@ -81,6 +94,8 @@ typedef struct	s_game
 	int					color;
 	float				fraction_x;
 	float				fraction_y;
+	struct s_enemy		**enemies;
+	int					enemy_count;
 }						t_game;
 
 typedef struct s_player
