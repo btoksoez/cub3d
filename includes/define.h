@@ -25,6 +25,8 @@
 #define RIGHT_KEY	0x7C
 #define SHIFT		0x101
 #define SPACEBAR	0x31
+#define LEFT_BTN	0xF0
+#define RIGHT_BTN 	0xF1
 #endif
 /* --------------- General --------------- */
 # define WHITESPACE " \t\n\r\f\v"

@@ -155,7 +155,6 @@ void	fill_with_space(t_map *map);
 /* ------------------------------------------------------------------------- */
 void	start_game(t_map *map);
 void	init_mlx(t_game *game, t_textures *textures, t_player *player, t_map *map);
-void	init_game_images(t_game *game, t_textures *textures);
 void	init_game_struct(t_game *game, t_player *player, t_map *map);
 void	init_window(t_game *game, t_map *map);
 void	init_image(t_game *game);
@@ -163,6 +162,8 @@ void	init_events(t_game *game);
 int		key_press(int keysym, t_game *game);
 int		key_release(int keysym, t_game *game);
 int		mouse_hook(int button, int x, int y, t_game *game);
+int		convert(t_rgb color);
+void	init_textures(t_game *game, t_textures *textures);
 
 /* ------------------------------- Rendering ------------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -175,7 +176,6 @@ void	move_player(t_game *game, float move_x, float move_y);
 void	check_movements(t_game *game);
 void	put_pixel_to_mapimg(t_game *game, int x, int y, int color);
 void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
-void	render_rayimage(t_game *game, int start_x, int start_y, int color);
 int		get_texture_color(t_game *game, int tex_x, int tex_y);
 void	draw_textures(t_game *game, int start_x, int start_y, int end_x, int end_y);
 void	jumping(t_player *player);

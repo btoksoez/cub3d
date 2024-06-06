@@ -1,5 +1,20 @@
 #include "../../includes/cub3d.h"
 
+void	init_events(t_game *game)
+{
+	mlx_hook(game->win, KeyPress, KeyPressMask, &key_press, game);
+	mlx_hook(game->mapwin, KeyPress, KeyPressMask, &key_press, game);
+
+	mlx_hook(game->win, KeyRelease, KeyReleaseMask, &key_release, game);
+	mlx_hook(game->mapwin, KeyRelease, KeyReleaseMask, &key_release, game);
+
+	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, &close_window, game);
+	mlx_hook(game->mapwin, DestroyNotify, StructureNotifyMask, &close_window, game);
+
+	mlx_mouse_hook(game->win, mouse_hook, game);
+	mlx_mouse_hook(game->mapwin, mouse_hook, game);
+}
+
 // add shooting, space, reload ...
 int	key_press(int key, t_game *game)
 {
@@ -55,14 +70,14 @@ int key_release(int key, t_game *game)
 
 int	mouse_hook(int button, int x, int y, t_game *game)
 {
-	if (button == 4)
+	if (button == LEFT_BTN)
 	{
-		//scroll up
+
 		(void)x;
 	}
-	if (button == 5)
+	if (button == RIGHT_BTN)
 	{
-		//scroll down
+
 		(void)y;
 	}
 	(void)game;
