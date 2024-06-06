@@ -18,7 +18,7 @@ bool	flood_fill(t_map *map_array, char **map, int row, int col)
 	return (true);
 }
 
-char **copy_map(t_map *map)
+char	**copy_map(t_map *map)
 {
 	char	**map_copy;
 	int		row;
@@ -59,7 +59,7 @@ bool	empty_left(char **map)
 	return (false);
 }
 
-bool	surrounded_by_walls2(t_map *map)
+bool	surrounded_by_walls(t_map *map)
 {
 	char **map_copy;
 	int	row;
@@ -88,7 +88,7 @@ bool	surrounded_by_walls2(t_map *map)
 }
 
 
-bool	surrounded_by_walls(t_map *map)
+bool	surrounded_by_walls2(t_map *map)
 {
 	int		row;
 	int		coll;

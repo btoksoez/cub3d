@@ -11,9 +11,9 @@ void	validate_map(t_map *map)
 		free_map(map, "Map is separated by empty lines", 1);
 	if (invalid_characters(map))
 		free_map(map, "Map has invalid characters", 1);
-	if (!surrounded_by_walls2(map))
+	if (!surrounded_by_walls(map))
 		free_map(map, "Map isn't surrounded by walls", 1);
-	// if (!surrounded_by_walls(map))
+	// if (!surrounded_by_walls2(map))
 	// 	free_map(map, "Map isn't surrounded by walls", 1);
 	// if (!leaking_empty_spaces(map))
 	// 	free_map(map, "Map has empty spaces not surrounded by walls", 1);

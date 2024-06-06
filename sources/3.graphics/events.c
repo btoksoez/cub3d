@@ -10,7 +10,6 @@ void	move_player(t_game *game, float new_x, float new_y)
 		&& game->map->map[(int)(new_y + PSIZE) / SCALE][((int)new_x + PSIZE) / SCALE] != WALL
 		&& game->map->map[(int)(new_y + PSIZE) / SCALE][(int)new_x / SCALE] != WALL
 		&& game->map->map[(int)(new_y) / SCALE][((int)new_x + PSIZE) / SCALE] != WALL)
-		//maybe add margin for the wall
 		{
 			player->pos.y = new_y;
 			player->pos.x = new_x;
