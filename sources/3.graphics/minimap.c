@@ -7,48 +7,59 @@
 void	minimap(t_game *game)
 {
 	t_player	*player;
-	int x;
-	int y;
+	int	start_x;
+	int	start_y;
 	int	end_x;
 	int	end_y;
-	int	coll;
-	int	row;
+	int	hori_vision;
+	int	vert_vision;
+	int	iterate_x;
+	int	iterate_y;
 
 	player = game->player;
-	x = player->pos.x / SCALE;
-	y = player->pos.y / SCALE;
-	if (x - 3 >= 0)
-		x -= 3;
+	start_x = player->pos.x;
+	start_y = player->pos.y;
+	hori_vision = (SCALE * 3) + (SCALE / 2) - (PSIZE / 2) - 1;
+	vert_vision = (SCALE * 2) + (SCALE / 2) - (PSIZE / 2) - 1;
+	if (start_x - hori_vision >= 0)
+		start_x -= hori_vision;
 	else
-		x = 0;
-	if (y - 2 >= 0)
-		y -= 2;
+		start_x = 0;
+
+	if (start_y - vert_vision >= 0)
+		start_y -= vert_vision;
 	else
-		y = 0;
-	end_x = x + 7;
-	end_y = y + 5;
-	row = 0;
-	while (y < end_y)
+		start_y = 0;
+
+	end_x = start_x + (SCALE * 7);
+	end_y = start_y + (SCALE * 5);
+	iterate_y = start_y;
+	int	initial_x = start_x;
+	int	initial_y = start_y;
+	// int	initial_player_x = player->pos.x;
+	// int	initial_player_y = player->pos.y;
+	while (iterate_y < end_y)
 	{
-		coll = 0;
-		x = player->pos.x / SCALE;
-		if (x - 3 >= 0)
-			x -= 3;
+		start_x = player->pos.x;
+		if (start_x - hori_vision >= 0)
+			start_x -= hori_vision;
 		else
-			x = 0;
-		while (x < end_x)
+			start_x = 0;
+		iterate_x = start_x;
+		while (iterate_x < end_x)
 		{
-			if (game->map->map[y][x] == WALL)
-				render_minimap(game, coll * SCALE / 2, row * SCALE / 2, WALLS);
-			if (game->map->map[y][x] == EMPTY)
-				render_minimap(game, coll * SCALE / 2, row * SCALE / 2, SPACE);
-			if (coll == 3 && row == 2)
-				render_minimap(game, coll * SCALE / 2, row * SCALE / 2, PLAYER_);
-			x++;
-			coll++;
+			if (game->map->map[(int)(iterate_y / SCALE)][(int)(iterate_x / SCALE)] == WALL)
+				put_pixel_to_img(game, start_x - initial_x + MINI_X, start_y - initial_y + MINI_Y, WALLS);
+			else if (game->map->map[(int)(iterate_y / SCALE)][(int)(iterate_x / SCALE)] == EMPTY)
+				put_pixel_to_img(game, start_x - initial_x  + MINI_X, start_y - initial_y + MINI_Y, SPACE);
+			else
+				put_pixel_to_img(game, start_x - initial_x  + MINI_X, start_y - initial_y + MINI_Y, GREY);
+			render_minimap(game, (player->pos.x / 2) + MINI_X, (player->pos.y / 2)+ MINI_Y, PLAYER_);
+			start_x++;
+			iterate_x += SCALE / (SCALE / 2);
 		}
-		row++;
-		y++;
+		start_y++;
+		iterate_y += SCALE / (SCALE / 2);
 	}
 }
 
@@ -57,31 +68,17 @@ void	render_minimap(t_game *game, int start_x, int start_y, int color)
 	int	width;
 	int	height;
 
-	if (color == PLAYER_)
+	width = PSIZE / 2;
+	height = PSIZE / 2;
+	for (int y = start_y; y < start_y + height; y++)
 	{
-		width = PSIZE / 2;
-		height = PSIZE / 2;
-	}
-	else
-	{
-		width = SCALE / 2;
-		height = SCALE / 2;
-	}
-	int	x;
-	int	y = start_y;
-
-	while (y < start_y + height)
-	{
-		x = start_x;
-		while (x < start_x + width)
+		for (int x = start_x; x < start_x + width; x++)
 		{
 			if (x == start_x || x == start_x + width - 1 || y == start_y || y == start_y + height - 1)
-				put_pixel_to_img(game, x + (WIDTH - WIDTH / 5), y + (HEIGHT - HEIGHT / 5), BLACK);
+				put_pixel_to_img(game, x, y, BLACK);
 			else
-				put_pixel_to_img(game, x + (WIDTH - WIDTH / 5), y + (HEIGHT - HEIGHT / 5), color);
-			x++;
+				put_pixel_to_img(game, x, y, color);
 		}
-		y++;
 	}
 }
 

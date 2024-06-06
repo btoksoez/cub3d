@@ -82,13 +82,8 @@
 # define W_ 0xFFFFFF
 # define E_ 0xD63A00
 /* --------------- Minimap -------------- */
-# define MM_WIDTH WIDTH / 5
-# define MM_HEIGHT HEIGHT / 5
-# define MM_SCALE SCALE / 3
-# define MM_SCREEN BLUE
-
-#define min(a,b) ((a) < (b) ? (a) : (b))
-#define max(a,b) ((a) > (b) ? (a) : (b))
+# define MINI_X 880
+# define MINI_Y 570
 /* ---------------- Colors --------------- */
 # define RED 0xFF0000
 # define GREEN 0x00FF00
@@ -103,7 +98,7 @@
 /* ---------------- Images --------------- */
 # define SCREEN BLACK
 # define SPACE WHITE
-# define WALLS ORANGE
+# define WALLS BLACK
 # define PLAYER_ BLUE
 /* ----------------- Keys ---------------- */
 # define KeyPress 2
