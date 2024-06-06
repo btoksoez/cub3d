@@ -15,9 +15,9 @@ int	render(t_game *game)
 {
 	// delete_image?
 	check_movements(game);
-
 	render_2dgame(game);
 	raycast(game);
+	render_weapon(game);
 
 	// minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);

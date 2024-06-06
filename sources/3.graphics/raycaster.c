@@ -27,6 +27,7 @@ void	raycast(t_game *game)
 		angle += (PLAYER_VISION / WIDTH);
 		x++;
 	}
+	// draw_gun(game);
 }
 
 float	cast_ray(t_game *game, float angle)

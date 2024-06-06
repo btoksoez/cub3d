@@ -60,6 +60,7 @@ typedef struct s_textures
 	struct s_img	south;
 	struct s_img	east;
 	struct s_img	west;
+	struct s_img	weapon[3][5];
 }					t_textures;
 
 typedef struct	s_game
@@ -95,6 +96,8 @@ typedef struct s_player
 	float			jump_height;
 	bool			jumping;
 	bool			jump_peak;
+	int				shooting;
+	int				weapon;
 }					t_player;
 
 typedef struct s_raycaster
@@ -179,6 +182,12 @@ void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y, in
 int		get_texture_color(t_game *game, int tex_x, int tex_y);
 void	draw_textures(t_game *game, int start_x, int start_y, int end_x, int end_y);
 void	jumping(t_player *player);
+
+/* --------------------------- Weapon Rendering ---------------------------- */
+/* ------------------------------------------------------------------------- */
+void	draw_weapon(t_game *game, int frame);
+int		get_weapon_color(t_game *game, int tex_x, int tex_y, int frame);
+void	render_weapon(t_game *game);
 
 /* ------------------------------ Ray Caster ------------------------------- */
 /* ------------------------------------------------------------------------- */

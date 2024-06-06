@@ -2,7 +2,6 @@
 
 bool	flood_fill(t_map *map_array, char **map, int row, int col)
 {
-	printf("%d, %d\n", row, col);
 	if (row < 0 || col < 0 || row >= map_array->rows || col >= map_array->cols)
 		return (false);
 	if (map[row][col] == WALL || map[row][col] == VISITED)

@@ -28,6 +28,8 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 	player->speed = 2;
 	player->jump_height = 0;
 	player->jumping = false;
+	player->shooting = 0;
+	player->weapon = GUN;
 }
 
 void	init_window(t_game *game, t_map *map)
