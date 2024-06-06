@@ -4,6 +4,18 @@
 // if player only has 1 on left, right, up, down, then render 5 on the other direction, same for 2, rander 4
 // will have problems with maps smaller than 7x7
 
+void	init_minimap(t_game *game, t_minimap *mm)
+{
+	mm->start.x = WIDTH - WIDTH / 5;
+	mm->start.y = HEIGHT - HEIGHT / 5;
+	mm->pos_player.x = mm->start.x + game->player->pos.x / WIDTH * (WIDTH - mm->start.x);
+	mm->pos_player.y = mm->start.y + game->player->pos.y / HEIGHT * (HEIGHT - mm->start.y);
+	mm->start_map.x = max(0, mm->pos_player.x - (MM_WIDTH / 2) * 5);
+	mm->start_map.y = max(0, mm->pos_player.y - (MM_HEIGHT / 2) * 5);
+	mm->end_map.x = min(game->map->cols, mm->pos_player.x + (MM_WIDTH / 2) * 5);
+	mm->end_map.y = min(game->map->rows, mm->pos_player.y + (MM_HEIGHT / 2) * 5);
+}
+
 void	render_2dgame(t_game *game)
 {
 	t_player	*player;
@@ -20,12 +32,14 @@ void	render_2dgame(t_game *game)
 		x -= 3;
 	else
 		x = 0;
-	if (y - 3 >= 0)
-		y -= 3;
+	if (y - 2 >= 0)
+		y -= 2;
 	else
 		y = 0;
-	end_y = y + 7;
 	end_x = x + 7;
+	end_y = y + 5;
+
+	// init_minimap(game, &mm, x, y);
 	while (y < end_y)
 	{
 		x = player->pos.x / SCALE;
@@ -36,10 +50,10 @@ void	render_2dgame(t_game *game)
 		while (x < end_x)
 		{
 			if (game->map->map[y][x] == WALL)
-				render_image(game, x * SCALE, y * SCALE, WALLS);
+				render_image(game, x * SCALE / 2, y * SCALE / 2, WALLS);
 			if (game->map->map[y][x] == EMPTY)
-				render_image(game, x * SCALE, y * SCALE, SPACE);
-			render_image(game, player->pos.x, player->pos.y, PLAYER_);
+				render_image(game, x * SCALE / 2, y * SCALE / 2, SPACE);
+			render_image(game, player->pos.x / 2, player->pos.y / 2, PLAYER_);
 			x++;
 		}
 		y++;
@@ -58,13 +72,13 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 	}
 	else if (color == PLAYER_)
 	{
-		width = PSIZE;
-		height = PSIZE;
+		width = PSIZE / 2;
+		height = PSIZE / 2;
 	}
 	else
 	{
-		width = SCALE;
-		height = SCALE;
+		width = SCALE / 2;
+		height = SCALE / 2;
 	}
 	for (int y = start_y; y < start_y + height; y++)
 	{
@@ -114,17 +128,6 @@ void	put_pixel_to_mapimg(t_game *game, int x, int y, int color)
 	}
 }
 
-void	init_minimap(t_game *game, t_minimap *mm)
-{
-	mm->start.x = WIDTH - WIDTH / 5;
-	mm->start.y = HEIGHT - HEIGHT / 5;
-	mm->pos_player.x = mm->start.x + game->player->pos.x / WIDTH * (WIDTH - mm->start.x);
-	mm->pos_player.y = mm->start.y + game->player->pos.y / HEIGHT * (HEIGHT - mm->start.y);
-	mm->start_map.x = max(0, mm->pos_player.x - (MM_WIDTH / 2) * 5);
-	mm->start_map.y = max(0, mm->pos_player.y - (MM_HEIGHT / 2) * 5);
-	mm->end_map.x = min(game->map->cols, mm->pos_player.x + (MM_WIDTH / 2) * 5);
-	mm->end_map.y = min(game->map->rows, mm->pos_player.y + (MM_HEIGHT / 2) * 5);
-}
 
 void	minimap(t_game *game)
 {

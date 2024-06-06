@@ -75,7 +75,7 @@ float	cast_ray(t_game *game, float angle)
 	}
 	game->fraction_x = fmod((ray.start.x + ray.dir.x * ray.len), (float)SCALE) / (float)SCALE;
 	game->fraction_y = fmod((ray.start.y + ray.dir.y * ray.len), (float)SCALE) / (float)SCALE;
-	draw_line(game, ray.start.x, ray.start.y, ray.start.x + ray.dir.x * ray.len, ray.start.y + ray.dir.y * ray.len, BLUE);
+	draw_line(game, ray.start.x / 2, ray.start.y / 2, (ray.start.x + ray.dir.x * ray.len) / 2, (ray.start.y + ray.dir.y * ray.len) / 2, BLUE);
 	return (ray.len);
 }
 
