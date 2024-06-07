@@ -59,13 +59,25 @@ void	minimap(t_game *game, t_raycaster *ray)
 		iterate_y += SCALE / (SCALE / 2);
 	}
 	if ((player->pos.x <= hori_vision) && (player->pos.y <= vert_vision))
+	{
+		// printf("HERE1\n");
 		render_player(game, MINI_X + (player->pos.x / 2), MINI_Y + (player->pos.y / 2));
+	}
 	else if (player->pos.y <= vert_vision)
+	{
+		// printf("HERE2\n");
 		render_player(game, MINI_X + 84, MINI_Y + (player->pos.y / 2));
+	}
 	else if (player->pos.x <= hori_vision)
+	{
+		// printf("HERE3\n");
 		render_player(game, MINI_X + (player->pos.x / 2), MINI_Y + 60);
+	}
 	else
+	{
+		// printf("HERE4\n");
 		render_player(game, MINI_X + 84, MINI_Y + 60);
+	}
 	cast_2d_rays(game, ray, hori_vision, vert_vision);
 }
 
