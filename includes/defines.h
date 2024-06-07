@@ -99,7 +99,7 @@
 # define SCREEN BLACK
 # define SPACE WHITE
 # define WALLS BLACK
-# define PLAYER_ ORANGE
+# define PLAYER_ BLUE
 /* ----------------- Keys ---------------- */
 # define KeyPress 2
 # define KeyPressMask 1L<<0

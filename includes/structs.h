@@ -55,6 +55,19 @@ typedef struct s_textures
 	struct s_img	west;
 }					t_textures;
 
+typedef struct s_raycaster
+{
+	t_point		dir;
+	t_point		scalingf;
+	t_point		ray_len;
+	t_point_i	map_loc;
+	t_point_i	map_step;
+	float		len;
+	t_point		intersection;
+	t_point		start;
+	bool		wall;
+}					t_raycaster;
+
 typedef struct	s_game
 {
 	void				*mlx;
@@ -69,6 +82,7 @@ typedef struct	s_game
 	struct s_player		*player;
 	int					dir;
 	struct s_textures	*textures;
+	struct s_raycaster	*ray;
 	int					f_color;
 	int					c_color;
 	int					color;
@@ -91,27 +105,5 @@ typedef struct s_player
 	int				prev_mouse_x;
 	int				prev_mouse_y;
 }					t_player;
-
-typedef struct s_raycaster
-{
-	t_point		dir;
-	t_point		scalingf;
-	t_point		ray_len;
-	t_point_i	map_loc;
-	t_point_i	map_step;
-	float		len;
-	t_point		intersection;
-	t_point		start;
-	bool		wall;
-}					t_raycaster;
-
-
-typedef struct s_minimap
-{
-	t_point			start;
-	t_point			start_map;
-	t_point			end_map;
-	t_point			pos_player;
-}					t_minimap;
 
 #endif

@@ -66,8 +66,11 @@ void	jumping(t_player *player);
 /* ------------------------------ Ray Caster ------------------------------- */
 /* ------------------------------------------------------------------------- */
 void	init_ray(t_raycaster *ray, t_player *player, float angle);
-float	cast_ray(t_game *game, float angle);
-void	raycast(t_game *game);
+float	cast_ray(t_game *game, float angle, t_raycaster *ray);
+void	raycast(t_game *game, t_raycaster *ray);
+void	cast_2d_rays(t_game *game, t_raycaster *ray);
+void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray);
+void	init_2d_ray(t_raycaster *ray, t_player *player, float angle);
 
 /* ------------------------------- Movements ------------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -79,8 +82,8 @@ int		mouse_hook(int x, t_player *player);
 
 /* ------------------------------- Mini Map -------------------------------- */
 /* ------------------------------------------------------------------------- */
-void	minimap(t_game *game);
-void	render_minimap(t_game *game, int start_x, int start_y, int color);
+void	minimap(t_game *game, t_raycaster *ray);
+void	render_player(t_game *game, int start_x, int start_y);
 
 /* -------------------------------- Utils ---------------------------------- */
 /* ------------------------------------------------------------------------- */

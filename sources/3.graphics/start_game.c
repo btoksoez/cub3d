@@ -13,10 +13,11 @@ void	start_game(t_map *map)
 
 int	render(t_game *game)
 {
+	t_raycaster	ray;
 	// delete_image?
 	check_movements(game);
-	raycast(game);
-	minimap(game);
+	raycast(game, &ray);
+	minimap(game, &ray);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
 	return (0);
 }

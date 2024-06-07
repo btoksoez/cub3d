@@ -4,7 +4,7 @@
 // if player only has 1 on left, right, up, down, then render 5 on the other direction, same for 2, rander 4
 // will have problems with maps smaller than 7x7
 
-void	minimap(t_game *game)
+void	minimap(t_game *game, t_raycaster *ray)
 {
 	t_player	*player;
 	int	start_x;
@@ -52,39 +52,42 @@ void	minimap(t_game *game)
 				put_pixel_to_img(game, start_x - initial_x  + MINI_X, start_y - initial_y + MINI_Y, SPACE);
 			else
 				put_pixel_to_img(game, start_x - initial_x  + MINI_X, start_y - initial_y + MINI_Y, GREY);
-
-			if ((player->pos.x <= hori_vision) && (player->pos.y <= vert_vision))
-				render_minimap(game, MINI_X + (player->pos.x / 2), MINI_Y + (player->pos.y / 2), PLAYER_);
-			else if (player->pos.y <= vert_vision)
-				render_minimap(game, MINI_X + 84, MINI_Y + (player->pos.y / 2), PLAYER_);
-			else if (player->pos.x <= hori_vision)
-				render_minimap(game, MINI_X + (player->pos.x / 2), MINI_Y + 60, PLAYER_);
-			else
-				render_minimap(game, MINI_X + 84, MINI_Y + 60, PLAYER_);
 			start_x++;
 			iterate_x += SCALE / (SCALE / 2);
 		}
 		start_y++;
 		iterate_y += SCALE / (SCALE / 2);
 	}
+	if ((player->pos.x <= hori_vision) && (player->pos.y <= vert_vision))
+		render_player(game, MINI_X + (player->pos.x / 2), MINI_Y + (player->pos.y / 2));
+	else if (player->pos.y <= vert_vision)
+		render_player(game, MINI_X + 84, MINI_Y + (player->pos.y / 2));
+	else if (player->pos.x <= hori_vision)
+		render_player(game, MINI_X + (player->pos.x / 2), MINI_Y + 60);
+	else
+		render_player(game, MINI_X + 84, MINI_Y + 60);
+	cast_2d_rays(game, ray);
 }
 
-void	render_minimap(t_game *game, int start_x, int start_y, int color)
+void	render_player(t_game *game, int start_x, int start_y)
 {
 	int	width;
 	int	height;
+	int	x;
+	int	y;
 
 	width = PSIZE / 2;
 	height = PSIZE / 2;
-	for (int y = start_y; y < start_y + height; y++)
+	y = start_y;
+	while (y < start_y + height)
 	{
-		for (int x = start_x; x < start_x + width; x++)
+		x = start_x;
+		while (x < start_x + width)
 		{
-			if (x == start_x || x == start_x + width - 1 || y == start_y || y == start_y + height - 1)
-				put_pixel_to_img(game, x, y, BLACK);
-			else
-				put_pixel_to_img(game, x, y, color);
+			put_pixel_to_img(game, x, y, PLAYER_);
+			x++;
 		}
+		y++;
 	}
 }
 
