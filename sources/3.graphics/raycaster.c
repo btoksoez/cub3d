@@ -81,10 +81,18 @@ void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, int hori_vision, i
 {
 	t_player	*player;
 	int			visited;
+	float		max_dist_x;
+	float		true_max_x;
+	float		max_dist_y;
+	float		true_max_y;
 
 	visited = 0;
 	player = game->player;
 	init_2d_ray(ray, player, angle);
+	max_dist_y = 5 * (SCALE / 2) / 2;
+	max_dist_x = 7 * (SCALE / 2) / 2;
+	true_max_y = fabs(max_dist_y / cos(_15PI - angle));
+	true_max_x = fabs(max_dist_x / cos(angle - PI));
 	while (!ray->wall)
 	{
 		if (ray->ray_len.x < ray->ray_len.y)
@@ -120,26 +128,26 @@ void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, int hori_vision, i
 			ray->wall = true;
 		}
 	}
+	if (true_max_x > true_max_y && ray->len > true_max_y)
+		ray->len = true_max_y;
+	else if (true_max_x < true_max_y && ray->len > true_max_x)
+		ray->len = true_max_x;
 	if ((player->pos.x <= hori_vision) && (player->pos.y <= vert_vision))
-	{
-		// printf("here1\n");
-		draw_line(game, (MINI_X + (player->pos.x / 2) + PSIZE / 4), (MINI_Y + (player->pos.y / 2) + PSIZE / 4),  (MINI_X + (player->pos.x / 2) + PSIZE / 4) + (ray->dir.x * ray->len), (MINI_Y + (player->pos.y / 2) + PSIZE / 4) + (ray->dir.y * ray->len), BLUE);
-	}
+		draw_line(game, CLOSE_TO_BOUND_POSITION_X, CLOSE_TO_BOUND_POSITION_Y,
+		CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
+		CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
 	else if (player->pos.y <= vert_vision)
-	{
-		// printf("here2\n");
-		draw_line(game, (MINI_X + 84 + PSIZE / 4), (MINI_Y + (player->pos.y / 2) + PSIZE / 4), (MINI_X + 84 + PSIZE / 4) + (ray->dir.x * ray->len), (MINI_Y + (player->pos.y / 2) + PSIZE / 4) + (ray->dir.y * ray->len), BLUE);
-	}
+		draw_line(game, CENTERED_POSITION_X, CLOSE_TO_BOUND_POSITION_Y,
+		CENTERED_POSITION_X + (ray->dir.x * ray->len),
+		CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
 	else if (player->pos.x <= hori_vision)
-	{
-		// printf("here3\n");
-		draw_line(game, (MINI_X + (player->pos.x / 2) + PSIZE / 4), (MINI_Y + 60 + PSIZE / 4), (MINI_X + (player->pos.x / 2) + PSIZE / 4) + (ray->dir.x * ray->len), (MINI_Y + 60 + PSIZE / 4) + (ray->dir.y * ray->len), BLUE);
-	}
+		draw_line(game, CLOSE_TO_BOUND_POSITION_X, CENTERED_POSITION_Y,
+		CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
+		CENTERED_POSITION_Y + (ray->dir.y * ray->len), BLUE);
 	else
-	{
-		// printf("here4\n");
-		draw_line(game, (MINI_X + 84 + PSIZE / 4), (MINI_Y + 60 + PSIZE / 4), (MINI_X + 84 + PSIZE / 4) + (ray->dir.x * ray->len), (MINI_Y + 60 + PSIZE / 4) + (ray->dir.y * ray->len), BLUE);
-	}
+		draw_line(game, CENTERED_POSITION_X, CENTERED_POSITION_Y,
+		CENTERED_POSITION_X + (ray->dir.x * ray->len),
+		CENTERED_POSITION_Y + (ray->dir.y * ray->len), BLUE);
 }
 
 float	cast_ray(t_game *game, float angle, t_raycaster *ray)

@@ -12,7 +12,7 @@
 #define LEFT_KEY	65361
 #define RIGHT_KEY	65363
 #define SHIFT		0xFFE1
-#define SPACENAR	0x31
+#define SPACEBAR	0x31
 #else
 /* ------------------ Mac ----------------- */
 # include "./minilibx-mac/mlx.h"
@@ -33,6 +33,7 @@
 # define VALID_CHARS "NSEW01 \t\n\r\f\v\0"
 # define WS_COMMA " \t\n\r\f\v,"
 # define QUIT 1
+# define EPSILON 0.0001
 /* -------------- PI Values -------------- */
 # define PI 3.141592653f
 # define _05PI (PI / 2.0)
@@ -84,6 +85,14 @@
 /* --------------- Minimap -------------- */
 # define MINI_X 880
 # define MINI_Y 570
+# define RIGHT_OUTBOUND (MINI_X + 84 + PSIZE / 4) + (SCALE * 7 / 4)
+# define LEFT_OUTBOUND (MINI_X + 84 + PSIZE / 4) - (SCALE * 7 / 4)
+# define TOP_OUTBOUND (MINI_Y + 60 + PSIZE / 4) + (SCALE * 5 / 4)
+# define BOTTOM_OUTBOUND (MINI_Y + 60 + PSIZE / 4) - (SCALE * 5 / 4)
+# define CENTERED_POSITION_X (MINI_X + 84 + PSIZE / 4)
+# define CLOSE_TO_BOUND_POSITION_X (MINI_X + (player->pos.x / 2) + PSIZE / 4)
+# define CENTERED_POSITION_Y (MINI_Y + 60 + PSIZE / 4)
+# define CLOSE_TO_BOUND_POSITION_Y (MINI_Y + (player->pos.x / 2) + PSIZE / 4)
 /* ---------------- Colors --------------- */
 # define RED 0xFF0000
 # define GREEN 0x00FF00
