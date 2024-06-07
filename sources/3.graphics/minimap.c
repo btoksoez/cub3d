@@ -51,7 +51,7 @@ void	minimap(t_game *game, t_raycaster *ray)
 			else if (game->map->map[(int)(iterate_y / SCALE)][(int)(iterate_x / SCALE)] == EMPTY)
 				put_pixel_to_img(game, start_x - initial_x  + MINI_X, start_y - initial_y + MINI_Y, SPACE);
 			else
-				put_pixel_to_img(game, start_x - initial_x  + MINI_X, start_y - initial_y + MINI_Y, GREY);
+				put_pixel_to_img(game, start_x - initial_x  + MINI_X, start_y - initial_y + MINI_Y, SCREEN);
 			start_x++;
 			iterate_x += SCALE / (SCALE / 2);
 		}
@@ -66,7 +66,7 @@ void	minimap(t_game *game, t_raycaster *ray)
 		render_player(game, MINI_X + (player->pos.x / 2), MINI_Y + 60);
 	else
 		render_player(game, MINI_X + 84, MINI_Y + 60);
-	cast_2d_rays(game, ray);
+	cast_2d_rays(game, ray, hori_vision, vert_vision);
 }
 
 void	render_player(t_game *game, int start_x, int start_y)

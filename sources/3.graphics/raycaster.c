@@ -29,7 +29,7 @@ void	raycast(t_game *game, t_raycaster *ray)
 	}
 }
 
-void	cast_2d_rays(t_game *game, t_raycaster *ray)
+void	cast_2d_rays(t_game *game, t_raycaster *ray, int hori_vision, int vert_vision)
 {
 	t_player	*player;
 	float		angle;
@@ -38,7 +38,7 @@ void	cast_2d_rays(t_game *game, t_raycaster *ray)
 	angle = player->p_angle - (PLAYER_VISION / 2);
 	while (angle < player->p_angle + (PLAYER_VISION / 2))
 	{
-		cast_2d_ray(game, angle, ray);
+		cast_2d_ray(game, angle, ray, hori_vision, vert_vision);
 		angle += (PLAYER_VISION / WIDTH);
 	}
 }
@@ -77,7 +77,7 @@ void	init_2d_ray(t_raycaster *ray, t_player *player, float angle)
 	ray->len = 0;
 }
 
-void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray)
+void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, int hori_vision, int vert_vision)
 {
 	t_player	*player;
 	int			visited;
@@ -120,7 +120,26 @@ void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray)
 			ray->wall = true;
 		}
 	}
-	draw_line(game, MINI_X + 84 + PSIZE / 4, MINI_Y + 60 + PSIZE / 4, (MINI_X + 84 + PSIZE / 4) + (ray->dir.x * ray->len), (MINI_Y + 60 + PSIZE / 4) + (ray->dir.y * ray->len), BLUE);
+	if ((player->pos.x <= hori_vision) && (player->pos.y <= vert_vision))
+	{
+		// printf("here1\n");
+		draw_line(game, (MINI_X + (player->pos.x / 2) + PSIZE / 4), (MINI_Y + (player->pos.y / 2) + PSIZE / 4),  (MINI_X + (player->pos.x / 2) + PSIZE / 4) + (ray->dir.x * ray->len), (MINI_Y + (player->pos.y / 2) + PSIZE / 4) + (ray->dir.y * ray->len), BLUE);
+	}
+	else if (player->pos.y <= vert_vision)
+	{
+		// printf("here2\n");
+		draw_line(game, (MINI_X + 84 + PSIZE / 4), (MINI_Y + (player->pos.y / 2) + PSIZE / 4), (MINI_X + 84 + PSIZE / 4) + (ray->dir.x * ray->len), (MINI_Y + (player->pos.y / 2) + PSIZE / 4) + (ray->dir.y * ray->len), BLUE);
+	}
+	else if (player->pos.x <= hori_vision)
+	{
+		// printf("here3\n");
+		draw_line(game, (MINI_X + (player->pos.x / 2) + PSIZE / 4), (MINI_Y + 60 + PSIZE / 4), (MINI_X + (player->pos.x / 2) + PSIZE / 4) + (ray->dir.x * ray->len), (MINI_Y + 60 + PSIZE / 4) + (ray->dir.y * ray->len), BLUE);
+	}
+	else
+	{
+		// printf("here4\n");
+		draw_line(game, (MINI_X + 84 + PSIZE / 4), (MINI_Y + 60 + PSIZE / 4), (MINI_X + 84 + PSIZE / 4) + (ray->dir.x * ray->len), (MINI_Y + 60 + PSIZE / 4) + (ray->dir.y * ray->len), BLUE);
+	}
 }
 
 float	cast_ray(t_game *game, float angle, t_raycaster *ray)

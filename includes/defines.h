@@ -97,8 +97,8 @@
 # define GREY 0xFF8080
 /* ---------------- Images --------------- */
 # define SCREEN BLACK
-# define SPACE WHITE
-# define WALLS BLACK
+# define SPACE GREY
+# define WALLS WHITE
 # define PLAYER_ BLUE
 /* ----------------- Keys ---------------- */
 # define KeyPress 2
