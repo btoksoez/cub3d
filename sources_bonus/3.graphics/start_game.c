@@ -15,9 +15,10 @@ int	render(t_game *game)
 {
 	// delete_image?
 	check_movements(game);
+	get_enemy_positions(game);
 	render_2dgame(game);
 	raycast(game);
-	render_sprites(game);
+	// render_sprites(game);
 	render_weapon(game);
 
 	// minimap(game);

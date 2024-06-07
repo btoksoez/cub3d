@@ -10,13 +10,14 @@ void	raycast(t_game *game)
 	int			x;
 	float		angle;
 	int			wall_height;
+	t_raycaster	ray;
 
 	player = game->player;
 	angle = player->p_angle - (PLAYER_VISION / 2);
 	x = 0;
 	while (angle < player->p_angle + (PLAYER_VISION / 2))
 	{
-		distance = cast_ray(game, angle);
+		distance = cast_ray(&ray, game, angle);
 		adjusted = distance * cos(angle - player->p_angle);
 		wall_height = (WALL_SCALE / adjusted);
 		top.y = (HEIGHT / 2) - wall_height + player->jump_height;
@@ -24,60 +25,66 @@ void	raycast(t_game *game)
 		draw_textures(game, x, top.y, x, bottom.y);
 		draw_vline(game, x, bottom.y, x, HEIGHT, game->f_color);
 		draw_vline(game, x, 0, x, top.y, game->c_color);
+		if (ray.enemy)
+		{
+			ray.distance_enemy *= cos(angle - player->p_angle);
+			draw_enemy(game, x, &ray);
+		}
 		angle += (PLAYER_VISION / WIDTH);
 		x++;
 	}
 	// draw_gun(game);
 }
 
-float	cast_ray(t_game *game, float angle)
+float	cast_ray(t_raycaster *ray, t_game *game, float angle)
 {
-	t_raycaster	ray;
 	t_player	*player;
 	int			visited;
 
 	visited = 0;
 	player = game->player;
-	init_ray(&ray, player, angle);
-	while (!ray.wall)
+	init_ray(ray, player, angle);
+	while (!ray->wall)
 	{
-		if (ray.ray_len.x < ray.ray_len.y)
+		if (ray->ray_len.x < ray->ray_len.y)
 		{
 			visited = 1;
-			ray.len = ray.ray_len.x;
-			ray.ray_len.x += ray.scalingf.x * SCALE;
-			ray.map_loc.x += ray.map_step.x;
+			ray->len = ray->ray_len.x;
+			ray->ray_len.x += ray->scalingf.x * SCALE;
+			ray->map_loc.x += ray->map_step.x;
 		}
 		else
 		{
 			visited = 1;
-			ray.len = ray.ray_len.y;
-			ray.ray_len.y += ray.scalingf.y * SCALE;
-			ray.map_loc.y += ray.map_step.y;
+			ray->len = ray->ray_len.y;
+			ray->ray_len.y += ray->scalingf.y * SCALE;
+			ray->map_loc.y += ray->map_step.y;
 		}
-		if (game->map->map[ray.map_loc.y][ray.map_loc.x] == WALL)
+		if (game->map->map[ray->map_loc.y][ray->map_loc.x] == WALL)
 		{
 			if (visited == 2)
 			{
-				if (ray.dir.y < NORTH_)
+				if (ray->dir.y < NORTH_)
 					game->dir = N_;
 				else
 					game->dir = S_;
 			}
 			else
 			{
-				if (ray.dir.x < WEST_)
+				if (ray->dir.x < WEST_)
 					game->dir = W_;
 				else
 					game->dir = E_;
 			}
-			ray.wall = true;
+			ray->wall = true;
 		}
+		if (enemy_in_tile(ray->map_loc.x, ray->map_loc.y, game))
+			get_enemy_distance(ray, game);
 	}
-	game->fraction_x = fmod((ray.start.x + ray.dir.x * ray.len), (float)SCALE) / (float)SCALE;
-	game->fraction_y = fmod((ray.start.y + ray.dir.y * ray.len), (float)SCALE) / (float)SCALE;
-	draw_line(game, ray.start.x, ray.start.y, ray.start.x + ray.dir.x * ray.len, ray.start.y + ray.dir.y * ray.len, BLUE);
-	return (ray.len);
+	game->fraction_x = fmod((ray->start.x + ray->dir.x * ray->len), (float)SCALE) / (float)SCALE;
+	game->fraction_y = fmod((ray->start.y + ray->dir.y * ray->len), (float)SCALE) / (float)SCALE;
+	draw_line(game, ray->start.x, ray->start.y, ray->start.x + ray->dir.x * ray->len, ray->start.y + ray->dir.y * ray->len, BLUE);
+	return (ray->len);
 }
 
 void	init_ray(t_raycaster *ray, t_player *player, float angle)
@@ -113,4 +120,8 @@ void	init_ray(t_raycaster *ray, t_player *player, float angle)
 	}
 	ray->wall = false;
 	ray->len = 0;
+	ray->enemy = false;
+	ray->distance_enemy = INT_MAX;
+	ray->enemy_fraction_x = 0;
+	ray->enemy_fraction_y = 0;
 }

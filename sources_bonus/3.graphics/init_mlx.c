@@ -9,6 +9,25 @@ void	init_mlx(t_game *game, t_textures *textures, t_player *player, t_map *map)
 	init_events(game);
 }
 
+void	get_enemy_positions(t_game *game)
+{
+	t_enemy	**enemy;
+	t_point	dir;
+	int		i;
+
+	i = 0;
+	enemy = game->enemies;
+	while (i < game->enemy_count)
+	{
+		dir = get_normalized_vector(enemy[i]->pos, game->player->pos);
+		enemy[i]->left.x = enemy[i]->pos.x - dir.y * PCENTER;
+		enemy[i]->left.y = enemy[i]->pos.y + dir.x * PCENTER;
+		enemy[i]->right.x = enemy[i]->pos.x + dir.y * PCENTER;
+		enemy[i]->right.y = enemy[i]->pos.y - dir.x * PCENTER;
+		i++;
+	}
+}
+
 void	init_game_struct(t_game *game, t_player *player, t_map *map)
 {
 	game->width = map->cols * SCALE;
@@ -32,6 +51,7 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 	player->weapon = GUN;
 	game->enemies = map->enemies;
 	game->enemy_count = map->enemy_count;
+	get_enemy_positions(game);
 }
 
 void	init_window(t_game *game, t_map *map)

@@ -25,7 +25,7 @@ void	render_2dgame(t_game *game)
 			i = 0;
 			while (i < game->enemy_count)
 			{
-				render_image(game, enemy[i]->pos.x, enemy[i]->pos.y, enemy[i]->type);
+				draw_line(game, enemy[i]->left.x, enemy[i]->left.y, enemy[i]->right.x, enemy[i]->right.y, enemy[i]->type);
 				i++;
 			}
 			x++;
@@ -44,7 +44,7 @@ void	render_image(t_game *game, int start_x, int start_y, int color)
 		width = game->width;
 		height = game->height;
 	}
-	else if (color == PLAYER_ || color == OFFICER || color == HITLER || color == BOSS)
+	else if (color == PLAYER_)
 	{
 		width = PSIZE;
 		height = PSIZE;

@@ -89,6 +89,7 @@
 # define OFFICER GREEN
 # define BOSS GOLD
 # define HITLER PURPLE
+# define ENEMY_SCALE 3000
 /* --------------- Minimap -------------- */
 # define MM_WIDTH WIDTH / 5
 # define MM_HEIGHT HEIGHT / 5
