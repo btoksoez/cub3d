@@ -50,7 +50,7 @@ float	cast_ray(t_game *game, float angle)
 		}
 		else
 		{
-			visited = 2;
+			visited = 1;
 			ray.len = ray.ray_len.y;
 			ray.ray_len.y += ray.scalingf.y * SCALE;
 			ray.map_loc.y += ray.map_step.y;
@@ -90,6 +90,7 @@ void	init_ray(t_raycaster *ray, t_player *player, float angle)
 	ray->map_loc.y = (int)player->pos.y / SCALE;
 	ray->start.x = player->pos.x + PCENTER;
 	ray->start.y = player->pos.y + PCENTER;
+	ray->wall = false;
 	if (ray->dir.y < NORTH_)
 	{
 		ray->map_step.y = -1;

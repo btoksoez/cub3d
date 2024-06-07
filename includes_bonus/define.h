@@ -35,6 +35,7 @@
 # define VALID_CHARS "NSEW01BOH \t\n\r\f\v\0"
 # define WS_COMMA " \t\n\r\f\v,"
 # define QUIT 1
+# define EPSILON 0.0001
 /* -------------- PI Values -------------- */
 # define PI 3.141592653f
 # define PI_05 (PI / 2.0)

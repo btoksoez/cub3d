@@ -125,6 +125,7 @@ typedef struct s_raycaster
 	t_point		intersection;
 	t_point		start;
 	bool		wall;
+	bool		enemy;
 }					t_raycaster;
 
 
@@ -202,6 +203,10 @@ void	jumping(t_player *player);
 void	draw_weapon(t_game *game, int frame);
 int		get_weapon_color(t_game *game, int tex_x, int tex_y, int frame);
 void	render_weapon(t_game *game);
+
+/* --------------------------- Sprite Rendering ---------------------------- */
+/* ------------------------------------------------------------------------- */
+void	render_sprites(t_game *game);
 
 /* ------------------------------ Ray Caster ------------------------------- */
 /* ------------------------------------------------------------------------- */
