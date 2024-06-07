@@ -11,151 +11,45 @@ t_point	get_normalized_vector(t_point p1, t_point p2)
 	return (dir);
 }
 
-// void	init_enemy_ray(t_raycaster *ray, t_player *player, t_enemy *enemy)
-// {
-// 	ray->dir = get_normalized_vector(player->pos, enemy->pos);
-// 	if (fabs(ray->dir.x) > EPSILON)
-// 		ray->scalingf.x = sqrt(1 + (ray->dir.y / ray->dir.x) * (ray->dir.y / ray->dir.x));
-// 	else
-// 		ray->scalingf.x = 0;
-// 	if (fabs(ray->dir.y) > EPSILON)
-// 		ray->scalingf.y = sqrt(1 + (ray->dir.x / ray->dir.y) * (ray->dir.x / ray->dir.y));
-// 	else
-// 		ray->scalingf.y = 0;
-// 	ray->map_loc.x = (int)player->pos.x / SCALE;
-// 	ray->map_loc.y = (int)player->pos.y / SCALE;
-// 	ray->start.x = player->pos.x + PCENTER;
-// 	ray->start.y = player->pos.y + PCENTER;
-// 	if (ray->dir.y < NORTH_)
-// 	{
-// 		ray->map_step.y = -1;
-// 		ray->ray_len.y = (ray->start.y - ray->map_loc.y * SCALE) * ray->scalingf.y;
-// 	}
-// 	else
-// 	{
-// 		ray->map_step.y = 1;
-// 		ray->ray_len.y = ((ray->map_loc.y + 1) * SCALE - ray->start.y) * ray->scalingf.y;
-// 	}
-// 	if (ray->dir.x < WEST_)
-// 	{
-// 		ray->map_step.x = -1;
-// 		ray->ray_len.x = (ray->start.x - ray->map_loc.x * SCALE) * ray->scalingf.x;
-// 	}
-// 	else
-// 	{
-// 		ray->map_step.x = 1;
-// 		ray->ray_len.x = ((ray->map_loc.x + 1) * SCALE - ray->start.x) * ray->scalingf.x;
-// 	}
-// 	ray->wall = false;
-// 	ray->enemy = false;
-// 	ray->len = 0;
-// }
-
-// void	get_enemy_position(t_game *game, t_raycaster *ray, t_enemy *enemy)
-// {
-// 	printf("%f %f\n", ray->dir.x, ray->dir.y);
-// 	if (game->dir == N_)	//Northwest
-// 		ray->len += ((ray->map_loc.y + 1) * SCALE - enemy->pos.y) * ray->scalingf.y;
-// 	else if (game->dir == S_) //North east
-// 		ray->len += (enemy->pos.y - ray->map_loc.y * SCALE) * ray->scalingf.y;
-// 	else if (game->dir == W_) //Southwest
-// 		ray->len += ((ray->map_loc.x + 1) * SCALE - enemy->pos.x) * ray->scalingf.x;
-// 	else
-// 		ray->len += (enemy->pos.x - ray->map_loc.x * SCALE) * ray->scalingf.x;
-// }
-
-// float	cast_enemy_ray(t_raycaster *ray, t_enemy *enemy, t_game *game)
-// {
-// 	int visited;
-
-// 	while (!ray->wall && !ray->enemy)
-// 	{
-// 		if (ray->ray_len.x < ray->ray_len.y)
-// 		{
-// 			visited = 1;
-// 			ray->len = ray->ray_len.x;
-// 			ray->ray_len.x += ray->scalingf.x * SCALE;
-// 			ray->map_loc.x += ray->map_step.x;
-// 		}
-// 		else
-// 		{
-// 			visited = 2;
-// 			ray->len = ray->ray_len.y;
-// 			ray->ray_len.y += ray->scalingf.y * SCALE;
-// 			ray->map_loc.y += ray->map_step.y;
-// 		}
-// 		if (game->map->map[ray->map_loc.y][ray->map_loc.x] == WALL)
-// 			ray->wall = true;
-// 		else if (ray->map_loc.x == (int)(enemy->pos.x / SCALE) && ray->map_loc.y == (int)(enemy->pos.y / SCALE))
-// 		{
-// 			if (visited == 2)
-// 			{
-// 				if (ray->dir.y < NORTH_)
-// 					game->dir = N_;
-// 				else
-// 					game->dir = S_;
-// 			}
-// 			else
-// 			{
-// 				if (ray->dir.x < WEST_)
-// 					game->dir = W_;
-// 				else
-// 					game->dir = E_;
-// 			}
-// 			ray->enemy = true;
-// 			get_enemy_position(game, ray, enemy);
-// 		}
-// 	}
-// 	// printf("%d, %d; %f, %f\n", ray->map_loc.x, ray->map_loc.y, enemy->pos.x / SCALE, enemy->pos.y / SCALE);
-// 	// printf("%f, %f; %f, %f\n", ray->start.x + ray->dir.x * ray->len, ray->start.y + ray->dir.y * ray->len, enemy->pos.x, enemy->pos.y);
-// 	draw_line(game, ray->start.x, ray->start.y, ray->start.x + ray->dir.x * ray->len, ray->start.y + ray->dir.y * ray->len, BLUE);
-// 	return (ray->len);
-// }
-
-bool	enemy_in_tile(int x, int y, t_game *game)
-{
-	t_enemy	**enemy;
-	int		i;
-
-	i = 0;
-	enemy = game->enemies;
-	while (i < game->enemy_count)
-	{
-		if (x == (int)(enemy[i]->pos.x / SCALE) && y == (int)(enemy[i]->pos.y / SCALE))
-			return (true);
-		i++;
-	}
-	return (false);
-
+// Function to compute the cross product of two vectors
+float cross_product(t_point a, t_point b) {
+    return a.x * b.y - a.y * b.x;
 }
 
-bool	lines_intersect(t_point p1, t_point p2, t_enemy *enemy, t_point *intersection)
+// Function to check if two line segments (p1, p2) and (q1, q2) intersect
+bool lines_intersect(t_point p1, t_point p2, t_enemy *enemy, t_point *intersection)
 {
-	float	denominator;
-	t_point	p3;
-	t_point	p4;
+	t_point	q1;
+	t_point	q2;
+	t_point	r;
+	t_point	s;
+	float	cross;
 	float	t;
 	float	u;
 
-	p3 = enemy->left;
-	p4 = enemy->right;
+	q1 = enemy->left;
+	q2 = enemy->right;
+	r.x = p2.x - p1.x;
+	r.y = p2.y - p1.y;
+	s.x = q2.x - q1.x;
+	s.y = q2.y - q1.y;
+	cross = cross_product(r, s);
+	if (cross == 0)
+		return false;
+	t_point qp = { q1.x - p1.x, q1.y - p1.y };
+	t = cross_product(qp, s) / cross;
+	u = cross_product(qp, r) / cross;
 
-	denominator = (p1.x - p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x - p4.x);
-	if (denominator == 0)	//lines are parallel
-		return (false);
-	t = ((p1.x - p3.x) * (p3.y - p4.y) - (p1.y - p3.y) * (p3.x - p4.x)) / denominator;
-	u = -((p1.x - p2.x) * (p1.y - p3.y) - (p1.y - p2.y) * (p1.x - p3.x)) / denominator;
-
-	if (t >= 0 && t <= 1 && u >= 0 && u <= 1)
-	{
-		intersection->x = p1.x + t * (p2.x - p1.x);
-		intersection->y = p1.y + t * (p2.y - p1.y);
-		return (true);
-	}
+    if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
+        // Compute the intersection point
+        intersection->x = p1.x + t * r.x;
+        intersection->y = p1.y + t * r.y;
+        return true;
+    }
 	return (false);
 }
 
-//is called if an enemy is in a tile
+//is called after ray is casted
 //check whether the ray hits an enemy line
 void	get_enemy_distance(t_raycaster *ray, t_game *game)
 {
@@ -173,14 +67,15 @@ void	get_enemy_distance(t_raycaster *ray, t_game *game)
 	{
 		if (lines_intersect(ray->start, ray_end, enemy[i], &intersection))
 		{
-			ray->enemy = enemy[i]->type;
-			distance = sqrt(pow(ray->start.x - intersection.x, 2) + pow(ray->start.y - intersection.y, 2));
-			if (distance <= ray->distance_enemy)
+			distance = hypot(ray->start.x - intersection.x, ray->start.y - intersection.y);
+			if (distance < ray->distance_enemy)
 			{
+				ray->enemy_type = enemy[i]->type;
+				ray->enemy = true;
 				ray->distance_enemy = distance;
 				ray->enemy_fraction_x = fmod(intersection.x, (float)PSIZE) / (float)PSIZE;
 				ray->enemy_fraction_y = fmod(intersection.y, (float)PSIZE) / (float)PSIZE;
-				draw_line(game, ray->start.x, ray->start.y, intersection.x, intersection.y, ray->enemy);
+				draw_line(game, ray->start.x, ray->start.y, intersection.x, intersection.y, BLACK);
 			}
 		}
 		i++;
@@ -215,14 +110,14 @@ void	draw_enemy(t_game *game, int start_x, t_raycaster *ray)
 
 	enemy_height = (ENEMY_SCALE / ray->distance_enemy);
 	top.y = (HEIGHT / 2) - enemy_height + game->player->jump_height;
-	bottom.y = (HEIGHT / 2) + enemy_height + game->player->jump_height;
+	bottom.y = (HEIGHT * 0.6f) + enemy_height + game->player->jump_height;
 
 	tex_y = 0;
-	tex_x = game->textures->enemy[ray->enemy].width * (ray->enemy_fraction_x + ray->enemy_fraction_y);
-	step = (float)game->textures->north.height / (bottom.y - top.y);
+	tex_x = game->textures->enemy[ray->enemy_type].width * (ray->enemy_fraction_x + ray->enemy_fraction_y);
+	step = (float)game->textures->enemy[ray->enemy_type].height / (bottom.y - top.y);
 	while (top.y <= bottom.y)
 	{
-		color = get_enemy_color(game, ray->enemy, tex_x, tex_y);
+		color = get_enemy_color(game, ray->enemy_type, tex_x, tex_y);
 		put_pixel_to_img(game, start_x, top.y, color);
 		top.y++;
 		tex_y += step;

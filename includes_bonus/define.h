@@ -12,7 +12,11 @@
 #define LEFT_KEY	65361
 #define RIGHT_KEY	65363
 #define SHIFT		0xFFE1
-#define SPACEBAR	0x31
+#define SPACEBAR	32
+#define LEFT_BTN	65361  // Left arrow key
+#define RIGHT_BTN 	65363  // Right arrow key
+#define SHOOT		102    // 's' key
+#define SWITCH		114    // 'd' key
 #else
 /* ------------------ Mac ----------------- */
 # include "../includes/minilibx-mac/mlx.h"
@@ -86,9 +90,9 @@
 # define GUN 0
 # define KNIFE 1
 # define SHOOT_SPEED 5
-# define OFFICER GREEN
-# define BOSS GOLD
-# define HITLER PURPLE
+# define HITLER 0
+# define BOSS 1
+# define OFFICER 2
 # define ENEMY_SCALE 3000
 /* --------------- Minimap -------------- */
 # define MM_WIDTH WIDTH / 5

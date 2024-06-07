@@ -128,7 +128,8 @@ typedef struct s_raycaster
 	t_point		intersection;
 	t_point		start;
 	bool		wall;
-	int			enemy;
+	bool		enemy;
+	int			enemy_type;
 	float		distance_enemy;
 	float		enemy_fraction_x;
 	float		enemy_fraction_y;

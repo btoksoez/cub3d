@@ -49,5 +49,6 @@ void	init_textures(t_game *game, t_textures *textures)
 	init_texture(game, &textures->weapon[3][2], "./textures/sticks/sticks3.xpm");
 	init_texture(game, &textures->weapon[3][3], "./textures/sticks/sticks4.xpm");
 	init_texture(game, &textures->weapon[3][4], "./textures/sticks/sticks5.xpm");
+	init_texture(game, &textures->enemy[0], "./textures/knife/knife5.xpm");
 	game->textures = textures;
 }

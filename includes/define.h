@@ -12,7 +12,11 @@
 #define LEFT_KEY	65361
 #define RIGHT_KEY	65363
 #define SHIFT		0xFFE1
-#define SPACEBAR	0x31
+#define SPACEBAR	32
+#define LEFT_BTN	65361  // Left arrow key
+#define RIGHT_BTN 	65363  // Right arrow key
+#define SHOOT		115    // 's' key
+#define SWITCH		100    // 'd' key
 #else
 /* ------------------ Mac ----------------- */
 # include "./minilibx-mac/mlx.h"

@@ -25,6 +25,7 @@ void	raycast(t_game *game)
 		draw_textures(game, x, top.y, x, bottom.y);
 		draw_vline(game, x, bottom.y, x, HEIGHT, game->f_color);
 		draw_vline(game, x, 0, x, top.y, game->c_color);
+		get_enemy_distance(&ray, game);
 		if (ray.enemy)
 		{
 			ray.distance_enemy *= cos(angle - player->p_angle);
@@ -33,7 +34,6 @@ void	raycast(t_game *game)
 		angle += (PLAYER_VISION / WIDTH);
 		x++;
 	}
-	// draw_gun(game);
 }
 
 float	cast_ray(t_raycaster *ray, t_game *game, float angle)
@@ -78,8 +78,6 @@ float	cast_ray(t_raycaster *ray, t_game *game, float angle)
 			}
 			ray->wall = true;
 		}
-		if (enemy_in_tile(ray->map_loc.x, ray->map_loc.y, game))
-			get_enemy_distance(ray, game);
 	}
 	game->fraction_x = fmod((ray->start.x + ray->dir.x * ray->len), (float)SCALE) / (float)SCALE;
 	game->fraction_y = fmod((ray->start.y + ray->dir.y * ray->len), (float)SCALE) / (float)SCALE;
@@ -118,10 +116,10 @@ void	init_ray(t_raycaster *ray, t_player *player, float angle)
 		ray->map_step.x = 1;
 		ray->ray_len.x = ((ray->map_loc.x + 1) * SCALE - ray->start.x) * ray->scalingf.x;
 	}
-	ray->wall = false;
 	ray->len = 0;
 	ray->enemy = false;
-	ray->distance_enemy = INT_MAX;
+	ray->enemy_type = -1;
+	ray->distance_enemy = (float)INT_MAX;
 	ray->enemy_fraction_x = 0;
 	ray->enemy_fraction_y = 0;
 }
