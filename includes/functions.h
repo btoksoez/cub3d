@@ -50,14 +50,11 @@ void	init_textures(t_game *game, t_textures *textures);
 
 /* ------------------------------- Rendering ------------------------------- */
 /* ------------------------------------------------------------------------- */
-void	render_2dgame(t_game *game);
 int		render(t_game *game);
-void	render_image(t_game *game, int start_x, int start_y, int color);
 void	put_pixel_to_img(t_game *game, int x, int y, int color);
 void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
 void	move_player(t_game *game, float move_x, float move_y);
 void	check_movements(t_game *game);
-void	put_pixel_to_mapimg(t_game *game, int x, int y, int color);
 void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
 int		get_texture_color(t_game *game, int tex_x, int tex_y);
 void	draw_textures(t_game *game, int start_x, int start_y, int end_x, int end_y);
@@ -68,9 +65,7 @@ void	jumping(t_player *player);
 void	init_ray(t_raycaster *ray, t_player *player, float angle);
 float	cast_ray(t_game *game, float angle, t_raycaster *ray);
 void	raycast(t_game *game, t_raycaster *ray);
-void	cast_2d_rays(t_game *game, t_raycaster *ray, t_minimap mini);
-void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, t_minimap mini);
-void	init_2d_ray(t_raycaster *ray, t_player *player, float angle);
+void	check_direction(t_game *game, t_raycaster *ray, int visited);
 
 /* ------------------------------- Movements ------------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -83,7 +78,16 @@ int		mouse_hook(int x, t_player *player);
 /* ------------------------------- Mini Map -------------------------------- */
 /* ------------------------------------------------------------------------- */
 void	minimap(t_game *game, t_raycaster *ray);
+void	init_minimap(t_player *player, t_minimap *mini);
+void	render_player_and_rays(t_game *game, t_raycaster *ray, t_minimap mini);
 void	render_player(t_game *game, int start_x, int start_y);
+void	raycast_2d(t_game *game, t_raycaster *ray, t_minimap mini);
+void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, t_minimap mini);
+void	init_2d_ray(t_raycaster *ray, t_player *player, float angle);
+void	adjust_raylen(t_raycaster *ray, float angle);
+void	draw_ray(t_game *game, t_player *player, t_raycaster *ray, t_minimap mini);
+void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
+void	get_start_x(t_player *player, t_minimap *mini);
 
 /* -------------------------------- Utils ---------------------------------- */
 /* ------------------------------------------------------------------------- */
