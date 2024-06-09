@@ -70,11 +70,16 @@ void	get_enemy_distance(t_raycaster *ray, t_game *game)
 			distance = hypot(ray->start.x - intersection.x, ray->start.y - intersection.y);
 			if (distance < ray->distance_enemy)
 			{
+				float enemy_line_length = hypot(enemy[i]->right.x - enemy[i]->left.x, enemy[i]->right.y - enemy[i]->left.y);
+				printf("%f\n", enemy_line_length);
+				float intersection_pos = hypot(intersection.x - enemy[i]->left.x, intersection.y - enemy[i]->left.y) / enemy_line_length;
 				ray->enemy_type = enemy[i]->type;
+				ray->enemy_id = i;
 				ray->enemy = true;
 				ray->distance_enemy = distance;
-				ray->enemy_fraction_x = fmod(intersection.x, (float)PSIZE) / (float)PSIZE;
-				ray->enemy_fraction_y = fmod(intersection.y, (float)PSIZE) / (float)PSIZE;
+				ray->tex_x = intersection_pos * game->textures->enemy[ray->enemy_type][0].width;
+				printf("Intersect pos: %f\n", intersection_pos);
+				printf("tex_x: %f\n", ray->tex_x);
 				draw_line(game, ray->start.x, ray->start.y, intersection.x, intersection.y, BLACK);
 			}
 		}
@@ -82,27 +87,32 @@ void	get_enemy_distance(t_raycaster *ray, t_game *game)
 	}
 }
 
-int	get_enemy_color(t_game *game, int enemy_type, int tex_x, int tex_y)
+int	get_enemy_color(t_game *game, t_raycaster *ray, int tex_x, int tex_y)
 {
 	int			color;
 	int			bpp;
 	int			len;
+	int			frame;
 	t_textures	*t;
 
 	color = 0;
 	t = game->textures;
-	bpp = t->enemy[enemy_type].bits_per_pixel;
-	len = t->enemy[enemy_type].line_len;
-	color = *(int*)&t->enemy[enemy_type].pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+	frame = game->enemies[ray->enemy_id]->frame;
+	printf("id %d , frame; %d\n", ray->enemy_id, frame);
+	bpp = t->enemy[ray->enemy_type][frame].bits_per_pixel;
+	len = t->enemy[ray->enemy_type][frame].line_len;
+	color = *(int*)&t->enemy[ray->enemy_type][frame].pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+	if (color == 6517885)
+		return (-1);
 	return (color);
 }
 
-void	draw_enemy(t_game *game, int start_x, t_raycaster *ray)
+void	draw_enemy(t_game *game, int x, t_raycaster *ray)
 {
 	int		color;
 
 	float	tex_y;
-	float	tex_x;
+	// float	tex_x;
 	float	step;
 	t_point	top;
 	t_point	bottom;
@@ -111,16 +121,29 @@ void	draw_enemy(t_game *game, int start_x, t_raycaster *ray)
 	enemy_height = (ENEMY_SCALE / ray->distance_enemy);
 	top.y = (HEIGHT / 2) - enemy_height + game->player->jump_height;
 	bottom.y = (HEIGHT * 0.6f) + enemy_height + game->player->jump_height;
-
 	tex_y = 0;
-	tex_x = game->textures->enemy[ray->enemy_type].width * (ray->enemy_fraction_x + ray->enemy_fraction_y);
-	step = (float)game->textures->enemy[ray->enemy_type].height / (bottom.y - top.y);
+	step = (float)game->textures->enemy[ray->enemy_type][0].height / (bottom.y - top.y);
 	while (top.y <= bottom.y)
 	{
-		color = get_enemy_color(game, ray->enemy_type, tex_x, tex_y);
-		put_pixel_to_img(game, start_x, top.y, color);
+		color = get_enemy_color(game, ray, ray->tex_x, tex_y);
+		if (color != -1)
+			put_pixel_to_img(game, x, top.y, color);
 		top.y++;
 		tex_y += step;
+	}
+}
+
+
+void	render_sprites(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->enemy_count)
+	{
+		game->enemies[i]->frame = (game->enemies[i]->frame + 1) % 4;
+		printf("frame; %d, %d\n",i, game->enemies[i]->frame);
+		i++;
 	}
 }
 

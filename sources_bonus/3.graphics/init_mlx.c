@@ -24,6 +24,7 @@ void	get_enemy_positions(t_game *game)
 		enemy[i]->left.y = enemy[i]->pos.y + dir.x * PCENTER;
 		enemy[i]->right.x = enemy[i]->pos.x + dir.y * PCENTER;
 		enemy[i]->right.y = enemy[i]->pos.y - dir.x * PCENTER;
+		enemy[i]->frame = 0;
 		i++;
 	}
 }

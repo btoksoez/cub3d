@@ -10,6 +10,7 @@ void	raycast(t_game *game)
 	int			x;
 	float		angle;
 	int			wall_height;
+	static int	counter = 0;
 	t_raycaster	ray;
 
 	player = game->player;
@@ -28,12 +29,18 @@ void	raycast(t_game *game)
 		get_enemy_distance(&ray, game);
 		if (ray.enemy)
 		{
+			if (counter == 10)
+			{
+				game->enemies[ray.enemy_id]->frame += 1;
+				counter = 0;
+			}
 			ray.distance_enemy *= cos(angle - player->p_angle);
-			draw_enemy(game, x, &ray);
+            draw_enemy(game, x, &ray);
 		}
 		angle += (PLAYER_VISION / WIDTH);
 		x++;
 	}
+	counter++;
 }
 
 float	cast_ray(t_raycaster *ray, t_game *game, float angle)
@@ -55,7 +62,7 @@ float	cast_ray(t_raycaster *ray, t_game *game, float angle)
 		}
 		else
 		{
-			visited = 1;
+			visited = 2;
 			ray->len = ray->ray_len.y;
 			ray->ray_len.y += ray->scalingf.y * SCALE;
 			ray->map_loc.y += ray->map_step.y;
@@ -120,6 +127,6 @@ void	init_ray(t_raycaster *ray, t_player *player, float angle)
 	ray->enemy = false;
 	ray->enemy_type = -1;
 	ray->distance_enemy = (float)INT_MAX;
-	ray->enemy_fraction_x = 0;
-	ray->enemy_fraction_y = 0;
+	ray->tex_x = 0;
+	ray->enemy_id = 0;
 }

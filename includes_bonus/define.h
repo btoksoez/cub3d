@@ -90,10 +90,10 @@
 # define GUN 0
 # define KNIFE 1
 # define SHOOT_SPEED 5
-# define HITLER 0
+# define OFFICER 0
 # define BOSS 1
-# define OFFICER 2
-# define ENEMY_SCALE 3000
+# define HITLER 2
+# define ENEMY_SCALE 2500
 /* --------------- Minimap -------------- */
 # define MM_WIDTH WIDTH / 5
 # define MM_HEIGHT HEIGHT / 5

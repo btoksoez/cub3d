@@ -38,6 +38,7 @@ typedef struct s_enemy
 	int				look_dir;
 	int				speed;
 	int				shooting;
+	int				frame;
 }					t_enemy;
 
 typedef struct	s_map
@@ -75,7 +76,7 @@ typedef struct s_textures
 	struct s_img	east;
 	struct s_img	west;
 	struct s_img	weapon[4][5];
-	struct s_img	enemy[3];
+	struct s_img	enemy[3][4];
 }					t_textures;
 
 typedef struct	s_game
@@ -131,8 +132,8 @@ typedef struct s_raycaster
 	bool		enemy;
 	int			enemy_type;
 	float		distance_enemy;
-	float		enemy_fraction_x;
-	float		enemy_fraction_y;
+	float		tex_x;
+	int			enemy_id;
 }					t_raycaster;
 
 
@@ -217,14 +218,14 @@ void	render_weapon(t_game *game);
 void	get_enemy_distance(t_raycaster *ray, t_game *game);
 t_point	get_normalized_vector(t_point p1, t_point p2);
 void	get_enemy_positions(t_game *game);
-void	draw_enemy(t_game *game, int start_x, t_raycaster *ray);
+void	draw_enemy(t_game *game, int x, t_raycaster *ray);
+void	render_sprites(t_game *game);
 
 /* ------------------------------ Ray Caster ------------------------------- */
 /* ------------------------------------------------------------------------- */
 void	init_ray(t_raycaster *ray, t_player *player, float angle);
 float	cast_ray(t_raycaster *ray, t_game *game, float angle);
 void	raycast(t_game *game);
-bool	enemy_in_tile(int x, int y, t_game *game);
 
 /* ------------------------------- Movements ------------------------------- */
 /* ------------------------------------------------------------------------- */
