@@ -133,30 +133,27 @@ void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, int hori_vision, i
 	else if (true_max_x < true_max_y && ray->len > true_max_x)
 		ray->len = true_max_x;
 
+	// need fix on here1 when for the ray len
 	if ((player->pos.x <= hori_vision) && (player->pos.y <= vert_vision)) // NEEDS FIX
 	{
-		printf("here1\n");
 		draw_line(game, CLOSE_TO_BOUND_POSITION_X, CLOSE_TO_BOUND_POSITION_Y,
 		CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
 		CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
 	}
 	else if (player->pos.y <= vert_vision) // NEEDS FIX
 	{
-		printf("here2\n");
 		draw_line(game, CENTERED_POSITION_X, CLOSE_TO_BOUND_POSITION_Y,
 		CENTERED_POSITION_X + (ray->dir.x * ray->len),
 		CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
 	}
 	else if (player->pos.x <= hori_vision)
 	{
-		printf("here3\n");
 		draw_line(game, CLOSE_TO_BOUND_POSITION_X, CENTERED_POSITION_Y,
 		CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
 		CENTERED_POSITION_Y + (ray->dir.y * ray->len), BLUE);
 	}
 	else
 	{
-		printf("here4\n");
 		draw_line(game, CENTERED_POSITION_X, CENTERED_POSITION_Y,
 		CENTERED_POSITION_X + (ray->dir.x * ray->len),
 		CENTERED_POSITION_Y + (ray->dir.y * ray->len), BLUE);
