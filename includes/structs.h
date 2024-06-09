@@ -106,4 +106,16 @@ typedef struct s_player
 	int				prev_mouse_y;
 }					t_player;
 
+typedef struct	s_minimap
+{
+	int				start_x;
+	int				start_y;
+	int				end_x;
+	int				end_y;
+	int				hori_vision;
+	int				vert_vision;
+	int				initial_x;
+	int				initial_y;
+}					t_minimap;
+
 #endif

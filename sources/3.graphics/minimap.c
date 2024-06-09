@@ -4,69 +4,76 @@
 // if player only has 1 on left, right, up, down, then render 5 on the other direction, same for 2, rander 4
 // will have problems with maps smaller than 7x7
 
-void	minimap(t_game *game, t_raycaster *ray)
+void	render_player_and_rays(t_game *game, t_raycaster *ray, t_minimap mini)
 {
 	t_player	*player;
-	int	start_x;
-	int	start_y;
-	int	end_x;
-	int	end_y;
-	int	hori_vision;
-	int	vert_vision;
-	int	iterate_x;
-	int	iterate_y;
 
 	player = game->player;
-	start_x = player->pos.x;
-	start_y = player->pos.y;
-	hori_vision = (SCALE * 3) + (SCALE / 2) - (PSIZE / 2) - 1;
-	vert_vision = (SCALE * 2) + (SCALE / 2) - (PSIZE / 2) - 1;
-	if (start_x - hori_vision >= 0)
-		start_x -= hori_vision;
-	else
-		start_x = 0;
-
-	if (start_y - vert_vision >= 0)
-		start_y -= vert_vision;
-	else
-		start_y = 0;
-
-	end_x = start_x + (SCALE * MINI_COLS);
-	end_y = start_y + (SCALE * MINI_ROWS);
-	iterate_y = start_y;
-	int	initial_x = start_x;
-	int	initial_y = start_y;
-	while (iterate_y < end_y)
-	{
-		start_x = player->pos.x;
-		if (start_x - hori_vision >= 0)
-			start_x -= hori_vision;
-		else
-			start_x = 0;
-		iterate_x = start_x;
-		while (iterate_x < end_x)
-		{	// protect for the lower part of the map (segfaults when player is at the bottom of the map)
-			if (game->map->map[(int)(iterate_y / SCALE)][(int)(iterate_x / SCALE)] == WALL)
-				put_pixel_to_img(game, start_x - initial_x + MINI_X, start_y - initial_y + MINI_Y, WALLS);
-			else if (game->map->map[(int)(iterate_y / SCALE)][(int)(iterate_x / SCALE)] == EMPTY)
-				put_pixel_to_img(game, start_x - initial_x  + MINI_X, start_y - initial_y + MINI_Y, SPACE);
-			else
-				put_pixel_to_img(game, start_x - initial_x  + MINI_X, start_y - initial_y + MINI_Y, SCREEN);
-			start_x++;
-			iterate_x += SCALE_FACTOR;
-		}
-		start_y++;
-		iterate_y += SCALE_FACTOR;
-	}
-	if ((player->pos.x <= hori_vision) && (player->pos.y <= vert_vision))
+	if ((player->pos.x <= mini.hori_vision) && (player->pos.y <= mini.vert_vision))
 		render_player(game, MINI_PLAYER_X, MINI_PLAYER_Y);
-	else if (player->pos.y <= vert_vision)
+	else if (player->pos.y <= mini.vert_vision)
 		render_player(game, CENTER_X, MINI_PLAYER_Y);
-	else if (player->pos.x <= hori_vision)
+	else if (player->pos.x <= mini.hori_vision)
 		render_player(game, MINI_PLAYER_X, CENTER_Y);
 	else
 		render_player(game, CENTER_X, CENTER_Y);
-	cast_2d_rays(game, ray, hori_vision, vert_vision);
+	cast_2d_rays(game, ray, mini);
+}
+
+void	get_start_x(t_player *player, t_minimap *mini)
+{
+	mini->start_x = player->pos.x;
+	if (mini->start_x - mini->hori_vision >= 0)
+		mini->start_x -= mini->hori_vision;
+	else
+		mini->start_x = 0;
+}
+
+void	init_minimap(t_player *player, t_minimap *mini)
+{
+	mini->hori_vision = (SCALE * MINI_COLS / 2) - MINI_PSIZE;
+	mini->vert_vision = (SCALE * MINI_ROWS / 2) - MINI_PSIZE;
+	mini->start_y = player->pos.y;
+	get_start_x(player, mini);
+	if (mini->start_y - mini->vert_vision >= 0)
+		mini->start_y -= mini->vert_vision;
+	else
+		mini->start_y = 0;
+	mini->end_x = mini->start_x + (SCALE * MINI_COLS);
+	mini->end_y = mini->start_y + (SCALE * MINI_ROWS);
+	mini->initial_x = mini->start_x;
+	mini->initial_y = mini->start_y;
+}
+
+void	minimap(t_game *game, t_raycaster *ray)
+{
+	t_player	*player;
+	t_minimap	mini;
+	int			y;
+	int			x;
+
+	player = game->player;
+	init_minimap(player, &mini);
+	y = mini.start_y;
+	while (y < mini.end_y)
+	{
+		get_start_x(player, &mini);
+		x = mini.start_x;
+		while (x < mini.end_x)
+		{
+			if (game->map->map[(int)(y / SCALE)][(int)(x / SCALE)] == WALL)
+				put_pixel_to_img(game, CURRENT_X, CURRENT_Y, WALLS);
+			else if (game->map->map[(int)(y / SCALE)][(int)(x / SCALE)] == EMPTY)
+				put_pixel_to_img(game, CURRENT_X, CURRENT_Y, SPACE);
+			else
+				put_pixel_to_img(game, CURRENT_X, CURRENT_Y, SCREEN);
+			mini.start_x++;
+			x += SCALE_FACTOR;
+		}
+		mini.start_y++;
+		y += SCALE_FACTOR;
+	}
+	render_player_and_rays(game, ray, mini);
 }
 
 void	render_player(t_game *game, int start_x, int start_y)
@@ -93,12 +100,17 @@ void	render_player(t_game *game, int start_x, int start_y)
 
 void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color)
 {
-	int dx = abs(end_x - start_x);
-	int dy = abs(end_y - start_y);
-	int sx = (start_x < end_x) ? 1 : -1;
-	int sy = (start_y < end_y) ? 1 : -1;
-	int err = dx - dy;
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
 
+	dx = abs(end_x - start_x);
+	dy = abs(end_y - start_y);
+	sx = (start_x < end_x) ? 1 : -1;
+	sy = (start_y < end_y) ? 1 : -1;
+	err = dx - dy;
 	while (true)
 	{
 		put_pixel_to_img(game, start_x, start_y, color);

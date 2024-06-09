@@ -68,8 +68,8 @@ void	jumping(t_player *player);
 void	init_ray(t_raycaster *ray, t_player *player, float angle);
 float	cast_ray(t_game *game, float angle, t_raycaster *ray);
 void	raycast(t_game *game, t_raycaster *ray);
-void	cast_2d_rays(t_game *game, t_raycaster *ray, int hori_vision, int vert_vision);
-void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, int hori_vision, int vert_vision);
+void	cast_2d_rays(t_game *game, t_raycaster *ray, t_minimap mini);
+void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, t_minimap mini);
 void	init_2d_ray(t_raycaster *ray, t_player *player, float angle);
 
 /* ------------------------------- Movements ------------------------------- */

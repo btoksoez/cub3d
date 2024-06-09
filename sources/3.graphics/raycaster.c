@@ -29,7 +29,7 @@ void	raycast(t_game *game, t_raycaster *ray)
 	}
 }
 
-void	cast_2d_rays(t_game *game, t_raycaster *ray, int hori_vision, int vert_vision)
+void	cast_2d_rays(t_game *game, t_raycaster *ray, t_minimap mini)
 {
 	t_player	*player;
 	float		angle;
@@ -38,7 +38,7 @@ void	cast_2d_rays(t_game *game, t_raycaster *ray, int hori_vision, int vert_visi
 	angle = player->p_angle - (PLAYER_VISION / 2);
 	while (angle < player->p_angle + (PLAYER_VISION / 2))
 	{
-		cast_2d_ray(game, angle, ray, hori_vision, vert_vision);
+		cast_2d_ray(game, angle, ray, mini);
 		angle += (PLAYER_VISION / WIDTH);
 	}
 }
@@ -77,22 +77,79 @@ void	init_2d_ray(t_raycaster *ray, t_player *player, float angle)
 	ray->len = 0;
 }
 
-void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, int hori_vision, int vert_vision)
+void	adjust_raylen(t_raycaster *ray, float angle)
 {
-	t_player	*player;
-	int			visited;
 	float		max_dist_x;
-	float		true_max_x;
 	float		max_dist_y;
+	float		true_max_x;
 	float		true_max_y;
 
-	visited = 0;
-	player = game->player;
-	init_2d_ray(ray, player, angle);
 	max_dist_y = MINI_ROWS * MINI_SCALE / 2;
 	max_dist_x = MINI_COLS * MINI_SCALE / 2;
 	true_max_y = fabs(max_dist_y / cos(_15PI - angle));
 	true_max_x = fabs(max_dist_x / cos(angle - PI));
+	if (true_max_x > true_max_y && ray->len > true_max_y)
+		ray->len = true_max_y;
+	else if (true_max_x < true_max_y && ray->len > true_max_x)
+		ray->len = true_max_x;
+}
+
+void	draw_ray(t_game *game, t_player *player, t_raycaster *ray, t_minimap mini)
+{
+	// need fix on here1 and 2 when for the ray len
+	if ((player->pos.x <= mini.hori_vision) && (player->pos.y <= mini.vert_vision)) // NEEDS FIX
+	{
+		draw_line(game, CLOSE_TO_BOUND_POSITION_X, CLOSE_TO_BOUND_POSITION_Y,
+		CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
+		CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
+	}
+	else if (player->pos.y <= mini.vert_vision) // NEEDS FIX
+	{
+		draw_line(game, CENTERED_POSITION_X, CLOSE_TO_BOUND_POSITION_Y,
+		CENTERED_POSITION_X + (ray->dir.x * ray->len),
+		CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
+	}
+	else if (player->pos.x <= mini.hori_vision)
+	{
+		draw_line(game, CLOSE_TO_BOUND_POSITION_X, CENTERED_POSITION_Y,
+		CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
+		CENTERED_POSITION_Y + (ray->dir.y * ray->len), BLUE);
+	}
+	else
+	{
+		draw_line(game, CENTERED_POSITION_X, CENTERED_POSITION_Y,
+		CENTERED_POSITION_X + (ray->dir.x * ray->len),
+		CENTERED_POSITION_Y + (ray->dir.y * ray->len), BLUE);
+	}
+}
+
+void	check_direction(t_game *game, t_raycaster *ray, int visited)
+{
+	if (visited == 2)
+	{
+		if (ray->dir.y < NORTH_)
+			game->dir = N_;
+		else
+			game->dir = S_;
+	}
+	else
+	{
+		if (ray->dir.x < WEST_)
+			game->dir = W_;
+		else
+			game->dir = E_;
+	}
+	ray->wall = true;
+}
+
+void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, t_minimap mini)
+{
+	t_player	*player;
+	int			visited;
+
+	visited = 0;
+	player = game->player;
+	init_2d_ray(ray, player, angle);
 	while (!ray->wall)
 	{
 		if (ray->ray_len.x < ray->ray_len.y)
@@ -110,54 +167,10 @@ void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, int hori_vision, i
 			ray->map_loc.y += ray->map_step.y;
 		}
 		if (game->map->map[ray->map_loc.y][ray->map_loc.x] == WALL)
-		{
-			if (visited == 2)
-			{
-				if (ray->dir.y < NORTH_)
-					game->dir = N_;
-				else
-					game->dir = S_;
-			}
-			else
-			{
-				if (ray->dir.x < WEST_)
-					game->dir = W_;
-				else
-					game->dir = E_;
-			}
-			ray->wall = true;
-		}
+			check_direction(game, ray, visited);
 	}
-	if (true_max_x > true_max_y && ray->len > true_max_y)
-		ray->len = true_max_y;
-	else if (true_max_x < true_max_y && ray->len > true_max_x)
-		ray->len = true_max_x;
-
-	// need fix on here1 when for the ray len
-	if ((player->pos.x <= hori_vision) && (player->pos.y <= vert_vision)) // NEEDS FIX
-	{
-		draw_line(game, CLOSE_TO_BOUND_POSITION_X, CLOSE_TO_BOUND_POSITION_Y,
-		CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
-		CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
-	}
-	else if (player->pos.y <= vert_vision) // NEEDS FIX
-	{
-		draw_line(game, CENTERED_POSITION_X, CLOSE_TO_BOUND_POSITION_Y,
-		CENTERED_POSITION_X + (ray->dir.x * ray->len),
-		CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
-	}
-	else if (player->pos.x <= hori_vision)
-	{
-		draw_line(game, CLOSE_TO_BOUND_POSITION_X, CENTERED_POSITION_Y,
-		CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
-		CENTERED_POSITION_Y + (ray->dir.y * ray->len), BLUE);
-	}
-	else
-	{
-		draw_line(game, CENTERED_POSITION_X, CENTERED_POSITION_Y,
-		CENTERED_POSITION_X + (ray->dir.x * ray->len),
-		CENTERED_POSITION_Y + (ray->dir.y * ray->len), BLUE);
-	}
+	adjust_raylen(ray, angle);
+	draw_ray(game, player, ray, mini);
 }
 
 float	cast_ray(t_game *game, float angle, t_raycaster *ray)
@@ -185,23 +198,7 @@ float	cast_ray(t_game *game, float angle, t_raycaster *ray)
 			ray->map_loc.y += ray->map_step.y;
 		}
 		if (game->map->map[ray->map_loc.y][ray->map_loc.x] == WALL)
-		{
-			if (visited == 2)
-			{
-				if (ray->dir.y < NORTH_)
-					game->dir = N_;
-				else
-					game->dir = S_;
-			}
-			else
-			{
-				if (ray->dir.x < WEST_)
-					game->dir = W_;
-				else
-					game->dir = E_;
-			}
-			ray->wall = true;
-		}
+			check_direction(game, ray, visited);
 	}
 	game->fraction_x = fmod((ray->start.x + ray->dir.x * ray->len), (float)SCALE) / (float)SCALE;
 	game->fraction_y = fmod((ray->start.y + ray->dir.y * ray->len), (float)SCALE) / (float)SCALE;
