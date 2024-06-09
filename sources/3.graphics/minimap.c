@@ -31,8 +31,8 @@ void	minimap(t_game *game, t_raycaster *ray)
 	else
 		start_y = 0;
 
-	end_x = start_x + (SCALE * 7);
-	end_y = start_y + (SCALE * 5);
+	end_x = start_x + (SCALE * MINI_COLS);
+	end_y = start_y + (SCALE * MINI_ROWS);
 	iterate_y = start_y;
 	int	initial_x = start_x;
 	int	initial_y = start_y;
@@ -53,19 +53,19 @@ void	minimap(t_game *game, t_raycaster *ray)
 			else
 				put_pixel_to_img(game, start_x - initial_x  + MINI_X, start_y - initial_y + MINI_Y, SCREEN);
 			start_x++;
-			iterate_x += SCALE / (SCALE / 2);
+			iterate_x += SCALE_FACTOR;
 		}
 		start_y++;
-		iterate_y += SCALE / (SCALE / 2);
+		iterate_y += SCALE_FACTOR;
 	}
 	if ((player->pos.x <= hori_vision) && (player->pos.y <= vert_vision))
-		render_player(game, MINI_X + (player->pos.x / 2), MINI_Y + (player->pos.y / 2));
+		render_player(game, MINI_PLAYER_X, MINI_PLAYER_Y);
 	else if (player->pos.y <= vert_vision)
-		render_player(game, MINI_X + 84, MINI_Y + (player->pos.y / 2));
+		render_player(game, CENTER_X, MINI_PLAYER_Y);
 	else if (player->pos.x <= hori_vision)
-		render_player(game, MINI_X + (player->pos.x / 2), MINI_Y + 60);
+		render_player(game, MINI_PLAYER_X, CENTER_Y);
 	else
-		render_player(game, MINI_X + 84, MINI_Y + 60);
+		render_player(game, CENTER_X, CENTER_Y);
 	cast_2d_rays(game, ray, hori_vision, vert_vision);
 }
 

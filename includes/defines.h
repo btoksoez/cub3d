@@ -85,24 +85,24 @@
 /* --------------- Minimap -------------- */
 # define MINI_X 880
 # define MINI_Y 570
-# define MINI_SCALE SCALE / 2
-# define MINI_PCENTER PSIZE / 4
-# define MINI_PLAYER_X (player->pos.x / 2)
-# define MINI_PLAYER_Y (player->pos.y / 2)
+# define MINI_ROWS 5
+# define MINI_COLS 7
 
+# define MINI_SCALE SCALE / 2
+# define SCALE_FACTOR 2
+# define MINI_PCENTER PCENTER / 2
+# define MINI_PLAYER_X MINI_X + (player->pos.x / 2)
+# define MINI_PLAYER_Y MINI_Y + (player->pos.y / 2)
 # define CENTER_X MINI_X + (MINI_SCALE * 7) / 2 - MINI_PCENTER
 # define CENTER_Y MINI_Y + (MINI_SCALE * 5) / 2 - MINI_PCENTER
-
 # define RIGHT_OUTBOUND (CENTER_X + MINI_PCENTER) + (MINI_SCALE * 7 / 2)
 # define LEFT_OUTBOUND (CENTER_X + MINI_PCENTER) - (MINI_SCALE * 7 / 2)
 # define TOP_OUTBOUND (CENTER_Y + MINI_PCENTER) + (MINI_SCALE * 5 / 2)
 # define BOTTOM_OUTBOUND (CENTER_Y + MINI_PCENTER) - (MINI_SCALE * 5 / 2)
-
 # define CENTERED_POSITION_X (CENTER_X + MINI_PCENTER)
 # define CENTERED_POSITION_Y (CENTER_Y + MINI_PCENTER)
-
-# define CLOSE_TO_BOUND_POSITION_X (MINI_X + MINI_PLAYER_X + MINI_PCENTER)
-# define CLOSE_TO_BOUND_POSITION_Y (MINI_Y + MINI_PLAYER_Y + MINI_PCENTER)
+# define CLOSE_TO_BOUND_POSITION_X (MINI_PLAYER_X + MINI_PCENTER)
+# define CLOSE_TO_BOUND_POSITION_Y (MINI_PLAYER_Y + MINI_PCENTER)
 /* ---------------- Colors --------------- */
 # define RED 0xFF0000
 # define GREEN 0x00FF00

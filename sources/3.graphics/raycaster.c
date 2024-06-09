@@ -56,22 +56,22 @@ void	init_2d_ray(t_raycaster *ray, t_player *player, float angle)
 	if (ray->dir.y < NORTH_)
 	{
 		ray->map_step.y = -1;
-		ray->ray_len.y = (ray->start.y - ray->map_loc.y * (SCALE / 2)) * ray->scalingf.y;
+		ray->ray_len.y = (ray->start.y - ray->map_loc.y * MINI_SCALE) * ray->scalingf.y;
 	}
 	else
 	{
 		ray->map_step.y = 1;
-		ray->ray_len.y = ((ray->map_loc.y + 1) * (SCALE / 2) - ray->start.y) * ray->scalingf.y;
+		ray->ray_len.y = ((ray->map_loc.y + 1) * MINI_SCALE - ray->start.y) * ray->scalingf.y;
 	}
 	if (ray->dir.x < WEST_)
 	{
 		ray->map_step.x = -1;
-		ray->ray_len.x = (ray->start.x - ray->map_loc.x * (SCALE / 2)) * ray->scalingf.x;
+		ray->ray_len.x = (ray->start.x - ray->map_loc.x * MINI_SCALE) * ray->scalingf.x;
 	}
 	else
 	{
 		ray->map_step.x = 1;
-		ray->ray_len.x = ((ray->map_loc.x + 1) * (SCALE / 2) - ray->start.x) * ray->scalingf.x;
+		ray->ray_len.x = ((ray->map_loc.x + 1) * MINI_SCALE - ray->start.x) * ray->scalingf.x;
 	}
 	ray->wall = false;
 	ray->len = 0;
@@ -89,8 +89,8 @@ void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, int hori_vision, i
 	visited = 0;
 	player = game->player;
 	init_2d_ray(ray, player, angle);
-	max_dist_y = 5 * (SCALE / 2) / 2;
-	max_dist_x = 7 * (SCALE / 2) / 2;
+	max_dist_y = MINI_ROWS * MINI_SCALE / 2;
+	max_dist_x = MINI_COLS * MINI_SCALE / 2;
 	true_max_y = fabs(max_dist_y / cos(_15PI - angle));
 	true_max_x = fabs(max_dist_x / cos(angle - PI));
 	while (!ray->wall)
@@ -99,14 +99,14 @@ void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, int hori_vision, i
 		{
 			visited = 1;
 			ray->len = ray->ray_len.x;
-			ray->ray_len.x += ray->scalingf.x * (SCALE / 2);
+			ray->ray_len.x += ray->scalingf.x * MINI_SCALE;
 			ray->map_loc.x += ray->map_step.x;
 		}
 		else
 		{
 			visited = 2;
 			ray->len = ray->ray_len.y;
-			ray->ray_len.y += ray->scalingf.y * (SCALE / 2);
+			ray->ray_len.y += ray->scalingf.y * MINI_SCALE;
 			ray->map_loc.y += ray->map_step.y;
 		}
 		if (game->map->map[ray->map_loc.y][ray->map_loc.x] == WALL)
