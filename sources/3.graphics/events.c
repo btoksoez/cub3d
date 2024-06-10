@@ -34,6 +34,10 @@ int	key_press(int key, t_game *game)
 		player->jumping= true;
 		player->jump_peak = false;
 	}
+	if (key == SHOOT)
+		player->shooting = 10;
+	if (key == SWITCH)
+		player->weapon = (player->weapon + 1) % 4;
 	return (0);
 }
 

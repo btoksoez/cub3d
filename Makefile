@@ -12,6 +12,11 @@ SRC_DIRS = $(wildcard $(SRC_DIR)/*)
 SRC = $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/*/*.c)
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
+BONUS_SRC_DIR = sources_bonus
+BONUS_SRC_DIRS = $(wildcard $(BONUS_SRC_DIR)/*)
+BONUS_SRC = $(wildcard $(BONUS_SRC_DIR)/*.c $(BONUS_SRC_DIR)/*/*.c)
+BONUS_OBJ = $(BONUS_SRC:%.c=$(OBJ_DIR)/%.o)
+
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S),Linux)
@@ -40,11 +45,15 @@ $(NAME): $(OBJ_DIR) $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) $(LIBFT) -o $(NAME)
 	@echo "$(CYAN)make$(RESET)   $@ $(GREEN)[OK]$(RESET)"
 
+bonus: $(OBJ_DIR) $(BONUS_OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) $(BONUS_OBJ) $(MLX_FLAGS) $(LIBFT) -o $(NAME)
+	@echo "$(CYAN)make bonus$(RESET)   $@ $(GREEN)[OK]$(RESET)"
+
 $(LIBFT):
 	@$(MAKE) -s -C $(LIBFT_DIR) --no-print-directory
 
 $(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR) $(foreach dir, $(SRC_DIRS), $(OBJ_DIR)/$(notdir $(dir)))
+	@mkdir -p $(OBJ_DIR) $(foreach dir, $(SRC_DIRS), $(OBJ_DIR)/$(notdir $(dir))) $(foreach dir, $(BONUS_SRC_DIRS), $(OBJ_DIR)/$(notdir $(dir)))
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)

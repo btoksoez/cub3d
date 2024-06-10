@@ -67,6 +67,22 @@ float	cast_ray(t_game *game, float angle, t_raycaster *ray);
 void	raycast(t_game *game, t_raycaster *ray);
 void	check_direction(t_game *game, t_raycaster *ray, int visited);
 
+/* --------------------------- Weapon Rendering ---------------------------- */
+/* ------------------------------------------------------------------------- */
+void	draw_weapon(t_game *game, int frame);
+int		get_weapon_color(t_game *game, int tex_x, int tex_y, int frame);
+void	render_weapon(t_game *game);
+
+/* --------------------------- Sprite Rendering ---------------------------- */
+/* ------------------------------------------------------------------------- */
+// void	render_sprites(t_game *game);
+void	get_enemy_distance(t_raycaster *ray, t_game *game);
+t_point	get_normalized_vector(t_point p1, t_point p2);
+void	get_enemy_positions(t_game *game);
+void	draw_enemy(t_game *game, int x, t_raycaster *ray);
+void	animate_sprites(t_game *game);
+void	move_sprites(t_game *game);
+
 /* ------------------------------- Movements ------------------------------- */
 /* ------------------------------------------------------------------------- */
 void	rotate_player(t_player *player);

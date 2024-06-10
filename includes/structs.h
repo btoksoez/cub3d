@@ -33,7 +33,6 @@ typedef struct	s_map
 	char			*ea_texture;
 	struct s_rgb	f_color;
 	struct s_rgb	c_color;
-
 }					t_map;
 
 typedef struct s_img
@@ -53,20 +52,8 @@ typedef struct s_textures
 	struct s_img	south;
 	struct s_img	east;
 	struct s_img	west;
+	struct s_img	weapon[4][5];
 }					t_textures;
-
-typedef struct s_raycaster
-{
-	t_point		dir;
-	t_point		scalingf;
-	t_point		ray_len;
-	t_point_i	map_loc;
-	t_point_i	map_step;
-	float		len;
-	t_point		intersection;
-	t_point		start;
-	bool		wall;
-}					t_raycaster;
 
 typedef struct	s_game
 {
@@ -82,7 +69,6 @@ typedef struct	s_game
 	struct s_player		*player;
 	int					dir;
 	struct s_textures	*textures;
-	struct s_raycaster	*ray;
 	int					f_color;
 	int					c_color;
 	int					color;
@@ -102,9 +88,22 @@ typedef struct s_player
 	float			jump_height;
 	bool			jumping;
 	bool			jump_peak;
-	int				prev_mouse_x;
-	int				prev_mouse_y;
+	int				shooting;
+	int				weapon;
 }					t_player;
+
+typedef struct s_raycaster
+{
+	t_point		dir;
+	t_point		scalingf;
+	t_point		ray_len;
+	t_point_i	map_loc;
+	t_point_i	map_step;
+	float		len;
+	t_point		intersection;
+	t_point		start;
+	bool		wall;
+}					t_raycaster;
 
 typedef struct	s_minimap
 {

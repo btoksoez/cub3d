@@ -18,6 +18,9 @@ int	render(t_game *game)
 	check_movements(game);
 	raycast(game, &ray);
 	minimap(game, &ray);
+	render_weapon(game);
+
+	// minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);
 	return (0);
 }

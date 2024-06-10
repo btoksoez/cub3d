@@ -6,7 +6,10 @@
 		"x.h": "c",
 		"keysymdef.h": "c",
 		"complex": "c",
-		"mlx.h": "c"
+		"mlx.h": "c",
+		"cstdlib": "c",
+		"locale": "c",
+		"define.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "enabled"
 }

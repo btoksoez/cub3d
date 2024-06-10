@@ -1,3 +1,4 @@
+(fixed)
         11111111111 111111111111
         10000000001 1000000000001
         10110000011 10000000000011111111111
@@ -15,3 +16,6 @@
 00
 //leads to segfault
 
+
+
+white line in raycaster when looking at corner

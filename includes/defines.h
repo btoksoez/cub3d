@@ -12,7 +12,11 @@
 #define LEFT_KEY	65361
 #define RIGHT_KEY	65363
 #define SHIFT		0xFFE1
-#define SPACEBAR	0x31
+#define SPACEBAR	32
+#define LEFT_BTN	65361  // Left arrow key
+#define RIGHT_BTN 	65363  // Right arrow key
+#define SHOOT		115    // 's' key
+#define SWITCH		100    // 'd' key
 #else
 /* ------------------ Mac ----------------- */
 # include "./minilibx-mac/mlx.h"
@@ -27,6 +31,8 @@
 #define SPACEBAR	0x31
 #define LEFT_BTN	0xF0
 #define RIGHT_BTN 	0xF1
+#define SHOOT		0x03
+#define SWITCH		0x0F
 #endif
 /* --------------- General --------------- */
 # define WHITESPACE " \t\n\r\f\v"
@@ -82,6 +88,9 @@
 # define S_ 0xFF4500
 # define W_ 0xFFFFFF
 # define E_ 0xD63A00
+# define GUN 0
+# define KNIFE 1
+# define SHOOT_SPEED 5
 /* --------------- Minimap -------------- */
 # define MINI_X (WIDTH - (WIDTH / 5) + (WIDTH / SCALE))
 # define MINI_Y (HEIGHT - (HEIGHT / 5))

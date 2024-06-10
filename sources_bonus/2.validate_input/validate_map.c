@@ -1,4 +1,4 @@
-#include "../../includes/cub3d.h"
+#include "../../includes_bonus/cub3d.h"
 
 // map split triggers if there is text after map
 // trim 1's which are outside of the outer wall
@@ -13,10 +13,6 @@ void	validate_map(t_map *map)
 		free_map(map, "Map has invalid characters", 1);
 	if (!surrounded_by_walls(map))
 		free_map(map, "Map isn't surrounded by walls", 1);
-	// if (!surrounded_by_walls2(map))
-	// 	free_map(map, "Map isn't surrounded by walls", 1);
-	// if (!leaking_empty_spaces(map))
-	// 	free_map(map, "Map has empty spaces not surrounded by walls", 1);
 }
 
 bool	valid_color(int color)
