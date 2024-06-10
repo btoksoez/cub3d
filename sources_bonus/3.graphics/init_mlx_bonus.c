@@ -22,13 +22,11 @@ void	get_enemy_positions(t_game *game)
 		dir = get_normalized_vector(enemy[i]->pos, game->player->pos);
 		if (enemy[i]->type == OFFICER)
 		{
-			printf("officer\n");
 			enemy[i]->size = 5;
 			enemy[i]->speed = 2;
 		}
 		else if (enemy[i]->type == BOSS)
 		{
-			printf("boss\n");
 			enemy[i]->size = 30;
 			enemy[i]->speed = 1;
 		}

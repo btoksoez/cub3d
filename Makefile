@@ -45,9 +45,9 @@ $(NAME): $(OBJ_DIR) $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) $(LIBFT) -o $(NAME)
 	@echo "$(CYAN)make$(RESET)   $@ $(GREEN)[OK]$(RESET)"
 
-bonus: $(OBJ_DIR) $(BONUS_OBJ) $(LIBFT)
+b: $(OBJ_DIR) $(BONUS_OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(BONUS_OBJ) $(MLX_FLAGS) $(LIBFT) -o $(NAME)
-	@echo "$(CYAN)make bonus$(RESET)   $@ $(GREEN)[OK]$(RESET)"
+	@echo "$(CYAN)make$(RESET)   bonus $(GREEN)[OK]$(RESET)"
 
 $(LIBFT):
 	@$(MAKE) -s -C $(LIBFT_DIR) --no-print-directory
@@ -69,7 +69,7 @@ fclean: clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
 	@echo "$(RED)$@$(RESET) $(NAME) $(GREEN)[OK]$(RESET)"
 
-re: fclean all
+re: fclean b
 
 v: re
 	@echo "\n"
