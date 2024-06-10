@@ -62,7 +62,6 @@ int	render(t_game *game)
 
 	if (game->is_player_dead)
 		return (0);
-
 	check_movements(game);
 	get_enemy_positions(game);
 	animate_sprites(game);

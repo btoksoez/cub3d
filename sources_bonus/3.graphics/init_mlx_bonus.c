@@ -70,6 +70,7 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 	player->weapon = GUN;
 	game->enemies = map->enemies;
 	game->enemy_count = map->enemy_count;
+	game->hit_enemy = -1;
 	get_enemy_positions(game);
 }
 

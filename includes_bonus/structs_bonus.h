@@ -91,6 +91,7 @@ typedef struct	s_game
 	float				fraction_y;
 	struct s_enemy		**enemies;
 	int					enemy_count;
+	int					hit_enemy;
 }						t_game;
 
 typedef struct s_player

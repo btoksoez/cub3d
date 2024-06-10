@@ -41,12 +41,13 @@ bool	lines_intersect(t_point p1, t_point p2, t_enemy *enemy, t_point *intersecti
 	t = cross_product(qp, s) / cross;
 	u = cross_product(qp, r) / cross;
 
-    if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
-        // Compute the intersection point
-        intersection->x = p1.x + t * r.x;
-        intersection->y = p1.y + t * r.y;
-        return true;
-    }
+	if (t >= 0 && t <= 1 && u >= 0 && u <= 1)
+	{
+		// Compute the intersection point
+		intersection->x = p1.x + t * r.x;
+		intersection->y = p1.y + t * r.y;
+		return (true);
+	}
 	return (false);
 }
 
@@ -69,7 +70,7 @@ void	get_enemy_distance(t_raycaster *ray, t_game *game)
 		if (lines_intersect(ray->start, ray_end, enemy[i], &intersection))
 		{
 			distance = hypot(ray->start.x - intersection.x, ray->start.y - intersection.y);
-			if (distance < ray->distance_enemy)
+			if (distance < ray->distance_enemy)  // this function is triggerring when it shouldn't
 			{
 				float enemy_line_length = hypot(enemy[i]->right.x - enemy[i]->left.x, enemy[i]->right.y - enemy[i]->left.y);
 				float intersection_pos = hypot(intersection.x - enemy[i]->left.x, intersection.y - enemy[i]->left.y) / enemy_line_length;
@@ -132,7 +133,10 @@ void	draw_enemy(t_game *game, int x, t_raycaster *ray)
 	{
 		color = get_enemy_color(game, ray, ray->tex_x, tex_y);
 		if (color != -1)
+		{
+			printf("HERE\n");
 			put_pixel_to_img(game, x, top.y, color);
+		}
 		top.y++;
 		tex_y += step;
 	}
