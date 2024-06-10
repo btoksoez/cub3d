@@ -57,7 +57,6 @@ int key_release(int key, t_game *game)
 	if (key == SHIFT)
 		player->speed = 1;
 	return (0);
-
 }
 
 // need to fix if mouse gets to screen edge
@@ -67,7 +66,7 @@ int	mouse_hook(int x, t_player *player)
 
 	delta_x = x - player->prev_mouse_x;
 	player->prev_mouse_x = x;
-	player->p_angle += delta_x * MOUSE_SENSITIVITY;
+	player->p_angle += (delta_x * MOUSE_SENSITIVITY);
 
 	if (player->p_angle < 0)
 		player->p_angle += _2PI;

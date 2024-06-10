@@ -1,9 +1,5 @@
 #include "../../includes/cub3d.h"
 
-// render player + 3 up, 3 left, 3 down, 3 right
-// if player only has 1 on left, right, up, down, then render 5 on the other direction, same for 2, rander 4
-// will have problems with maps smaller than 7x7
-
 void	minimap(t_game *game, t_raycaster *ray)
 {
 	t_player	*player;
