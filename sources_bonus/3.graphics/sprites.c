@@ -154,6 +154,16 @@ void	animate_sprites(t_game *game)
 	move_sprites(game);
 }
 
+float	distance(float x1, float y1, float x2, float y2)
+{
+	float	dx;
+	float	dy;
+
+	dx = x2 - x1;
+	dy = y2 - y1;
+	return (sqrtf(dx * dx + dy * dy));
+}
+
 void	move_sprites(t_game *game)
 {
 	int	i;
@@ -166,8 +176,9 @@ void	move_sprites(t_game *game)
 	{
 		new_pos.x = enemy[i]->pos.x + (enemy[i]->speed * enemy[i]->dir_vec.x);
 		new_pos.y = enemy[i]->pos.y + (enemy[i]->speed * enemy[i]->dir_vec.y);
-		if (fabs(new_pos.x - game->player->pos.x) > 10
-			&& game->map->map[(int)(new_pos.y) / SCALE][(int)new_pos.x / SCALE] != WALL
+		if (distance(new_pos.x, new_pos.y, game->player->pos.x, game->player->pos.y) < 10)
+			return (player_dead(game));
+		if (game->map->map[(int)(new_pos.y) / SCALE][(int)new_pos.x / SCALE] != WALL
 			&& game->map->map[(int)(new_pos.y + ESIZE) / SCALE][((int)new_pos.x + ESIZE) / SCALE] != WALL
 			&& game->map->map[(int)(new_pos.y + ESIZE) / SCALE][(int)new_pos.x / SCALE] != WALL
 			&& game->map->map[(int)(new_pos.y) / SCALE][((int)new_pos.x + ESIZE) / SCALE] != WALL)

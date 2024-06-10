@@ -40,6 +40,7 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 	game->dir = 0;
 	game->f_color = convert(map->f_color);
 	game->c_color = convert(map->c_color);
+	game->is_player_dead = false;
 	player->left_right = 0;
 	player->up_down = 0;
 	player->rot = 0;

@@ -83,6 +83,7 @@ typedef struct	s_game
 	void				*win;
 	void				*mapwin;
 	char				**pixel_map;
+	bool				is_player_dead;
 	struct s_map		*map;
 	struct s_img		img;
 	struct s_img		mapimg;
@@ -249,5 +250,6 @@ void	print_pixel_map(t_game *game);
 void	error_message(char *str);
 void	free_map(t_map *map, char *str, int status);
 int		close_window(t_game *game, int status, int exit);
+void	player_dead(t_game *game);
 
 #endif
