@@ -1,38 +1,78 @@
 #include "../../includes_bonus/cub3d.h"
 
+int	get_img_color(int tex_x, int tex_y, t_img texture)
+{
+	int	color;
+	int	bpp;
+	int	len;
+
+	bpp = texture.bits_per_pixel;
+	len = texture.line_len;
+
+	if (tex_x < 0 || tex_x >= texture.width || tex_y < 0 || tex_y >= texture.height)
+		return (0);
+	color = *(int*)&texture.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+	return (color);
+}
+
+void	draw_texture(t_game *game, int pos_x, int pos_y, t_img texture, int x, int y)
+{
+	int			color;
+	float		scale_x;
+	float		scale_y;
+	float		tex_x;
+	float		tex_y;
+
+	scale_x = (float)texture.width / MINI_SCALE;
+	scale_y = (float)texture.height / MINI_SCALE;
+	tex_x = (int)(x * scale_x) % MINI_SCALE;
+	tex_y = (int)(y * scale_y) % MINI_SCALE;
+	color = get_img_color((int)tex_x, (int)tex_y, texture);
+	if (!((color >> 24) & 0xFF))
+		put_pixel_to_img(game, pos_x, pos_y, color);
+	x++;
+}
+
 void	minimap(t_game *game, t_raycaster *ray)
 {
 	t_player	*player;
 	t_minimap	mini;
+	t_textures	*texture;
 	int			y;
 	int			x;
+	int			img_x;
+	int			img_y;
 
+	texture = game->textures;
 	player = game->player;
 	init_minimap(player, &mini);
+	img_y = 0;
 	y = mini.start_y;
 	while (y < mini.end_y)
 	{
 		get_start_x(player, &mini);
 		x = mini.start_x;
+		img_x = 0;
 		while (x < mini.end_x)
 		{
 			if (y < (game->map->rows * SCALE))
 			{
 				if (game->map->map[(int)(y / SCALE)][(int)(x / SCALE)] == WALL)
-					put_pixel_to_img(game, CURRENT_X, CURRENT_Y, WALLS);
+					draw_texture(game, CURRENT_X, CURRENT_Y, texture->east, img_x, img_y);
 				else if (game->map->map[(int)(y / SCALE)][(int)(x / SCALE)] == EMPTY)
-					put_pixel_to_img(game, CURRENT_X, CURRENT_Y, SPACE);
+					draw_texture(game, CURRENT_X, CURRENT_Y, texture->north, img_x, img_y);
 				else
-					put_pixel_to_img(game, CURRENT_X, CURRENT_Y, SCREEN);
+					draw_texture(game, CURRENT_X, CURRENT_Y, texture->south, img_x, img_y);
 			}
 			else
-				put_pixel_to_img(game, CURRENT_X, CURRENT_Y, SCREEN);
-
+				draw_texture(game, CURRENT_X, CURRENT_Y, texture->south, img_x, img_y);
 			mini.start_x++;
 			x += SCALE_FACTOR;
+			img_x++;
 		}
 		mini.start_y++;
 		y += SCALE_FACTOR;
+		img_y++;
 	}
 	render_player_and_rays(game, ray, mini);
 }

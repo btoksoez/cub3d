@@ -55,6 +55,58 @@ void	aim(t_game *game)
 	}
 }
 
+int	get_map_color(int tex_x, int tex_y, t_textures *texture)
+{
+	int	color;
+	int	bpp;
+	int	len;
+
+	bpp = texture->map.bits_per_pixel;
+	len = texture->map.line_len;
+
+	if (tex_x < 0 || tex_x >= texture->map.width || tex_y < 0 || tex_y >= texture->map.height)
+		return (0);
+
+	color = *(int*)&texture->map.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+	return (color);
+}
+
+void	map(t_game *game)
+{
+	t_textures	*texture;
+	int			color;
+	int			x;
+	int			y;
+	float		scale_x;
+	float		scale_y;
+	float		tex_x;
+	float		tex_y;
+	int			mini_width;
+	int			mini_height;
+
+	texture = game->textures;
+	mini_width = MINI_X_END - MINI_X + 20;
+	mini_height = MINI_Y_END - MINI_Y + 30;
+	scale_x = (float)texture->map.width / mini_width;
+	scale_y = (float)texture->map.height / mini_height;
+	y = MINI_Y - 10;
+	tex_y = 0;
+	while (y < MINI_Y_END)
+	{
+		x = MINI_X - 10;
+		tex_x = 0;
+		while (x < MINI_X_END + 10)
+		{
+			color = get_map_color((int)tex_x, (int)tex_y, texture);
+			if (!((color >> 24) & 0xFF))
+				put_pixel_to_img(game, x, y, color);
+			tex_x += scale_x;
+			x++;
+		}
+		tex_y += scale_y;
+		y++;
+	}
+}
 
 int	render(t_game *game)
 {
@@ -67,6 +119,7 @@ int	render(t_game *game)
 	animate_sprites(game);
 	raycast(game, &ray);
 	render_weapon(game);
+	map(game);
 	minimap(game, &ray);
 	aim(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img_ptr, 0, 0);

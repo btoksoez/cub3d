@@ -98,10 +98,12 @@
 # define ESIZE 20
 # define ANIMATION_SPEED 10
 /* --------------- Minimap -------------- */
-# define MINI_X (WIDTH - (WIDTH / 5) + (WIDTH / SCALE))
-# define MINI_Y (HEIGHT - (HEIGHT / 5))
 # define MINI_ROWS 5
 # define MINI_COLS 7
+# define MINI_X (WIDTH - (WIDTH / 5) + (WIDTH / SCALE))
+# define MINI_Y (HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) - 10
+# define MINI_X_END (WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (MINI_SCALE * MINI_COLS)
+# define MINI_Y_END (HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + (MINI_SCALE * MINI_ROWS)
 # define CURRENT_X (mini.start_x - mini.initial_x + MINI_X)
 # define CURRENT_Y (mini.start_y - mini.initial_y + MINI_Y)
 # define MINI_SCALE (SCALE / 2)
@@ -143,7 +145,7 @@
 /* ---------------- Images --------------- */
 # define SCREEN BLACK
 # define SPACE WHITE
-# define WALLS ORANGE
+# define WALLS BROWN
 # define PLAYER_ BLUE
 /* ----------------- Keys ---------------- */
 # define KeyPress 2

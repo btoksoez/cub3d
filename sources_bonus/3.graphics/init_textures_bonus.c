@@ -22,6 +22,8 @@ void	init_textures(t_game *game, t_textures *textures)
 	init_texture(game, &textures->south, game->map->so_texture);
 	init_texture(game, &textures->east, game->map->ea_texture);
 	init_texture(game, &textures->west, game->map->we_texture);
+	init_texture(game, &textures->aim, "./textures/aim.xpm");
+	init_texture(game, &textures->map, "./textures/map.xpm");
 	init_texture(game, &textures->weapon[0][0], "./textures/gun/gun1.xpm");
 	init_texture(game, &textures->weapon[0][1], "./textures/gun/gun2.xpm");
 	init_texture(game, &textures->weapon[0][2], "./textures/gun/gun3.xpm");
@@ -54,6 +56,5 @@ void	init_textures(t_game *game, t_textures *textures)
 	init_texture(game, &textures->enemy[2][1], "./textures/rat/rat2.xpm");
 	init_texture(game, &textures->enemy[2][2], "./textures/rat/rat3.xpm");
 	init_texture(game, &textures->enemy[2][3], "./textures/rat/rat4.xpm");
-	init_texture(game, &textures->aim, "./textures/aim.xpm");
 	game->textures = textures;
 }
