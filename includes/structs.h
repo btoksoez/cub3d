@@ -80,6 +80,8 @@ typedef struct s_player
 {
 	int				up_down;
 	int				left_right;
+	int				prev_mouse_x;
+	int				prev_mouse_y;
 	int				rot;
 	t_point			pos;
 	float			p_angle;
