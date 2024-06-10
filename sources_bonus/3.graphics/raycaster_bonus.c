@@ -1,5 +1,83 @@
 #include "../../includes_bonus/cub3d.h"
 
+int	get_fc_color(t_game *game, int tex_x, int tex_y, bool floor_ceiling)
+{
+	int			color;
+	int			bpp;
+	int			len;
+	t_textures	*t;
+
+	color = 0;
+	t = game->textures;
+	if (!floor_ceiling)
+	{
+		bpp = t->ground.bits_per_pixel;
+		len = t->ground.line_len;
+		color = *(int*)&t->ground.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+	}
+	else
+	{
+		bpp = t->sky.bits_per_pixel;
+		len = t->sky.line_len;
+		color = *(int*)&t->sky.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+	}
+	return (color);
+}
+
+void	draw_ceiling(t_game *game, int x, int bottom, int top)
+{
+	int		temp;
+	int		color;
+	float	tex_y;
+	float	tex_x;
+	float	step;
+
+	temp = 0;
+	if (bottom > top)
+	{
+		temp = bottom;
+		bottom = top;
+		top = temp;
+	}
+	tex_y = 0;
+	tex_x = game->textures->sky.width * (game->fraction_x + game->fraction_y);
+	step = (float)game->textures->sky.height / (top - bottom);
+	while (bottom <= top)
+	{
+		color = get_fc_color(game, tex_x, tex_y, true);
+		put_pixel_to_img(game, x, bottom, color);
+		bottom++;
+		tex_y += step;
+	}
+}
+
+void	draw_floor(t_game *game, int x, int bottom, int top)
+{
+	int		temp;
+	int		color;
+	float	tex_y;
+	float	tex_x;
+	float	step;
+
+	temp = 0;
+	if (bottom > top)
+	{
+		temp = bottom;
+		bottom = top;
+		top = temp;
+	}
+	tex_y = 0;
+	tex_x = game->textures->ground.width * (game->fraction_x + game->fraction_y);
+	step = (float)game->textures->ground.height / (top - bottom);
+	while (bottom <= top)
+	{
+		color = get_fc_color(game, tex_x, tex_y, false);
+		put_pixel_to_img(game, x, bottom, color);
+		bottom++;
+		tex_y += step;
+	}
+}
+
 void	raycast(t_game *game, t_raycaster *ray)
 {
 	t_player	*player;
@@ -23,12 +101,11 @@ void	raycast(t_game *game, t_raycaster *ray)
 		top.y = (HEIGHT / 2) - wall_height + player->jump_height;
 		bottom.y = (HEIGHT / 2) + wall_height + player->jump_height;
 		draw_textures(game, x, top.y, x, bottom.y);
-		draw_vline(game, x, bottom.y, x, HEIGHT, game->f_color);
-		draw_vline(game, x, 0, x, top.y, game->c_color);
+		draw_floor(game, x, bottom.y, HEIGHT);
+		draw_ceiling(game, x, 0, top.y);
 		get_enemy_distance(ray, game);
 		if (ray->enemy)
 		{
-			// printf("here\n");
 			game->hit_enemy = ray->enemy_id;
 			ray->distance_enemy *= cos(angle - player->p_angle);
 			draw_enemy(game, x, ray);

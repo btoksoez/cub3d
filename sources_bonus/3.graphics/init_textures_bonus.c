@@ -24,6 +24,8 @@ void	init_textures(t_game *game, t_textures *textures)
 	init_texture(game, &textures->west, game->map->we_texture);
 	init_texture(game, &textures->aim, "./textures/aim.xpm");
 	init_texture(game, &textures->map, "./textures/map.xpm");
+	init_texture(game, &textures->ground, "./textures/floor.xpm");
+	init_texture(game, &textures->sky, "./textures/sky.xpm");
 	init_texture(game, &textures->weapon[0][0], "./textures/gun/gun1.xpm");
 	init_texture(game, &textures->weapon[0][1], "./textures/gun/gun2.xpm");
 	init_texture(game, &textures->weapon[0][2], "./textures/gun/gun3.xpm");
