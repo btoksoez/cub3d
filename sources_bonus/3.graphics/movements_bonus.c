@@ -5,8 +5,8 @@ void	check_movements(t_game *game)
 	t_player	*player;
 	float		new_x;
 	float		new_y;
-	int			x;
-	int			y;
+	// int			x;
+	// int			y;
 
 	player = game->player;
 	new_x = player->pos.x;
@@ -31,9 +31,9 @@ void	check_movements(t_game *game)
 		new_x = player->pos.x + (player->speed * cos(player->p_angle + _05PI));
 		new_y = player->pos.y + (player->speed * sin(player->p_angle + _05PI));
 	}
-	mlx_mouse_get_pos(game->mlx, game->win, &x, &y);	// need to adjust this, it is changing the player->p_angle as game starts
+	// mlx_mouse_get_pos(game->mlx, game->win, &x, &y);	// need to adjust this, it is changing the player->p_angle as game starts
 	// mlx_mouse_get_pos(game->win, &x, &y);
-	mouse_hook(x, game->player);
+	// mouse_hook(x, game->player);
 	rotate_player(player);
 	jumping(game->player);
 	move_player(game, new_x, new_y);

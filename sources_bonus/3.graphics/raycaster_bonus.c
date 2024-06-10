@@ -28,7 +28,7 @@ void	raycast(t_game *game, t_raycaster *ray)
 		get_enemy_distance(ray, game);
 		if (ray->enemy)
 		{
-			printf("here\n");
+			// printf("here\n");
 			game->hit_enemy = ray->enemy_id;
 			ray->distance_enemy *= cos(angle - player->p_angle);
 			draw_enemy(game, x, ray);

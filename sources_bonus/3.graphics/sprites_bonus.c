@@ -134,7 +134,7 @@ void	draw_enemy(t_game *game, int x, t_raycaster *ray)
 		color = get_enemy_color(game, ray, ray->tex_x, tex_y);
 		if (color != -1)
 		{
-			printf("HERE\n");
+			// printf("HERE\n");
 			put_pixel_to_img(game, x, top.y, color);
 		}
 		top.y++;

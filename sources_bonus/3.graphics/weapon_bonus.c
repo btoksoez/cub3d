@@ -73,8 +73,8 @@ void	render_weapon(t_game *game)
 			// game->enemies[game->hit_enemy];
 			if (game->hit_enemy != -1)
 			{
-				printf("game->enemy_x: %f\n", game->enemies[game->hit_enemy]->pos.x);
-				printf("game->enemy_y: %f\n", game->enemies[game->hit_enemy]->pos.y);
+				// printf("game->enemy_x: %f\n", game->enemies[game->hit_enemy]->pos.x);
+				// printf("game->enemy_y: %f\n", game->enemies[game->hit_enemy]->pos.y);
 			}
 		}
 	}
