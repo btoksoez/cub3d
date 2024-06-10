@@ -35,7 +35,7 @@ typedef struct s_enemy
 	t_point			right;
 	t_point			dir_vec;
 	int				speed;
-	int				shooting;
+	int				size;
 	int				frame;
 }					t_enemy;
 

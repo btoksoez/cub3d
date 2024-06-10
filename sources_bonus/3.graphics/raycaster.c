@@ -10,7 +10,6 @@ void	raycast(t_game *game)
 	int			x;
 	float		angle;
 	int			wall_height;
-	static int	counter = 0;
 	t_raycaster	ray;
 
 	player = game->player;
@@ -35,7 +34,6 @@ void	raycast(t_game *game)
 		angle += (PLAYER_VISION / WIDTH);
 		x++;
 	}
-	counter++;
 }
 
 float	cast_ray(t_raycaster *ray, t_game *game, float angle)

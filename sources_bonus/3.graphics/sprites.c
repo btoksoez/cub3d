@@ -113,17 +113,26 @@ void	draw_enemy(t_game *game, int x, t_raycaster *ray)
 	t_point	bottom;
 	int		enemy_height;
 	float	distance_factor;
-	float	enemy_center;
+	// float	enemy_center;
+	int		enemy_scale;
 
 
 	distance_factor = 1.0f / ray->distance_enemy;
-	enemy_center = HEIGHT * 0.5f; // the vertical center of the screen
-	enemy_height = ENEMY_SCALE * distance_factor;
-	top.y = enemy_center - enemy_height + game->player->jump_height;
-	bottom.y = enemy_center + enemy_height + game->player->jump_height;
+	// enemy_center = HEIGHT * 0.5f; // the vertical center of the screen
+	if (ray->enemy_type == OFFICER)
+		enemy_scale = 5000;
+	else if (ray->enemy_type == BOSS)
+		enemy_scale = 8000;
+	else
+		enemy_scale = 10000;
+	enemy_height = enemy_scale * distance_factor;
+	// top.y = enemy_center - enemy_height + game->player->jump_height;
+	// bottom.y = enemy_center + enemy_height + game->player->jump_height;
+	bottom.y = HEIGHT * 0.5f + 8000 * distance_factor + game->player->jump_height;
+	top.y = bottom.y - 2 * enemy_height;
 	tex_y = 0;
 	step = (float)game->textures->enemy[ray->enemy_type][0].height / (bottom.y - top.y);
-	while (top.y <= bottom.y)
+	while (top.y < bottom.y)
 	{
 		color = get_enemy_color(game, ray, ray->tex_x, tex_y);
 		if (color != -1)

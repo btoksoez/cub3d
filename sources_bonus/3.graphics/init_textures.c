@@ -46,5 +46,9 @@ void	init_textures(t_game *game, t_textures *textures)
 	init_texture(game, &textures->enemy[0][1], "./textures/officer/officer2.xpm");
 	init_texture(game, &textures->enemy[0][2], "./textures/officer/officer3.xpm");
 	init_texture(game, &textures->enemy[0][3], "./textures/officer/officer4.xpm");
+	init_texture(game, &textures->enemy[1][0], "./textures/boss/boss1.xpm");
+	init_texture(game, &textures->enemy[1][1], "./textures/boss/boss2.xpm");
+	init_texture(game, &textures->enemy[1][2], "./textures/boss/boss3.xpm");
+	init_texture(game, &textures->enemy[1][3], "./textures/boss/boss4.xpm");
 	game->textures = textures;
 }

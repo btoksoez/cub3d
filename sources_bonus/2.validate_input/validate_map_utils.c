@@ -27,7 +27,6 @@ void	get_enemy_coordinates(t_map *map, int rows, int coll)
 	enemy->left.y = 0;
 	enemy->right.x = 0;
 	enemy->right.y = 0;
-	enemy->shooting = 0;
 	enemy->speed = 2;
 	if (map->map[rows][coll] == 'O')
 		enemy->type = OFFICER;
