@@ -56,16 +56,8 @@ void	minimap(t_game *game, t_raycaster *ray)
 		while (x < mini.end_x)
 		{
 			if (y < (game->map->rows * SCALE))
-			{
 				if (game->map->map[(int)(y / SCALE)][(int)(x / SCALE)] == WALL)
-					draw_texture(game, CURRENT_X, CURRENT_Y, texture->east, img_x, img_y);
-				else if (game->map->map[(int)(y / SCALE)][(int)(x / SCALE)] == EMPTY)
 					draw_texture(game, CURRENT_X, CURRENT_Y, texture->north, img_x, img_y);
-				else
-					draw_texture(game, CURRENT_X, CURRENT_Y, texture->south, img_x, img_y);
-			}
-			else
-				draw_texture(game, CURRENT_X, CURRENT_Y, texture->south, img_x, img_y);
 			mini.start_x++;
 			x += SCALE_FACTOR;
 			img_x++;
