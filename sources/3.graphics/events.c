@@ -57,7 +57,6 @@ int key_release(int key, t_game *game)
 	if (key == SHIFT)
 		player->speed = 1;
 	return (0);
-
 }
 
 // need to fix if mouse gets to screen edge
