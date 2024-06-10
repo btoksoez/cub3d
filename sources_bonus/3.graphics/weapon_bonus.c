@@ -14,7 +14,6 @@ int	get_weapon_color(t_game *game, int tex_x, int tex_y, int frame)
 	bpp = t->weapon[w_type][frame].bits_per_pixel;
 	len = t->weapon[w_type][frame].line_len;
 	color = *(int*)&t->weapon[w_type][frame].pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
-	// printf("%d\n", *(int*)&t->weapon[w_type][frame].pixels_ptr[5* (bpp / 8) + (5 * len)]);
 	if (color == 9961608 || color == 33023)	//removing background
 		return (-1);
 	return (color);

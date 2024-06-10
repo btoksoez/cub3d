@@ -12,12 +12,13 @@ t_point	get_normalized_vector(t_point p1, t_point p2)
 }
 
 // Function to compute the cross product of two vectors
-float cross_product(t_point a, t_point b) {
-    return a.x * b.y - a.y * b.x;
+float	cross_product(t_point a, t_point b)
+{
+	return ((a.x * b.y) - (a.y * b.x));
 }
 
 // Function to check if two line segments (p1, p2) and (q1, q2) intersect
-bool lines_intersect(t_point p1, t_point p2, t_enemy *enemy, t_point *intersection)
+bool	lines_intersect(t_point p1, t_point p2, t_enemy *enemy, t_point *intersection)
 {
 	t_point	q1;
 	t_point	q2;
@@ -112,12 +113,10 @@ void	draw_enemy(t_game *game, int x, t_raycaster *ray)
 	t_point	bottom;
 	int		enemy_height;
 	float	distance_factor;
-	// float	enemy_center;
 	int		enemy_scale;
 
 
 	distance_factor = 1.0f / ray->distance_enemy;
-	// enemy_center = HEIGHT * 0.5f; // the vertical center of the screen
 	if (ray->enemy_type == OFFICER)
 		enemy_scale = 5000;
 	else if (ray->enemy_type == BOSS)
@@ -125,8 +124,6 @@ void	draw_enemy(t_game *game, int x, t_raycaster *ray)
 	else
 		enemy_scale = 10000;
 	enemy_height = enemy_scale * distance_factor;
-	// top.y = enemy_center - enemy_height + game->player->jump_height;
-	// bottom.y = enemy_center + enemy_height + game->player->jump_height;
 	bottom.y = HEIGHT * 0.5f + 8000 * distance_factor + game->player->jump_height;
 	top.y = bottom.y - 2 * enemy_height;
 	tex_y = 0;
@@ -174,12 +171,12 @@ float	distance(float x1, float y1, float x2, float y2)
 
 void	move_sprites(t_game *game)
 {
-	int	i;
 	t_enemy	**enemy;
 	t_point	new_pos;
-	i = 0;
-	enemy = game->enemies;
+	int	i;
 
+	enemy = game->enemies;
+	i = 0;
 	while (i < game->enemy_count)
 	{
 		new_pos.x = enemy[i]->pos.x + (enemy[i]->speed * enemy[i]->dir_vec.x);

@@ -54,5 +54,6 @@ void	init_textures(t_game *game, t_textures *textures)
 	init_texture(game, &textures->enemy[2][1], "./textures/rat/rat2.xpm");
 	init_texture(game, &textures->enemy[2][2], "./textures/rat/rat3.xpm");
 	init_texture(game, &textures->enemy[2][3], "./textures/rat/rat4.xpm");
+	init_texture(game, &textures->aim, "./textures/aim.xpm");
 	game->textures = textures;
 }
