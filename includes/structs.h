@@ -52,18 +52,15 @@ typedef struct s_textures
 	struct s_img	south;
 	struct s_img	east;
 	struct s_img	west;
-	struct s_img	weapon[4][5];
 }					t_textures;
 
 typedef struct	s_game
 {
 	void				*mlx;
 	void				*win;
-	void				*mapwin;
 	char				**pixel_map;
 	struct s_map		*map;
 	struct s_img		img;
-	struct s_img		mapimg;
 	int					width;
 	int					height;
 	struct s_player		*player;
@@ -87,11 +84,6 @@ typedef struct s_player
 	float			p_angle;
 	int				look_dir;
 	int				speed;
-	float			jump_height;
-	bool			jumping;
-	bool			jump_peak;
-	int				shooting;
-	int				weapon;
 }					t_player;
 
 typedef struct s_raycaster
@@ -106,17 +98,5 @@ typedef struct s_raycaster
 	t_point		start;
 	bool		wall;
 }					t_raycaster;
-
-typedef struct	s_minimap
-{
-	int				start_x;
-	int				start_y;
-	int				end_x;
-	int				end_y;
-	int				hori_vision;
-	int				vert_vision;
-	int				initial_x;
-	int				initial_y;
-}					t_minimap;
 
 #endif

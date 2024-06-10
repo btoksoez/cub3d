@@ -91,20 +91,6 @@ void	move_player(t_game *game, float new_x, float new_y);
 void	check_movements(t_game *game);
 int		mouse_hook(int x, t_player *player);
 
-/* ------------------------------- Mini Map -------------------------------- */
-/* ------------------------------------------------------------------------- */
-void	minimap(t_game *game, t_raycaster *ray);
-void	init_minimap(t_player *player, t_minimap *mini);
-void	render_player_and_rays(t_game *game, t_raycaster *ray, t_minimap mini);
-void	render_player(t_game *game, int start_x, int start_y);
-void	raycast_2d(t_game *game, t_raycaster *ray, t_minimap mini);
-void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, t_minimap mini);
-void	init_2d_ray(t_raycaster *ray, t_player *player, float angle);
-void	adjust_raylen(t_raycaster *ray, float angle, t_minimap mini, t_player *player);
-void	draw_ray(t_game *game, t_player *player, t_raycaster *ray, t_minimap mini);
-void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
-void	get_start_x(t_player *player, t_minimap *mini);
-
 /* -------------------------------- Utils ---------------------------------- */
 /* ------------------------------------------------------------------------- */
 void	print_textures(t_map *map_info);

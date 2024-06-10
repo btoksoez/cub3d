@@ -19,8 +19,8 @@ void	raycast(t_game *game, t_raycaster *ray)
 		distance = cast_ray(game, angle, ray);
 		adjusted = distance * cos(angle - player->p_angle);
 		wall_height = (WALL_SCALE / adjusted);
-		top.y = (HEIGHT / 2) - wall_height + player->jump_height;
-		bottom.y = (HEIGHT / 2) + wall_height + player->jump_height;
+		top.y = (HEIGHT / 2) - wall_height;
+		bottom.y = (HEIGHT / 2) + wall_height;
 		draw_textures(game, x, top.y, x, bottom.y);
 		draw_vline(game, x, bottom.y, x, HEIGHT, game->f_color);
 		draw_vline(game, x, 0, x, top.y, game->c_color);

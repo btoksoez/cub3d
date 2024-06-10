@@ -5,8 +5,6 @@ void	check_movements(t_game *game)
 	t_player	*player;
 	float		new_x;
 	float		new_y;
-	int x;
-	int	y;
 
 	player = game->player;
 	new_x = player->pos.x;
@@ -31,11 +29,7 @@ void	check_movements(t_game *game)
 		new_x = player->pos.x + (player->speed * cos(player->p_angle + _05PI));
 		new_y = player->pos.y + (player->speed * sin(player->p_angle + _05PI));
 	}
-	mlx_mouse_get_pos(game->mlx, game->win, &x, &y);	// need to adjust this, it is changing the player->p_angle as game starts
-	// mlx_mouse_get_pos(game->win, &x, &y);
-	mouse_hook(x, game->player);
 	rotate_player(player);
-	jumping(game->player);
 	move_player(game, new_x, new_y);
 }
 
@@ -71,31 +65,3 @@ void	rotate_player(t_player *player)
 	}
 }
 
-void	jumping(t_player *player)
-{
-	float	jump_progress;
-	float	jump_speed;
-	float	fall_progress;
-	float	fall_speed;
-
-	if (player->jumping && !player->jump_peak)
-	{
-		jump_progress = player->jump_height / (float)MAX_JUMP_HEIGHT;
-		jump_speed = MAX_JUMP_SPEED * (1.0 - jump_progress);
-		player->jump_height += jump_speed;
-		if (player->jump_height >= MAX_JUMP_HEIGHT || jump_speed < 0.5)
-			player->jump_peak = true;
-	}
-	else if (player->jump_peak || !player->jumping)
-	{
-		fall_progress = 1.0 - (player->jump_height / (float)MAX_JUMP_HEIGHT);
-		fall_speed = MAX_JUMP_SPEED * sqrt(fall_progress);
-		player->jump_height -= fall_speed;
-		if (player->jump_height <= 0)
-		{
-			player->jump_height = 0;
-			player->jumping = false;
-			player->jump_peak = false;
-		}
-	}
-}

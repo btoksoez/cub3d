@@ -15,8 +15,8 @@
 #define SPACEBAR	32
 #define LEFT_BTN	65361  // Left arrow key
 #define RIGHT_BTN 	65363  // Right arrow key
-#define SHOOT		115    // 's' key
-#define SWITCH		100    // 'd' key
+#define SHOOT		102    // 's' key
+#define SWITCH		114    // 'd' key
 #else
 /* ------------------ Mac ----------------- */
 # include "./minilibx-mac/mlx.h"
@@ -91,29 +91,7 @@
 # define GUN 0
 # define KNIFE 1
 # define SHOOT_SPEED 5
-/* --------------- Minimap -------------- */
-# define MINI_X (WIDTH - (WIDTH / 5) + (WIDTH / SCALE))
-# define MINI_Y (HEIGHT - (HEIGHT / 5))
-# define MINI_ROWS 5
-# define MINI_COLS 7
-# define CURRENT_X (mini.start_x - mini.initial_x + MINI_X)
-# define CURRENT_Y (mini.start_y - mini.initial_y + MINI_Y)
-# define MINI_SCALE (SCALE / 2)
-# define SCALE_FACTOR (SCALE / (SCALE / 2))
-# define MINI_PCENTER (PCENTER / 2)
-# define MINI_PSIZE (PSIZE / 2)
-# define MINI_PLAYER_X (MINI_X + (player->pos.x / 2))
-# define MINI_PLAYER_Y (MINI_Y + (player->pos.y / 2))
-# define CENTER_X (MINI_X + ((MINI_SCALE * 7) / 2) - MINI_PCENTER)
-# define CENTER_Y (MINI_Y + ((MINI_SCALE * 5) / 2) - MINI_PCENTER)
-# define RIGHT_OUTBOUND (CENTER_X + MINI_PCENTER) + (MINI_SCALE * 7 / 2)
-# define LEFT_OUTBOUND (CENTER_X + MINI_PCENTER) - (MINI_SCALE * 7 / 2)
-# define TOP_OUTBOUND (CENTER_Y + MINI_PCENTER) + (MINI_SCALE * 5 / 2)
-# define BOTTOM_OUTBOUND (CENTER_Y + MINI_PCENTER) - (MINI_SCALE * 5 / 2)
-# define CENTERED_POSITION_X (CENTER_X + MINI_PCENTER)
-# define CENTERED_POSITION_Y (CENTER_Y + MINI_PCENTER)
-# define CLOSE_TO_BOUND_POSITION_X (MINI_PLAYER_X + MINI_PCENTER)
-# define CLOSE_TO_BOUND_POSITION_Y (MINI_PLAYER_Y + MINI_PCENTER)
+
 /* ---------------- Colors --------------- */
 # define RED 0xFF0000
 # define GREEN 0x00FF00

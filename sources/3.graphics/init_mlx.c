@@ -26,11 +26,6 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 	player->pos.y = (map->player.y * SCALE) + (3 * (PSIZE / 2));
 	player->look_dir = 0;
 	player->speed = 1;
-	player->jump_height = 0;
-	player->jumping = false;
-	player->prev_mouse_x = 0;
-	player->shooting = 0;
-	player->weapon = GUN;
 }
 
 void	init_window(t_game *game, t_map *map)

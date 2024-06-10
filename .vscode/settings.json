@@ -9,7 +9,12 @@
 		"mlx.h": "c",
 		"cstdlib": "c",
 		"locale": "c",
-		"define.h": "c"
+		"define.h": "c",
+		"defines.h": "c",
+		"functions_bonus.h": "c",
+		"defines_bonus.h": "c",
+		"libft.h": "c",
+		"structs_bonus.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "enabled"
 }
