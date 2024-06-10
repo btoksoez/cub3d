@@ -71,15 +71,12 @@ void	get_enemy_distance(t_raycaster *ray, t_game *game)
 			if (distance < ray->distance_enemy)
 			{
 				float enemy_line_length = hypot(enemy[i]->right.x - enemy[i]->left.x, enemy[i]->right.y - enemy[i]->left.y);
-				printf("%f\n", enemy_line_length);
 				float intersection_pos = hypot(intersection.x - enemy[i]->left.x, intersection.y - enemy[i]->left.y) / enemy_line_length;
 				ray->enemy_type = enemy[i]->type;
 				ray->enemy_id = i;
 				ray->enemy = true;
 				ray->distance_enemy = distance;
 				ray->tex_x = intersection_pos * game->textures->enemy[ray->enemy_type][0].width;
-				printf("Intersect pos: %f\n", intersection_pos);
-				printf("tex_x: %f\n", ray->tex_x);
 				draw_line(game, ray->start.x, ray->start.y, intersection.x, intersection.y, BLACK);
 			}
 		}
@@ -98,7 +95,6 @@ int	get_enemy_color(t_game *game, t_raycaster *ray, int tex_x, int tex_y)
 	color = 0;
 	t = game->textures;
 	frame = game->enemies[ray->enemy_id]->frame;
-	printf("id %d , frame; %d\n", ray->enemy_id, frame);
 	bpp = t->enemy[ray->enemy_type][frame].bits_per_pixel;
 	len = t->enemy[ray->enemy_type][frame].line_len;
 	color = *(int*)&t->enemy[ray->enemy_type][frame].pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
@@ -112,15 +108,19 @@ void	draw_enemy(t_game *game, int x, t_raycaster *ray)
 	int		color;
 
 	float	tex_y;
-	// float	tex_x;
 	float	step;
 	t_point	top;
 	t_point	bottom;
 	int		enemy_height;
+	float	distance_factor;
+	float	enemy_center;
 
-	enemy_height = (ENEMY_SCALE / ray->distance_enemy);
-	top.y = (HEIGHT / 2) - enemy_height + game->player->jump_height;
-	bottom.y = (HEIGHT * 0.6f) + enemy_height + game->player->jump_height;
+
+	distance_factor = 1.0f / ray->distance_enemy;
+	enemy_center = HEIGHT * 0.5f; // the vertical center of the screen
+	enemy_height = ENEMY_SCALE * distance_factor;
+	top.y = enemy_center - enemy_height + game->player->jump_height;
+	bottom.y = enemy_center + enemy_height + game->player->jump_height;
 	tex_y = 0;
 	step = (float)game->textures->enemy[ray->enemy_type][0].height / (bottom.y - top.y);
 	while (top.y <= bottom.y)
@@ -134,45 +134,51 @@ void	draw_enemy(t_game *game, int x, t_raycaster *ray)
 }
 
 
-void	render_sprites(t_game *game)
+void	animate_sprites(t_game *game)
 {
 	int	i;
+	static int frame = 0;
+	static int counter = 0;
 
 	i = 0;
 	while (i < game->enemy_count)
 	{
-		game->enemies[i]->frame = (game->enemies[i]->frame + 1) % 4;
-		printf("frame; %d, %d\n",i, game->enemies[i]->frame);
+		game->enemies[i]->frame = frame;
+		i++;
+	}
+	if (++counter == ANIMATION_SPEED)
+	{
+		frame = (frame + 1) % 4;
+		counter = 0;
+	}
+	move_sprites(game);
+}
+
+void	move_sprites(t_game *game)
+{
+	int	i;
+	t_enemy	**enemy;
+	t_point	new_pos;
+	i = 0;
+	enemy = game->enemies;
+
+	while (i < game->enemy_count)
+	{
+		new_pos.x = enemy[i]->pos.x + (enemy[i]->speed * enemy[i]->dir_vec.x);
+		new_pos.y = enemy[i]->pos.y + (enemy[i]->speed * enemy[i]->dir_vec.y);
+		if (fabs(new_pos.x - game->player->pos.x) > 10
+			&& game->map->map[(int)(new_pos.y) / SCALE][(int)new_pos.x / SCALE] != WALL
+			&& game->map->map[(int)(new_pos.y + ESIZE) / SCALE][((int)new_pos.x + ESIZE) / SCALE] != WALL
+			&& game->map->map[(int)(new_pos.y + ESIZE) / SCALE][(int)new_pos.x / SCALE] != WALL
+			&& game->map->map[(int)(new_pos.y) / SCALE][((int)new_pos.x + ESIZE) / SCALE] != WALL)
+			{
+				enemy[i]->pos.x = new_pos.x;
+				enemy[i]->pos.y = new_pos.y;
+			}
+		enemy[i]->left.x = enemy[i]->pos.x - enemy[i]->dir_vec.y * ESIZE / 2;
+		enemy[i]->left.y = enemy[i]->pos.y + enemy[i]->dir_vec.x * ESIZE / 2;
+		enemy[i]->right.x = enemy[i]->pos.x + enemy[i]->dir_vec.y * ESIZE / 2;
+		enemy[i]->right.y = enemy[i]->pos.y - enemy[i]->dir_vec.x * ESIZE / 2;
 		i++;
 	}
 }
-
-
-
-// 	int			i;
-// 	t_player	*player;
-// 	t_raycaster ray[game->enemy_count];
-// 	t_enemy		**enemy;
-// 	float		distance;
-// 	// float		adjusted;
-// 	t_point		top;
-// 	t_point		bottom;
-// 	int			wall_height;
-
-// 	i = 0;
-// 	player = game->player;
-// 	enemy = game->enemies;
-// 	while (i < game->enemy_count)
-// 	{
-// 		init_enemy_ray(&ray[i], player, enemy[i]);
-// 		distance = cast_enemy_ray(&ray[i], enemy[i], game);
-// 		// adjusted = distance * cos(angle - player->p_angle);
-// 		wall_height = (WALL_SCALE / distance);
-// 		top.y = (HEIGHT / 2) - wall_height + player->jump_height;
-// 		bottom.y = (HEIGHT / 2) + wall_height + player->jump_height;
-// 		draw_vline(game, WIDTH /2, bottom.y, WIDTH / 2, bottom.y, BLACK);
-// 		i++;
-// 		//sprite movement:
-// 			//move always in direction of player until can't go forward, then decrease x and y towards player x and y
-// 	}
-// }

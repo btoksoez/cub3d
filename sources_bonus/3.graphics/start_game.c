@@ -17,7 +17,7 @@ int	render(t_game *game)
 	check_movements(game);
 	get_enemy_positions(game);
 	render_2dgame(game);
-	// render_sprites(game);
+	animate_sprites(game);
 	raycast(game);
 	render_weapon(game);
 

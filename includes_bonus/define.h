@@ -68,7 +68,7 @@
 # define PLAYER "NSEW"
 # define ENEMY "BOH"
 # define SCALE 50
-# define PSIZE SCALE / 4
+# define PSIZE 12
 # define PCENTER PSIZE / 2
 # define JUMP_SPEED 10
 # define MAX_JUMP_HEIGHT 140
@@ -93,7 +93,9 @@
 # define OFFICER 0
 # define BOSS 1
 # define HITLER 2
-# define ENEMY_SCALE 2500
+# define ENEMY_SCALE 8000
+# define ESIZE 20
+# define ANIMATION_SPEED 10
 /* --------------- Minimap -------------- */
 # define MM_WIDTH WIDTH / 5
 # define MM_HEIGHT HEIGHT / 5

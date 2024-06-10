@@ -20,11 +20,13 @@ void	get_enemy_positions(t_game *game)
 	while (i < game->enemy_count)
 	{
 		dir = get_normalized_vector(enemy[i]->pos, game->player->pos);
-		enemy[i]->left.x = enemy[i]->pos.x - dir.y * PCENTER;
-		enemy[i]->left.y = enemy[i]->pos.y + dir.x * PCENTER;
-		enemy[i]->right.x = enemy[i]->pos.x + dir.y * PCENTER;
-		enemy[i]->right.y = enemy[i]->pos.y - dir.x * PCENTER;
+		enemy[i]->left.x = enemy[i]->pos.x - dir.y * ESIZE / 2;
+		enemy[i]->left.y = enemy[i]->pos.y + dir.x * ESIZE / 2;
+		enemy[i]->right.x = enemy[i]->pos.x + dir.y * ESIZE / 2;
+		enemy[i]->right.y = enemy[i]->pos.y - dir.x * ESIZE / 2;
 		enemy[i]->frame = 0;
+		enemy[i]->speed = 1;
+		enemy[i]->dir_vec = dir;
 		i++;
 	}
 }

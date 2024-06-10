@@ -21,8 +21,8 @@ void	get_enemy_coordinates(t_map *map, int rows, int coll)
 	enemy = malloc(sizeof(t_enemy));
 	map->enemies = realloc(map->enemies, sizeof(t_enemy *) * map->enemy_count);
 	map->enemies[map->enemy_count - 1] = enemy;
-	enemy->pos.x = coll * SCALE + 3 * (PSIZE / 2);
-	enemy->pos.y = rows * SCALE + 3 * (PSIZE / 2);
+	enemy->pos.x = coll * SCALE + 3 * (ESIZE / 2);
+	enemy->pos.y = rows * SCALE + 3 * (ESIZE / 2);
 	enemy->left.x = 0;
 	enemy->left.y = 0;
 	enemy->right.x = 0;

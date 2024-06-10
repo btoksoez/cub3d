@@ -29,13 +29,8 @@ void	raycast(t_game *game)
 		get_enemy_distance(&ray, game);
 		if (ray.enemy)
 		{
-			if (counter == 10)
-			{
-				game->enemies[ray.enemy_id]->frame += 1;
-				counter = 0;
-			}
 			ray.distance_enemy *= cos(angle - player->p_angle);
-            draw_enemy(game, x, &ray);
+			draw_enemy(game, x, &ray);
 		}
 		angle += (PLAYER_VISION / WIDTH);
 		x++;

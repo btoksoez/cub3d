@@ -30,12 +30,10 @@ typedef struct s_point_i
 typedef struct s_enemy
 {
 	int				type;
-	int				rot;
 	t_point			pos;
 	t_point			left;
 	t_point			right;
-	float			e_angle;
-	int				look_dir;
+	t_point			dir_vec;
 	int				speed;
 	int				shooting;
 	int				frame;
@@ -219,7 +217,8 @@ void	get_enemy_distance(t_raycaster *ray, t_game *game);
 t_point	get_normalized_vector(t_point p1, t_point p2);
 void	get_enemy_positions(t_game *game);
 void	draw_enemy(t_game *game, int x, t_raycaster *ray);
-void	render_sprites(t_game *game);
+void	animate_sprites(t_game *game);
+void	move_sprites(t_game *game);
 
 /* ------------------------------ Ray Caster ------------------------------- */
 /* ------------------------------------------------------------------------- */
