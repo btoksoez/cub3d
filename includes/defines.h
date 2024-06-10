@@ -83,8 +83,8 @@
 # define W_ 0xFFFFFF
 # define E_ 0xD63A00
 /* --------------- Minimap -------------- */
-# define MINI_X 880
-# define MINI_Y 570
+# define MINI_X (WIDTH - (WIDTH / 5) + (WIDTH / SCALE))
+# define MINI_Y (HEIGHT - (HEIGHT / 5))
 # define MINI_ROWS 5
 # define MINI_COLS 7
 # define CURRENT_X (mini.start_x - mini.initial_x + MINI_X)
