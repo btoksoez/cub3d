@@ -87,16 +87,16 @@
 # define MINI_Y 570
 # define MINI_ROWS 5
 # define MINI_COLS 7
-# define CURRENT_X mini.start_x - mini.initial_x + MINI_X
-# define CURRENT_Y mini.start_y - mini.initial_y + MINI_Y
-# define MINI_SCALE SCALE / 2
-# define SCALE_FACTOR 2
-# define MINI_PCENTER PCENTER / 2
-# define MINI_PSIZE PSIZE / 2
-# define MINI_PLAYER_X MINI_X + (player->pos.x / 2)
-# define MINI_PLAYER_Y MINI_Y + (player->pos.y / 2)
-# define CENTER_X MINI_X + (MINI_SCALE * 7) / 2 - MINI_PCENTER
-# define CENTER_Y MINI_Y + (MINI_SCALE * 5) / 2 - MINI_PCENTER
+# define CURRENT_X (mini.start_x - mini.initial_x + MINI_X)
+# define CURRENT_Y (mini.start_y - mini.initial_y + MINI_Y)
+# define MINI_SCALE (SCALE / 2)
+# define SCALE_FACTOR (SCALE / (SCALE / 2))
+# define MINI_PCENTER (PCENTER / 2)
+# define MINI_PSIZE (PSIZE / 2)
+# define MINI_PLAYER_X (MINI_X + (player->pos.x / 2))
+# define MINI_PLAYER_Y (MINI_Y + (player->pos.y / 2))
+# define CENTER_X (MINI_X + ((MINI_SCALE * 7) / 2) - MINI_PCENTER)
+# define CENTER_Y (MINI_Y + ((MINI_SCALE * 5) / 2) - MINI_PCENTER)
 # define RIGHT_OUTBOUND (CENTER_X + MINI_PCENTER) + (MINI_SCALE * 7 / 2)
 # define LEFT_OUTBOUND (CENTER_X + MINI_PCENTER) - (MINI_SCALE * 7 / 2)
 # define TOP_OUTBOUND (CENTER_Y + MINI_PCENTER) + (MINI_SCALE * 5 / 2)

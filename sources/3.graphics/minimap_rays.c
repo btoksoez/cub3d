@@ -41,7 +41,7 @@ void	cast_2d_ray(t_game *game, float angle, t_raycaster *ray, t_minimap mini)
 		if (game->map->map[ray->map_loc.y][ray->map_loc.x] == WALL)
 			check_direction(game, ray, visited);
 	}
-	adjust_raylen(ray, angle);
+	adjust_raylen(ray, angle, mini, player);
 	draw_ray(game, player, ray, mini);
 }
 
@@ -79,15 +79,33 @@ void	init_2d_ray(t_raycaster *ray, t_player *player, float angle)
 	ray->len = 0;
 }
 
-void	adjust_raylen(t_raycaster *ray, float angle)
+void	adjust_raylen(t_raycaster *ray, float angle, t_minimap mini, t_player *player)
 {
-	float		max_dist_x;
-	float		max_dist_y;
-	float		true_max_x;
-	float		true_max_y;
+	float	max_dist_x;
+	float	max_dist_y;
+	float	true_max_x;
+	float	true_max_y;
 
-	max_dist_y = MINI_ROWS * MINI_SCALE / 2;
-	max_dist_x = MINI_COLS * MINI_SCALE / 2;
+	if ((player->pos.x <= mini.hori_vision) && (player->pos.y <= mini.vert_vision))
+	{
+		max_dist_y = (MINI_ROWS * MINI_SCALE) / 2 + fabs(CENTER_Y - MINI_PLAYER_Y);
+		max_dist_x = (MINI_COLS * MINI_SCALE) / 2 + fabs(CENTER_X - MINI_PLAYER_X);
+	}
+	else if (player->pos.y <= mini.vert_vision)
+	{
+		max_dist_y = ((MINI_ROWS * MINI_SCALE) / 2) + fabs(CENTER_Y - MINI_PLAYER_Y);
+		max_dist_x = (MINI_COLS * MINI_SCALE) / 2;
+	}
+	else if (player->pos.x <= mini.hori_vision)
+	{
+		max_dist_y = (MINI_ROWS * MINI_SCALE) / 2;
+		max_dist_x = (MINI_COLS * MINI_SCALE) / 2 + fabs(CENTER_X - MINI_PLAYER_X);
+	}
+	else
+	{
+		max_dist_y = (MINI_ROWS * MINI_SCALE) / 2;
+		max_dist_x = (MINI_COLS * MINI_SCALE) / 2;
+	}
 	true_max_y = fabs(max_dist_y / cos(_15PI - angle));
 	true_max_x = fabs(max_dist_x / cos(angle - PI));
 	if (true_max_x > true_max_y && ray->len > true_max_y)
@@ -98,14 +116,13 @@ void	adjust_raylen(t_raycaster *ray, float angle)
 
 void	draw_ray(t_game *game, t_player *player, t_raycaster *ray, t_minimap mini)
 {
-	// need fix on here1 and 2 when for the ray len
-	if ((player->pos.x <= mini.hori_vision) && (player->pos.y <= mini.vert_vision)) // NEEDS FIX
+	if ((player->pos.x <= mini.hori_vision) && (player->pos.y <= mini.vert_vision))
 	{
 		draw_line(game, CLOSE_TO_BOUND_POSITION_X, CLOSE_TO_BOUND_POSITION_Y,
 		CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
 		CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
 	}
-	else if (player->pos.y <= mini.vert_vision) // NEEDS FIX
+	else if (player->pos.y <= mini.vert_vision)
 	{
 		draw_line(game, CENTERED_POSITION_X, CLOSE_TO_BOUND_POSITION_Y,
 		CENTERED_POSITION_X + (ray->dir.x * ray->len),

@@ -20,12 +20,18 @@ void	minimap(t_game *game, t_raycaster *ray)
 		x = mini.start_x;
 		while (x < mini.end_x)
 		{
-			if (game->map->map[(int)(y / SCALE)][(int)(x / SCALE)] == WALL)
-				put_pixel_to_img(game, CURRENT_X, CURRENT_Y, WALLS);
-			else if (game->map->map[(int)(y / SCALE)][(int)(x / SCALE)] == EMPTY)
-				put_pixel_to_img(game, CURRENT_X, CURRENT_Y, SPACE);
+			if (y < (game->map->rows * SCALE))
+			{
+				if (game->map->map[(int)(y / SCALE)][(int)(x / SCALE)] == WALL)
+					put_pixel_to_img(game, CURRENT_X, CURRENT_Y, WALLS);
+				else if (game->map->map[(int)(y / SCALE)][(int)(x / SCALE)] == EMPTY)
+					put_pixel_to_img(game, CURRENT_X, CURRENT_Y, SPACE);
+				else
+					put_pixel_to_img(game, CURRENT_X, CURRENT_Y, SCREEN);
+			}
 			else
 				put_pixel_to_img(game, CURRENT_X, CURRENT_Y, SCREEN);
+
 			mini.start_x++;
 			x += SCALE_FACTOR;
 		}
