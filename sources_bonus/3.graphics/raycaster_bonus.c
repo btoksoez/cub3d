@@ -106,7 +106,7 @@ void	raycast(t_game *game, t_raycaster *ray)
 		get_enemy_distance(ray, game);
 		if (ray->enemy)
 		{
-			printf("here\n");
+			// printf("here\n");
 			game->hit_enemy = ray->enemy_id;
 			ray->distance_enemy *= cos(angle - player->p_angle);
 			draw_enemy(game, x, ray);
@@ -170,8 +170,8 @@ void	init_ray(t_raycaster *ray, t_player *player, float angle)
 	ray->dir.y = sin(angle);
 	ray->scalingf.x = sqrt(1 + (ray->dir.y / ray->dir.x) * (ray->dir.y / ray->dir.x));
 	ray->scalingf.y = sqrt(1 + (ray->dir.x / ray->dir.y) * (ray->dir.x / ray->dir.y));
-	ray->map_loc.x = (int)player->pos.x / SCALE;
-	ray->map_loc.y = (int)player->pos.y / SCALE;
+	ray->map_loc.x = (int)(player->pos.x + PCENTER) / SCALE;
+	ray->map_loc.y = (int)(player->pos.y + PCENTER) / SCALE;
 	ray->start.x = player->pos.x + PCENTER;
 	ray->start.y = player->pos.y + PCENTER;
 	ray->wall = false;

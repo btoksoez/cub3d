@@ -68,8 +68,8 @@ void	init_ray(t_raycaster *ray, t_player *player, float angle)
 	ray->dir.y = sin(angle);
 	ray->scalingf.x = sqrt(1 + (ray->dir.y / ray->dir.x) * (ray->dir.y / ray->dir.x));
 	ray->scalingf.y = sqrt(1 + (ray->dir.x / ray->dir.y) * (ray->dir.x / ray->dir.y));
-	ray->map_loc.x = (int)player->pos.x / SCALE;
-	ray->map_loc.y = (int)player->pos.y / SCALE;
+	ray->map_loc.x = (int)(player->pos.x + PCENTER) / SCALE;
+	ray->map_loc.y = (int)(player->pos.y + PCENTER) / SCALE;
 	ray->start.x = player->pos.x + PCENTER;
 	ray->start.y = player->pos.y + PCENTER;
 	if (ray->dir.y < NORTH_)

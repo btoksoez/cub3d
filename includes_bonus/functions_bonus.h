@@ -118,5 +118,4 @@ void	free_map(t_map *map, char *str, int status);
 int		close_window(t_game *game, int status, int exit);
 void	player_dead(t_game *game);
 
-
 #endif
