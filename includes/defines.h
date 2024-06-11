@@ -70,10 +70,7 @@
 # define SCALE 50
 # define PSIZE SCALE / 4
 # define PCENTER PSIZE / 2
-# define JUMP_SPEED 10
-# define MAX_JUMP_HEIGHT 140
-# define MAX_JUMP_SPEED 30
-# define ROT_SPEED 0.05
+# define ROT_SPEED 0.01
 # define BUFFER 10
 # define WALL 49
 # define VISITED 85
@@ -88,9 +85,6 @@
 # define S_ 0xFF4500
 # define W_ 0xFFFFFF
 # define E_ 0xD63A00
-# define GUN 0
-# define KNIFE 1
-# define SHOOT_SPEED 5
 
 /* ---------------- Colors --------------- */
 # define RED 0xFF0000

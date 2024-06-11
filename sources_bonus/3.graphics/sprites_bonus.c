@@ -177,6 +177,8 @@ void	move_sprites(t_game *game)
 {
 	t_enemy	**enemy;
 	t_point	new_pos;
+	int		wall_in_x;
+	int		wall_in_y;
 	int	i;
 
 	enemy = game->enemies;
@@ -185,16 +187,26 @@ void	move_sprites(t_game *game)
 	{
 		new_pos.x = enemy[i]->pos.x + (enemy[i]->speed * enemy[i]->dir_vec.x);
 		new_pos.y = enemy[i]->pos.y + (enemy[i]->speed * enemy[i]->dir_vec.y);
-		if (distance(new_pos.x, new_pos.y, game->player->pos.x, game->player->pos.y) < 10)
-			return (player_dead(game));
-		if (game->map->map[(int)(new_pos.y) / SCALE][(int)new_pos.x / SCALE] != WALL
-			&& game->map->map[(int)(new_pos.y + ESIZE) / SCALE][((int)new_pos.x + ESIZE) / SCALE] != WALL
-			&& game->map->map[(int)(new_pos.y + ESIZE) / SCALE][(int)new_pos.x / SCALE] != WALL
-			&& game->map->map[(int)(new_pos.y) / SCALE][((int)new_pos.x + ESIZE) / SCALE] != WALL)
-			{
-				enemy[i]->pos.x = new_pos.x;
-				enemy[i]->pos.y = new_pos.y;
-			}
+		// if (distance(new_pos.x, new_pos.y, game->player->pos.x, game->player->pos.y) < 10)
+		// 	return (player_dead(game));
+		wall_in_x = game->map->map[(int)(enemy[i]->pos.y / SCALE)][(int)(new_pos.x / SCALE)] == WALL
+				|| game->map->map[(int)(enemy[i]->pos.y + PSIZE) / SCALE][((int)(new_pos.x + PSIZE)) / SCALE] == WALL
+				|| game->map->map[(int)(enemy[i]->pos.y + PSIZE) / SCALE][(int)new_pos.x / SCALE] == WALL
+				|| game->map->map[(int)(enemy[i]->pos.y) / SCALE][((int)new_pos.x + PSIZE) / SCALE] == WALL;
+
+		wall_in_y = game->map->map[(int)(new_pos.y / SCALE)][(int)(enemy[i]->pos.x / SCALE)] == WALL
+				|| game->map->map[(int)(new_pos.y + PSIZE) / SCALE][(int)(enemy[i]->pos.x + PSIZE) / SCALE] == WALL
+				|| game->map->map[(int)(new_pos.y + PSIZE) / SCALE][(int)enemy[i]->pos.x / SCALE] == WALL
+				|| game->map->map[(int)(new_pos.y) / SCALE][((int)enemy[i]->pos.x + PSIZE) / SCALE] == WALL;
+		if (!wall_in_x && !wall_in_y)
+		{
+			enemy[i]->pos.y = new_pos.y;
+			enemy[i]->pos.x = new_pos.x;
+		}
+		else if (!wall_in_x)
+			enemy[i]->pos.x = new_pos.x;
+		else if (!wall_in_y)
+			enemy[i]->pos.y = new_pos.y;
 		enemy[i]->left.x = enemy[i]->pos.x - enemy[i]->dir_vec.y * ESIZE / 2;
 		enemy[i]->left.y = enemy[i]->pos.y + enemy[i]->dir_vec.x * ESIZE / 2;
 		enemy[i]->right.x = enemy[i]->pos.x + enemy[i]->dir_vec.y * ESIZE / 2;

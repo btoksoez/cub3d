@@ -83,7 +83,7 @@ typedef struct s_player
 	t_point			pos;
 	float			p_angle;
 	int				look_dir;
-	int				speed;
+	float			speed;
 }					t_player;
 
 typedef struct s_raycaster
