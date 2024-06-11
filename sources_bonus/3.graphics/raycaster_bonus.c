@@ -9,72 +9,67 @@ int	get_fc_color(t_game *game, int tex_x, int tex_y, bool floor_ceiling)
 
 	color = 0;
 	t = game->textures;
-	if (!floor_ceiling)
+	if (tex_y >= 0 && tex_y < HEIGHT + 110)
 	{
-		bpp = t->ground.bits_per_pixel;
-		len = t->ground.line_len;
-		color = *(int*)&t->ground.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
-	}
-	else
-	{
-		bpp = t->sky.bits_per_pixel;
-		len = t->sky.line_len;
-		color = *(int*)&t->sky.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+		if (!floor_ceiling)
+		{
+			bpp = t->ground.bits_per_pixel;
+			len = t->ground.line_len;
+			color = *(int*)&t->ground.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+		}
+		else
+		{
+			bpp = t->sky.bits_per_pixel;
+			len = t->sky.line_len;
+			color = *(int*)&t->sky.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+		}
 	}
 	return (color);
 }
 
 void	draw_ceiling(t_game *game, int x, int bottom, int top)
 {
-	int		temp;
 	int		color;
+	int		temp;
 	float	tex_y;
 	float	tex_x;
-	float	step;
 
-	temp = 0;
 	if (bottom > top)
 	{
 		temp = bottom;
 		bottom = top;
 		top = temp;
 	}
-	tex_y = 0;
-	tex_x = game->textures->sky.width * (game->fraction_x + game->fraction_y);
-	step = (float)game->textures->sky.height / (top - bottom);
+	tex_x = (float)x / WIDTH * game->textures->sky.width;
 	while (bottom <= top)
 	{
-		color = get_fc_color(game, tex_x, tex_y, true);
+		tex_y = (float)bottom / HEIGHT * game->textures->sky.height;
+		color = get_fc_color(game, (int)tex_x, (int)tex_y, true);
 		put_pixel_to_img(game, x, bottom, color);
 		bottom++;
-		tex_y += step;
 	}
 }
 
 void	draw_floor(t_game *game, int x, int bottom, int top)
 {
-	int		temp;
 	int		color;
+	int		temp;
 	float	tex_y;
 	float	tex_x;
-	float	step;
 
-	temp = 0;
 	if (bottom > top)
 	{
 		temp = bottom;
 		bottom = top;
 		top = temp;
 	}
-	tex_y = 0;
-	tex_x = game->textures->ground.width * (game->fraction_x + game->fraction_y);
-	step = (float)game->textures->ground.height / (top - bottom);
+	tex_x = (float)x / WIDTH * game->textures->ground.width;
 	while (bottom <= top)
 	{
-		color = get_fc_color(game, tex_x, tex_y, false);
+		tex_y = (float)bottom / HEIGHT * game->textures->ground.height;
+		color = get_fc_color(game, (int)tex_x, (int)tex_y, false);
 		put_pixel_to_img(game, x, bottom, color);
 		bottom++;
-		tex_y += step;
 	}
 }
 
@@ -106,7 +101,6 @@ void	raycast(t_game *game, t_raycaster *ray)
 		get_enemy_distance(ray, game);
 		if (ray->enemy)
 		{
-			// printf("here\n");
 			game->hit_enemy = ray->enemy_id;
 			ray->distance_enemy *= cos(angle - player->p_angle);
 			draw_enemy(game, x, ray);
