@@ -16,12 +16,13 @@ void	get_player_coordinates(t_map *map, int rows, int coll)
 }
 void	get_enemy_coordinates(t_map *map, int rows, int coll)
 {
-	t_enemy *enemy;
+	t_enemy	*enemy;
 
 	enemy = malloc(sizeof(t_enemy));
 	if (!enemy)
-		return error_message(map, "malloc error enemy");
-	map->enemies = ft_realloc(map->enemies, sizeof(t_enemy *) * (map->enemy_count - 1), sizeof(t_enemy *) * map->enemy_count);
+		return (error_message(map, "malloc error enemy"));
+	map->enemies = ft_realloc(map->enemies, sizeof(t_enemy *)
+			* (map->enemy_count - 1), sizeof(t_enemy *) * map->enemy_count);
 	map->enemies[map->enemy_count - 1] = enemy;
 	enemy->pos.x = coll * SCALE + 3 * (ESIZE / 2);
 	enemy->pos.y = rows * SCALE + 3 * (ESIZE / 2);
@@ -77,4 +78,3 @@ bool	invalid_characters(t_map *map)
 	fill_with_space(map);
 	return (false);
 }
-

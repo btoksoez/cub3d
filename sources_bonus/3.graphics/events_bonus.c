@@ -4,7 +4,8 @@ void	init_events(t_game *game)
 {
 	mlx_hook(game->win, KeyPress, KeyPressMask, &key_press, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, &key_release, game);
-	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, &close_window, game);
+	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, &close_window,
+		game);
 }
 
 // add shooting, space, reload ...
@@ -31,7 +32,7 @@ int	key_press(int key, t_game *game)
 		player->speed = 2;
 	if (key == SPACEBAR)
 	{
-		player->jumping= true;
+		player->jumping = true;
 		player->jump_peak = false;
 	}
 	if (key == SHOOT)
@@ -41,7 +42,7 @@ int	key_press(int key, t_game *game)
 	return (0);
 }
 
-int key_release(int key, t_game *game)
+int	key_release(int key, t_game *game)
 {
 	t_player	*player;
 
@@ -61,5 +62,4 @@ int key_release(int key, t_game *game)
 	if (key == SHIFT)
 		player->speed = 1;
 	return (0);
-
 }

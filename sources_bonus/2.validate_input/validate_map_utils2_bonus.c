@@ -28,7 +28,7 @@ char	**copy_map(t_map *map)
 	row = 0;
 	map_copy = (char **)malloc(sizeof(char *) * (map->rows + 1));
 	if (!map_copy)
-		error_message(map,"Malloc error copy map\n");
+		error_message(map, "Malloc error copy map\n");
 	while (row < map->rows)
 	{
 		map_copy[row] = ft_strdup(map->map[row]);
@@ -63,11 +63,11 @@ bool	empty_left(char **map)
 
 bool	surrounded_by_walls(t_map *map)
 {
-	char **map_copy;
-	int	row;
-	int	col;
+	char	**map_copy;
+	int		row;
+	int		col;
 
-	map_copy = copy_map(map);	//copy map and put  V for visited floors, player is 0 too
+	map_copy = copy_map(map);
 	row = 0;
 	col = 0;
 	while (map_copy[row])

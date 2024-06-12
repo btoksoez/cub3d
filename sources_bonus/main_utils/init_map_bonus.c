@@ -1,9 +1,9 @@
 #include "../../includes_bonus/cub3d.h"
 
-void init_map(t_map *map)
+void	init_map(t_map *map)
 {
 	if (map == NULL)
-		return;
+		return ;
 	map->map = NULL;
 	map->rows = 0;
 	map->player.x = 0;

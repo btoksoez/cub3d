@@ -1,6 +1,7 @@
 #include "../../includes_bonus/cub3d.h"
 
-void	init_mlx(t_game *game, t_textures *textures, t_player *player, t_map *map)
+void	init_mlx(t_game *game, t_textures *textures, t_player *player,
+		t_map *map)
 {
 	init_game_struct(game, player, map);
 	init_window(game, map);
@@ -23,7 +24,7 @@ void	get_enemy_positions(t_game *game)
 		if (enemy[i]->type == OFFICER)
 		{
 			enemy[i]->size = 5;
-			enemy[i]->speed = 2;
+			enemy[i]->speed = 20;
 		}
 		else if (enemy[i]->type == BOSS)
 		{
@@ -100,9 +101,7 @@ void	init_image(t_game *game)
 		free_map(game->map, "Image initialization failed", 1);
 	}
 	game->img.pixels_ptr = mlx_get_data_addr(game->img.img_ptr,
-		&game->img.bits_per_pixel,
-		&game->img.line_len,
-		&game->img.endian);
+			&game->img.bits_per_pixel, &game->img.line_len, &game->img.endian);
 }
 
 int	convert(t_rgb color)

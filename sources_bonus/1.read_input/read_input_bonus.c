@@ -2,7 +2,7 @@
 
 void	read_input(int argc, char *argv[], t_map *map)
 {
-	int		fd;
+	int	fd;
 
 	check_arguments(map, argc, argv);
 	fd = open(argv[1], O_RDONLY);
@@ -16,8 +16,8 @@ void	read_input(int argc, char *argv[], t_map *map)
 
 void	read_textures(t_map *map, int fd)
 {
-	char *line;
-	char *tmp;
+	char	*line;
+	char	*tmp;
 
 	line = get_next_line(fd);
 	while (line)
@@ -62,7 +62,8 @@ void	fill_with_space(t_map *map)
 			coll++;
 		if (coll < map->cols)
 		{
-			temp = ft_realloc(map->map[row], sizeof(char) * (coll + 1), sizeof(char) * (map->cols + 1));
+			temp = ft_realloc(map->map[row], sizeof(char) * (coll + 1),
+					sizeof(char) * (map->cols + 1));
 			if (!temp)
 				free_map(map, "Failed to allocate memory for row", 1);
 			map->map[row] = temp;
@@ -89,10 +90,11 @@ void	read_map(t_map *map, int fd)
 	}
 	while (line)
 	{
-		temp = ft_realloc(map->map, sizeof(char *) * (row + 1), sizeof(char *) * (row + 2));
+		temp = ft_realloc(map->map, sizeof(char *) * (row + 1), sizeof(char *)
+				* (row + 2));
 		if (!temp)
 		{
-			free (line);
+			free(line);
 			if (map->map)
 				free_map(map, "Memory allocation failed", 1);
 			error_message(map, "Memory allocation failed");

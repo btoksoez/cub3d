@@ -1,12 +1,14 @@
 #include "../../includes_bonus/cub3d.h"
 
-void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color)
+void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y,
+		int color)
 {
 	int	dx;
 	int	dy;
 	int	sx;
 	int	sy;
 	int	err;
+	int	e2;
 
 	dx = abs(end_x - start_x);
 	dy = abs(end_y - start_y);
@@ -18,7 +20,7 @@ void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int
 		put_pixel_to_img(game, start_x, start_y, color);
 		if (start_x == end_x && start_y == end_y)
 			break ;
-		int e2 = 2 * err;
+		e2 = 2 * err;
 		if (e2 > -dy)
 		{
 			err -= dy;

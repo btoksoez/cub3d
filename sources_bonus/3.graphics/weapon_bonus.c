@@ -5,7 +5,7 @@ int	get_weapon_color(t_game *game, int tex_x, int tex_y, int frame)
 	int			color;
 	int			bpp;
 	int			len;
-	int		w_type;
+	int			w_type;
 	t_textures	*t;
 
 	color = 0;
@@ -13,23 +13,24 @@ int	get_weapon_color(t_game *game, int tex_x, int tex_y, int frame)
 	t = game->textures;
 	bpp = t->weapon[w_type][frame].bits_per_pixel;
 	len = t->weapon[w_type][frame].line_len;
-	color = *(int*)&t->weapon[w_type][frame].pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
-	if (color == 9961608 || color == 33023)	//removing background
+	color = *(int *)&t->weapon[w_type][frame].pixels_ptr[tex_x * (bpp / 8)
+		+ (tex_y * len)];
+	if (color == 9961608 || color == 33023) // removing background
 		return (-1);
 	return (color);
 }
 
 void	draw_weapon(t_game *game, int frame)
 {
-	int		x;
-	int		y;
-	int		tex_y;
-	int		tex_x;
-	int 	color;
-	int		scale;
-	int		w_type;
-	t_img	(*weapon)[5];
+	int	x;
+	int	y;
+	int	tex_y;
+	int	tex_x;
+	int	color;
+	int	scale;
+	int	w_type;
 
+	t_img(*weapon)[5];
 	scale = 8;
 	w_type = game->player->weapon;
 	weapon = game->textures->weapon;
@@ -68,15 +69,6 @@ void	render_weapon(t_game *game)
 		}
 		else
 			*frame = 0;
-		if (game->hit_enemy)
-		{
-			// game->enemies[game->hit_enemy];
-			if (game->hit_enemy != -1)
-			{
-				// printf("game->enemy_x: %f\n", game->enemies[game->hit_enemy]->pos.x);
-				// printf("game->enemy_y: %f\n", game->enemies[game->hit_enemy]->pos.y);
-			}
-		}
 	}
 	else
 		draw_weapon(game, *frame);

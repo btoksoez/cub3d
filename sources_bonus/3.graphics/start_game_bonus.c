@@ -19,11 +19,10 @@ int	get_aim_color(int tex_x, int tex_y, t_textures *texture)
 
 	bpp = texture->aim.bits_per_pixel;
 	len = texture->aim.line_len;
-
-	if (tex_x < 0 || tex_x >= texture->aim.width || tex_y < 0 || tex_y >= texture->aim.height)
+	if (tex_x < 0 || tex_x >= texture->aim.width || tex_y < 0
+		|| tex_y >= texture->aim.height)
 		return (0);
-
-	color = *(int*)&texture->aim.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+	color = *(int *)&texture->aim.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
 	return (color);
 }
 
@@ -46,7 +45,6 @@ void	aim(t_game *game)
 			tex_x = x - (WIDTH / 2) + (texture->aim.width / 2);
 			tex_y = y - (HEIGHT / 2) + (texture->aim.height / 2);
 			color = get_aim_color(tex_x, tex_y, texture);
-
 			if (!((color >> 24) & 0xFF))
 				put_pixel_to_img(game, x, y, color);
 			x++;
@@ -63,11 +61,10 @@ int	get_map_color(int tex_x, int tex_y, t_textures *texture)
 
 	bpp = texture->map.bits_per_pixel;
 	len = texture->map.line_len;
-
-	if (tex_x < 0 || tex_x >= texture->map.width || tex_y < 0 || tex_y >= texture->map.height)
+	if (tex_x < 0 || tex_x >= texture->map.width || tex_y < 0
+		|| tex_y >= texture->map.height)
 		return (0);
-
-	color = *(int*)&texture->map.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+	color = *(int *)&texture->map.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
 	return (color);
 }
 
@@ -110,7 +107,7 @@ void	map(t_game *game)
 
 int	render(t_game *game)
 {
-	t_raycaster ray;
+	t_raycaster	ray;
 
 	if (game->is_player_dead)
 		return (0);

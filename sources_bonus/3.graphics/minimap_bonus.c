@@ -8,20 +8,21 @@ int	get_img_color(int tex_x, int tex_y, t_img texture)
 
 	bpp = texture.bits_per_pixel;
 	len = texture.line_len;
-
-	if (tex_x < 0 || tex_x >= texture.width || tex_y < 0 || tex_y >= texture.height)
+	if (tex_x < 0 || tex_x >= texture.width || tex_y < 0
+		|| tex_y >= texture.height)
 		return (0);
-	color = *(int*)&texture.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+	color = *(int *)&texture.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
 	return (color);
 }
 
-void	draw_texture(t_game *game, int pos_x, int pos_y, t_img texture, int x, int y)
+void	draw_texture(t_game *game, int pos_x, int pos_y, t_img texture, int x,
+		int y)
 {
-	int			color;
-	float		scale_x;
-	float		scale_y;
-	float		tex_x;
-	float		tex_y;
+	int		color;
+	float	scale_x;
+	float	scale_y;
+	float	tex_x;
+	float	tex_y;
 
 	scale_x = (float)texture.width / MINI_SCALE;
 	scale_y = (float)texture.height / MINI_SCALE;
@@ -57,7 +58,8 @@ void	minimap(t_game *game, t_raycaster *ray)
 		{
 			if (y < (game->map->rows * SCALE))
 				if (game->map->map[(int)(y / SCALE)][(int)(x / SCALE)] == WALL)
-					draw_texture(game, CURRENT_X, CURRENT_Y, texture->north, img_x, img_y);
+					draw_texture(game, CURRENT_X, CURRENT_Y, texture->north,
+						img_x, img_y);
 			mini.start_x++;
 			x += SCALE_FACTOR;
 			img_x++;
@@ -90,7 +92,8 @@ void	render_player_and_rays(t_game *game, t_raycaster *ray, t_minimap mini)
 	t_player	*player;
 
 	player = game->player;
-	if ((player->pos.x <= mini.hori_vision) && (player->pos.y <= mini.vert_vision))
+	if ((player->pos.x <= mini.hori_vision)
+		&& (player->pos.y <= mini.vert_vision))
 		render_player(game, MINI_PLAYER_X, MINI_PLAYER_Y);
 	else if (player->pos.y <= mini.vert_vision)
 		render_player(game, CENTER_X, MINI_PLAYER_Y);

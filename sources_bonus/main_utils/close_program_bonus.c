@@ -5,7 +5,7 @@ void	error_message(t_map *map, char *str)
 	ft_putendl_fd("Error", 2);
 	ft_putendl_fd(str, 2);
 	free_enemies(map);
-	exit (1);
+	exit(1);
 }
 
 int	close_window(t_game *game, int status, int exit)
@@ -76,7 +76,6 @@ void	free_textures(t_game *game, t_textures *textures)
 		mlx_destroy_image(game->mlx, textures->ground.img_ptr);
 	if (textures->sky.img_ptr)
 		mlx_destroy_image(game->mlx, textures->sky.img_ptr);
-
 	i = 0;
 	while (i < 3)
 	{
@@ -105,8 +104,9 @@ void	free_textures(t_game *game, t_textures *textures)
 
 void	free_enemies(t_map *map)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	if (!map->enemies)
 		return ;
 	while (i < map->enemy_count)
@@ -130,6 +130,6 @@ void	clean_up(t_game *game, char *str, int status)
 	{
 		free_enemies(game->map);
 		ft_printf("%s\n", str);
-		exit (0);
+		exit(0);
 	}
 }

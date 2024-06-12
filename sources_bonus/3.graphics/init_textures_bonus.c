@@ -2,7 +2,8 @@
 
 void	init_texture(t_game *game, t_img *texture_img, char *texture)
 {
-	texture_img->img_ptr = mlx_xpm_file_to_image(game->mlx, texture, &texture_img->width, &texture_img->height);
+	texture_img->img_ptr = mlx_xpm_file_to_image(game->mlx, texture,
+			&texture_img->width, &texture_img->height);
 	if (!texture_img->img_ptr)
 	{
 		mlx_destroy_window(game->mlx, game->win);
@@ -11,9 +12,8 @@ void	init_texture(t_game *game, t_img *texture_img, char *texture)
 		free_map(game->map, "Failed to initialize texture", 1);
 	}
 	texture_img->pixels_ptr = mlx_get_data_addr(texture_img->img_ptr,
-												&texture_img->bits_per_pixel,
-												&texture_img->line_len,
-												&texture_img->endian);
+			&texture_img->bits_per_pixel, &texture_img->line_len,
+			&texture_img->endian);
 }
 
 void	init_textures(t_game *game, t_textures *textures)
@@ -41,10 +41,14 @@ void	init_textures(t_game *game, t_textures *textures)
 	init_texture(game, &textures->weapon[2][2], "./textures/mg/mg3.xpm");
 	init_texture(game, &textures->weapon[2][3], "./textures/mg/mg4.xpm");
 	init_texture(game, &textures->weapon[2][4], "./textures/mg/mg5.xpm");
-	init_texture(game, &textures->enemy[0][0], "./textures/officer/officer1.xpm");
-	init_texture(game, &textures->enemy[0][1], "./textures/officer/officer2.xpm");
-	init_texture(game, &textures->enemy[0][2], "./textures/officer/officer3.xpm");
-	init_texture(game, &textures->enemy[0][3], "./textures/officer/officer4.xpm");
+	init_texture(game, &textures->enemy[0][0],
+		"./textures/officer/officer1.xpm");
+	init_texture(game, &textures->enemy[0][1],
+		"./textures/officer/officer2.xpm");
+	init_texture(game, &textures->enemy[0][2],
+		"./textures/officer/officer3.xpm");
+	init_texture(game, &textures->enemy[0][3],
+		"./textures/officer/officer4.xpm");
 	init_texture(game, &textures->enemy[1][0], "./textures/boss/boss1.xpm");
 	init_texture(game, &textures->enemy[1][1], "./textures/boss/boss2.xpm");
 	init_texture(game, &textures->enemy[1][2], "./textures/boss/boss3.xpm");

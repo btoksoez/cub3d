@@ -49,8 +49,10 @@ void	init_2d_ray(t_raycaster *ray, t_player *player, float angle)
 {
 	ray->dir.x = cos(angle);
 	ray->dir.y = sin(angle);
-	ray->scalingf.x = sqrt(1 + (ray->dir.y / ray->dir.x) * (ray->dir.y / ray->dir.x));
-	ray->scalingf.y = sqrt(1 + (ray->dir.x / ray->dir.y) * (ray->dir.x / ray->dir.y));
+	ray->scalingf.x = sqrt(1 + (ray->dir.y / ray->dir.x) * (ray->dir.y
+				/ ray->dir.x));
+	ray->scalingf.y = sqrt(1 + (ray->dir.x / ray->dir.y) * (ray->dir.x
+				/ ray->dir.y));
 	ray->map_loc.x = (int)player->pos.x / SCALE;
 	ray->map_loc.y = (int)player->pos.y / SCALE;
 	ray->start.x = (player->pos.x + PCENTER) / 2;
@@ -58,48 +60,58 @@ void	init_2d_ray(t_raycaster *ray, t_player *player, float angle)
 	if (ray->dir.y < NORTH_)
 	{
 		ray->map_step.y = -1;
-		ray->ray_len.y = (ray->start.y - ray->map_loc.y * MINI_SCALE) * ray->scalingf.y;
+		ray->ray_len.y = (ray->start.y - ray->map_loc.y * MINI_SCALE)
+			* ray->scalingf.y;
 	}
 	else
 	{
 		ray->map_step.y = 1;
-		ray->ray_len.y = ((ray->map_loc.y + 1) * MINI_SCALE - ray->start.y) * ray->scalingf.y;
+		ray->ray_len.y = ((ray->map_loc.y + 1) * MINI_SCALE - ray->start.y)
+			* ray->scalingf.y;
 	}
 	if (ray->dir.x < WEST_)
 	{
 		ray->map_step.x = -1;
-		ray->ray_len.x = (ray->start.x - ray->map_loc.x * MINI_SCALE) * ray->scalingf.x;
+		ray->ray_len.x = (ray->start.x - ray->map_loc.x * MINI_SCALE)
+			* ray->scalingf.x;
 	}
 	else
 	{
 		ray->map_step.x = 1;
-		ray->ray_len.x = ((ray->map_loc.x + 1) * MINI_SCALE - ray->start.x) * ray->scalingf.x;
+		ray->ray_len.x = ((ray->map_loc.x + 1) * MINI_SCALE - ray->start.x)
+			* ray->scalingf.x;
 	}
 	ray->wall = false;
 	ray->len = 0;
 }
 
-void	adjust_raylen(t_raycaster *ray, float angle, t_minimap mini, t_player *player)
+void	adjust_raylen(t_raycaster *ray, float angle, t_minimap mini,
+		t_player *player)
 {
 	float	max_dist_x;
 	float	max_dist_y;
 	float	true_max_x;
 	float	true_max_y;
 
-	if ((player->pos.x <= mini.hori_vision) && (player->pos.y <= mini.vert_vision))
+	if ((player->pos.x <= mini.hori_vision)
+		&& (player->pos.y <= mini.vert_vision))
 	{
-		max_dist_y = (MINI_ROWS * MINI_SCALE) / 2 + fabs(CENTER_Y - MINI_PLAYER_Y);
-		max_dist_x = (MINI_COLS * MINI_SCALE) / 2 + fabs(CENTER_X - MINI_PLAYER_X);
+		max_dist_y = (MINI_ROWS * MINI_SCALE) / 2 + fabs(CENTER_Y
+				- MINI_PLAYER_Y);
+		max_dist_x = (MINI_COLS * MINI_SCALE) / 2 + fabs(CENTER_X
+				- MINI_PLAYER_X);
 	}
 	else if (player->pos.y <= mini.vert_vision)
 	{
-		max_dist_y = ((MINI_ROWS * MINI_SCALE) / 2) + fabs(CENTER_Y - MINI_PLAYER_Y);
+		max_dist_y = ((MINI_ROWS * MINI_SCALE) / 2) + fabs(CENTER_Y
+				- MINI_PLAYER_Y);
 		max_dist_x = (MINI_COLS * MINI_SCALE) / 2;
 	}
 	else if (player->pos.x <= mini.hori_vision)
 	{
 		max_dist_y = (MINI_ROWS * MINI_SCALE) / 2;
-		max_dist_x = (MINI_COLS * MINI_SCALE) / 2 + fabs(CENTER_X - MINI_PLAYER_X);
+		max_dist_x = (MINI_COLS * MINI_SCALE) / 2 + fabs(CENTER_X
+				- MINI_PLAYER_X);
 	}
 	else
 	{
@@ -114,30 +126,32 @@ void	adjust_raylen(t_raycaster *ray, float angle, t_minimap mini, t_player *play
 		ray->len = true_max_x;
 }
 
-void	draw_ray(t_game *game, t_player *player, t_raycaster *ray, t_minimap mini)
+void	draw_ray(t_game *game, t_player *player, t_raycaster *ray,
+		t_minimap mini)
 {
-	if ((player->pos.x <= mini.hori_vision) && (player->pos.y <= mini.vert_vision))
+	if ((player->pos.x <= mini.hori_vision)
+		&& (player->pos.y <= mini.vert_vision))
 	{
 		draw_line(game, CLOSE_TO_BOUND_POSITION_X, CLOSE_TO_BOUND_POSITION_Y,
-		CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
-		CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
+			CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
+			CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
 	}
 	else if (player->pos.y <= mini.vert_vision)
 	{
 		draw_line(game, CENTERED_POSITION_X, CLOSE_TO_BOUND_POSITION_Y,
-		CENTERED_POSITION_X + (ray->dir.x * ray->len),
-		CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
+			CENTERED_POSITION_X + (ray->dir.x * ray->len),
+			CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
 	}
 	else if (player->pos.x <= mini.hori_vision)
 	{
 		draw_line(game, CLOSE_TO_BOUND_POSITION_X, CENTERED_POSITION_Y,
-		CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
-		CENTERED_POSITION_Y + (ray->dir.y * ray->len), BLUE);
+			CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
+			CENTERED_POSITION_Y + (ray->dir.y * ray->len), BLUE);
 	}
 	else
 	{
 		draw_line(game, CENTERED_POSITION_X, CENTERED_POSITION_Y,
-		CENTERED_POSITION_X + (ray->dir.x * ray->len),
-		CENTERED_POSITION_Y + (ray->dir.y * ray->len), BLUE);
+			CENTERED_POSITION_X + (ray->dir.x * ray->len), CENTERED_POSITION_Y
+			+ (ray->dir.y * ray->len), BLUE);
 	}
 }
