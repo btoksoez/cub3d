@@ -6,12 +6,12 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:21 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:37:22 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:36:04 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FUNCTIONS_H
-# define FUNCTIONS_H
+#ifndef FUNCTIONS_BONUS_H
+# define FUNCTIONS_BONUS_H
 
 # include "structs_bonus.h"
 
@@ -28,6 +28,7 @@ void	assign_color(int i, char *num, char type, t_map *map);
 void	get_color(char *line, char type, t_map *map);
 bool	assigned_all(t_map *map);
 void	init_map(t_map *map);
+void	get_texture_or_color(char *tmp, t_map *map);
 
 /* ----------------------------- Validate map ------------------------------ */
 /* ------------------------------------------------------------------------- */

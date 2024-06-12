@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:49:15 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:49:16 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:23:40 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,17 +94,17 @@ void	map(t_game *game)
 	int			mini_height;
 
 	texture = game->textures;
-	mini_width = MINI_X_END - MINI_X + 20;
-	mini_height = MINI_Y_END - MINI_Y + 30;
+	mini_width = (WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (MINI_SCALE * MINI_COLS) - (WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + 20;
+	mini_height = (HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + (MINI_SCALE * MINI_ROWS) - (HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) - 10 + 30;
 	scale_x = (float)texture->map.width / mini_width;
 	scale_y = (float)texture->map.height / mini_height;
-	y = MINI_Y - 10;
+	y = (HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) - 10 - 10;
 	tex_y = 0;
-	while (y < MINI_Y_END)
+	while (y < (HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + (MINI_SCALE * MINI_ROWS))
 	{
-		x = MINI_X - 10;
+		x = (WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) - 10;
 		tex_x = 0;
-		while (x < MINI_X_END + 10)
+		while (x < (WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (MINI_SCALE * MINI_COLS) + 10)
 		{
 			color = get_map_color((int)tex_x, (int)tex_y, texture);
 			if (!((color >> 24) & 0xFF))

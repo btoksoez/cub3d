@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:48:34 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:48:35 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:28:28 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	minimap(t_game *game, t_raycaster *ray)
 		{
 			if (y < (game->map->rows * SCALE))
 				if (game->map->map[(int)(y / SCALE)][(int)(x / SCALE)] == WALL)
-					draw_texture(game, CURRENT_X, CURRENT_Y, texture->north,
+					draw_texture(game, (mini.start_x - mini.initial_x + (WIDTH - (WIDTH / 5) + (WIDTH / SCALE))), (mini.start_y - mini.initial_y + (HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE))), texture->north,
 						img_x, img_y);
 			mini.start_x++;
 			x += SCALE_FACTOR;
@@ -106,13 +106,13 @@ void	render_player_and_rays(t_game *game, t_raycaster *ray, t_minimap mini)
 	player = game->player;
 	if ((player->pos.x <= mini.hori_vision)
 		&& (player->pos.y <= mini.vert_vision))
-		render_player(game, MINI_PLAYER_X, MINI_PLAYER_Y);
+		render_player(game, ((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (player->pos.x / 2)), ((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + (player->pos.y / 2)));
 	else if (player->pos.y <= mini.vert_vision)
-		render_player(game, CENTER_X, MINI_PLAYER_Y);
+		render_player(game, ((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + ((MINI_SCALE * 7) / 2) - MINI_PCENTER), ((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + (player->pos.y / 2)));
 	else if (player->pos.x <= mini.hori_vision)
-		render_player(game, MINI_PLAYER_X, CENTER_Y);
+		render_player(game, ((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (player->pos.x / 2)), ((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + ((MINI_SCALE * 5) / 2) - MINI_PCENTER));
 	else
-		render_player(game, CENTER_X, CENTER_Y);
+		render_player(game, ((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + ((MINI_SCALE * 7) / 2) - MINI_PCENTER), ((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + ((MINI_SCALE * 5) / 2) - MINI_PCENTER));
 	raycast_2d(game, ray, mini);
 }
 

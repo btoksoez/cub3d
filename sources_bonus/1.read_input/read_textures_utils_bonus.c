@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:47:04 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:47:05 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:40:35 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	get_texture(char *line, char type, t_map *map)
 		map->ea_texture = file;
 	line += ft_strlen(file);
 }
+
 void	assign_color(int i, char *num, char type, t_map *map)
 {
 	if (i == 0 && type == 'F')

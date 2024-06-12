@@ -6,12 +6,12 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:18 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 17:22:55 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:31:49 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFINE_BONUS_H
-# define DEFINE_BONUS_H
+#ifndef DEFINES_BONUS_H
+# define DEFINES_BONUS_H
 
 # ifdef LINUX
 /* ----------------- Linux---------------- */
@@ -54,9 +54,9 @@
 # define EPSILON 0.0001
 /* -------------- PI Values -------------- */
 # define PI 3.141592653f
-# define _05PI (PI / 2.0)
-# define _15PI (3.0 * PI / 2.0)
-# define _2PI (2.0 * PI)
+# define _05PI 1.5707963265f
+# define _15PI 4.71238898f
+# define _2PI 6.283185306f
 /* -------------- Directions ------------- */
 # define NORTH _15PI
 # define SOUTH _05PI
@@ -82,7 +82,7 @@
 # define ENEMY "BOH"
 # define SCALE 50
 # define PSIZE 12
-# define PCENTER PSIZE / 2
+# define PCENTER 6
 # define JUMP_SPEED 10
 # define MAX_JUMP_HEIGHT 140
 # define MAX_JUMP_SPEED 30
@@ -94,7 +94,7 @@
 # define WON 89
 # define WIDTH 1080
 # define HEIGHT 720
-# define PLAYER_VISION (PI / 3)
+# define PLAYER_VISION 1.0471975511965976f
 # define WALL_SCALE 8000
 # define N_ 0x000000
 # define S_ 0xFF4500
@@ -112,28 +112,10 @@
 /* --------------- Minimap -------------- */
 # define MINI_ROWS 5
 # define MINI_COLS 7
-# define MINI_X (WIDTH - (WIDTH / 5) + (WIDTH / SCALE))
-# define MINI_Y (HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) - 10
-# define MINI_X_END (WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (MINI_SCALE * MINI_COLS)
-# define MINI_Y_END (HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + (MINI_SCALE * MINI_ROWS)
-# define CURRENT_X (mini.start_x - mini.initial_x + MINI_X)
-# define CURRENT_Y (mini.start_y - mini.initial_y + MINI_Y)
-# define MINI_SCALE (SCALE / 2)
-# define SCALE_FACTOR (SCALE / (SCALE / 2))
-# define MINI_PCENTER (PCENTER / 2)
-# define MINI_PSIZE (PSIZE / 2)
-# define MINI_PLAYER_X (MINI_X + (player->pos.x / 2))
-# define MINI_PLAYER_Y (MINI_Y + (player->pos.y / 2))
-# define CENTER_X (MINI_X + ((MINI_SCALE * 7) / 2) - MINI_PCENTER)
-# define CENTER_Y (MINI_Y + ((MINI_SCALE * 5) / 2) - MINI_PCENTER)
-# define RIGHT_OUTBOUND (CENTER_X + MINI_PCENTER) + (MINI_SCALE * 7 / 2)
-# define LEFT_OUTBOUND (CENTER_X + MINI_PCENTER) - (MINI_SCALE * 7 / 2)
-# define TOP_OUTBOUND (CENTER_Y + MINI_PCENTER) + (MINI_SCALE * 5 / 2)
-# define BOTTOM_OUTBOUND (CENTER_Y + MINI_PCENTER) - (MINI_SCALE * 5 / 2)
-# define CENTERED_POSITION_X (CENTER_X + MINI_PCENTER)
-# define CENTERED_POSITION_Y (CENTER_Y + MINI_PCENTER)
-# define CLOSE_TO_BOUND_POSITION_X (MINI_PLAYER_X + MINI_PCENTER)
-# define CLOSE_TO_BOUND_POSITION_Y (MINI_PLAYER_Y + MINI_PCENTER)
+# define MINI_SCALE 25
+# define SCALE_FACTOR 2
+# define MINI_PCENTER 3
+# define MINI_PSIZE 6
 /* ---------------- Colors --------------- */
 # define RED 0xFF0000
 # define GREEN 0x00FF00
@@ -159,12 +141,5 @@
 # define SPACE WHITE
 # define WALLS BROWN
 # define PLAYER_ BLUE
-/* ----------------- Keys ---------------- */
-# define KEYPRESS 2
-# define KEYPRESSMASK 1L << 0
-# define KEYRELEASE 3
-# define KEYRELEASEMASK 1L << 1
-# define DESTROYNOTIFY 17
-# define STRUCTURENOTIFYMASK 1L << 17
 
 #endif

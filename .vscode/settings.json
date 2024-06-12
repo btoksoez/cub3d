@@ -14,7 +14,8 @@
 		"functions_bonus.h": "c",
 		"defines_bonus.h": "c",
 		"libft.h": "c",
-		"structs_bonus.h": "c"
+		"structs_bonus.h": "c",
+		"cub3d_bonus.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "enabled"
 }

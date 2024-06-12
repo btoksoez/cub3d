@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:36:56 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 17:37:19 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:09:05 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@
 /* ----------------- Game ---------------- */
 # define PLAYER "NSEW"
 # define SCALE 50
-# define PSIZE 12.5
-# define PCENTER 6.25
+# define PSIZE 12
+# define PCENTER 6
 # define ROT_SPEED 0.01
 # define BUFFER 10
 # define WALL 49

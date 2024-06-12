@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:48:40 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:48:41 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:30:46 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,22 +108,22 @@ void	adjust_raylen(t_raycaster *ray, float angle, t_minimap mini,
 	if ((player->pos.x <= mini.hori_vision)
 		&& (player->pos.y <= mini.vert_vision))
 	{
-		max_dist_y = (MINI_ROWS * MINI_SCALE) / 2 + fabs(CENTER_Y
-				- MINI_PLAYER_Y);
-		max_dist_x = (MINI_COLS * MINI_SCALE) / 2 + fabs(CENTER_X
-				- MINI_PLAYER_X);
+		max_dist_y = (MINI_ROWS * MINI_SCALE) / 2 + fabs(((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + ((MINI_SCALE * 5) / 2) - MINI_PCENTER)
+				- ((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + (player->pos.y / 2)));
+		max_dist_x = (MINI_COLS * MINI_SCALE) / 2 + fabs(((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + ((MINI_SCALE * 7) / 2) - MINI_PCENTER)
+				- ((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (player->pos.x / 2)));
 	}
 	else if (player->pos.y <= mini.vert_vision)
 	{
-		max_dist_y = ((MINI_ROWS * MINI_SCALE) / 2) + fabs(CENTER_Y
-				- MINI_PLAYER_Y);
+		max_dist_y = ((MINI_ROWS * MINI_SCALE) / 2) + fabs(((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + ((MINI_SCALE * 5) / 2) - MINI_PCENTER)
+				- ((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + (player->pos.y / 2)));
 		max_dist_x = (MINI_COLS * MINI_SCALE) / 2;
 	}
 	else if (player->pos.x <= mini.hori_vision)
 	{
 		max_dist_y = (MINI_ROWS * MINI_SCALE) / 2;
-		max_dist_x = (MINI_COLS * MINI_SCALE) / 2 + fabs(CENTER_X
-				- MINI_PLAYER_X);
+		max_dist_x = (MINI_COLS * MINI_SCALE) / 2 + fabs(((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + ((MINI_SCALE * 7) / 2) - MINI_PCENTER)
+				- ((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (player->pos.x / 2)));
 	}
 	else
 	{
@@ -144,26 +144,26 @@ void	draw_ray(t_game *game, t_player *player, t_raycaster *ray,
 	if ((player->pos.x <= mini.hori_vision)
 		&& (player->pos.y <= mini.vert_vision))
 	{
-		draw_line(game, CLOSE_TO_BOUND_POSITION_X, CLOSE_TO_BOUND_POSITION_Y,
-			CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
-			CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
+		draw_line(game, (((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (player->pos.x / 2)) + MINI_PCENTER), (((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + (player->pos.y / 2)) + MINI_PCENTER),
+			(((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (player->pos.x / 2)) + MINI_PCENTER) + (ray->dir.x * ray->len),
+			(((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + (player->pos.y / 2)) + MINI_PCENTER) + (ray->dir.y * ray->len), BLUE);
 	}
 	else if (player->pos.y <= mini.vert_vision)
 	{
-		draw_line(game, CENTERED_POSITION_X, CLOSE_TO_BOUND_POSITION_Y,
-			CENTERED_POSITION_X + (ray->dir.x * ray->len),
-			CLOSE_TO_BOUND_POSITION_Y + (ray->dir.y * ray->len), BLUE);
+		draw_line(game, (((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + ((MINI_SCALE * 7) / 2) - MINI_PCENTER) + MINI_PCENTER), (((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + (player->pos.y / 2)) + MINI_PCENTER),
+			(((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + ((MINI_SCALE * 7) / 2) - MINI_PCENTER) + MINI_PCENTER) + (ray->dir.x * ray->len),
+			(((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + (player->pos.y / 2)) + MINI_PCENTER) + (ray->dir.y * ray->len), BLUE);
 	}
 	else if (player->pos.x <= mini.hori_vision)
 	{
-		draw_line(game, CLOSE_TO_BOUND_POSITION_X, CENTERED_POSITION_Y,
-			CLOSE_TO_BOUND_POSITION_X + (ray->dir.x * ray->len),
-			CENTERED_POSITION_Y + (ray->dir.y * ray->len), BLUE);
+		draw_line(game, (((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (player->pos.x / 2)) + MINI_PCENTER), (((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + ((MINI_SCALE * 5) / 2) - MINI_PCENTER) + MINI_PCENTER),
+			(((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (player->pos.x / 2)) + MINI_PCENTER) + (ray->dir.x * ray->len),
+			(((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + ((MINI_SCALE * 5) / 2) - MINI_PCENTER) + MINI_PCENTER) + (ray->dir.y * ray->len), BLUE);
 	}
 	else
 	{
-		draw_line(game, CENTERED_POSITION_X, CENTERED_POSITION_Y,
-			CENTERED_POSITION_X + (ray->dir.x * ray->len), CENTERED_POSITION_Y
+		draw_line(game, (((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + ((MINI_SCALE * 7) / 2) - MINI_PCENTER) + MINI_PCENTER), (((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + ((MINI_SCALE * 5) / 2) - MINI_PCENTER) + MINI_PCENTER),
+			(((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + ((MINI_SCALE * 7) / 2) - MINI_PCENTER) + MINI_PCENTER) + (ray->dir.x * ray->len), (((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + ((MINI_SCALE * 5) / 2) - MINI_PCENTER) + MINI_PCENTER)
 			+ (ray->dir.y * ray->len), BLUE);
 	}
 }
