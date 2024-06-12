@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:21 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 21:10:47 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:20:20 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int		get_texture_color(t_game *game, int tex_x, int tex_y);
 void	draw_textures(t_game *game, int start_x, int start_y, int end_x,
 			int end_y);
 void	jumping(t_player *player);
+void	prepate_to_move_player(t_player *p, float *new_x, float *new_y);
 
 /* --------------------------- Weapon Rendering ---------------------------- */
 /* ------------------------------------------------------------------------- */

@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 21:02:23 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 21:10:04 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:13:05 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	draw_ray_aux1(t_point_i *start, t_point_i *end, t_point close_to_b)
 	end->y = close_to_b.y;
 }
 
-void	draw_ray_aux2(t_point_i *start, t_point_i *end, t_point close_to_b, t_point centered)
+void	draw_ray_aux2(t_point_i *start, t_point_i *end, t_point close_to_b,
+		t_point centered)
 {
 	start->x = centered.x;
 	start->y = close_to_b.y;
@@ -28,7 +29,8 @@ void	draw_ray_aux2(t_point_i *start, t_point_i *end, t_point close_to_b, t_point
 	end->y = close_to_b.y;
 }
 
-void	draw_ray_aux3(t_point_i *start, t_point_i *end, t_point close_to_b, t_point centered)
+void	draw_ray_aux3(t_point_i *start, t_point_i *end, t_point close_to_b,
+		t_point centered)
 {
 	start->x = close_to_b.x;
 	start->y = centered.y;
