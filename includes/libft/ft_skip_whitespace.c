@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_skip_whitespaces.c                              :+:      :+:    :+:   */
+/*   ft_skip_whitespace.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:00:39 by marvin            #+#    #+#             */
-/*   Updated: 2024/05/22 12:00:40 by marvin           ###   ########.fr       */
+/*   Updated: 2024/06/12 11:04:14 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	ft_skip_whitespace(char **line)
 {
-	if (**line == '\0')
-		return ;
-	while (ft_strchr(WHITESPACE, **line))
+	while (line && *line && **line && ft_strchr(WHITESPACE, **line))
 		(*line)++;
 }

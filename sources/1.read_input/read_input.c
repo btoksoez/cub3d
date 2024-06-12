@@ -20,17 +20,17 @@ void	read_textures(t_map *map, int fd)
 	char *tmp;
 
 	line = get_next_line(fd);
-	while (line)
+	while (line && *line)
 	{
 		tmp = line;
 		ft_skip_whitespace(&tmp);
-		if (*tmp == 'N' && *(tmp + 1) == 'O')
+		if (ft_strlen(tmp) >= 3 && *tmp == 'N' && *(tmp + 1) == 'O')
 			get_texture(tmp, 'N', map);
-		else if (*tmp == 'S' && *(tmp + 1) == 'O')
+		else if (ft_strlen(tmp) >= 3 && *tmp == 'S' && *(tmp + 1) == 'O')
 			get_texture(tmp, 'S', map);
-		else if (*tmp == 'W' && *(tmp + 1) == 'E')
+		else if (ft_strlen(tmp) >= 3 && *tmp == 'W' && *(tmp + 1) == 'E')
 			get_texture(tmp, 'W', map);
-		else if (*tmp == 'E' && *(tmp + 1) == 'A')
+		else if (ft_strlen(tmp) >= 3 && *tmp == 'E' && *(tmp + 1) == 'A')
 			get_texture(tmp, 'E', map);
 		else if (*tmp == 'F' && ft_strchr(WHITESPACE, *(tmp + 1)))
 			get_color(tmp, 'F', map);
@@ -42,6 +42,8 @@ void	read_textures(t_map *map, int fd)
 			return ;
 		line = get_next_line(fd);
 	}
+	if (line)
+		free(line);
 	if (!assigned_all(map))
 		free_map(map, "Missing textures or colors in .cub file", 1);
 }
@@ -60,7 +62,7 @@ void	fill_with_space(t_map *map)
 			coll++;
 		if (coll < map->cols)
 		{
-			temp = ft_realloc(map->map[row], map->cols);
+			temp = ft_realloc(map->map[row], sizeof(char) * (coll + 1), sizeof(char) * (map->cols + 1));	//causing problems
 			if (!temp)
 				free_map(map, "Failed to allocate memory for row", 1);
 			map->map[row] = temp;
@@ -75,16 +77,19 @@ void	fill_with_space(t_map *map)
 void	read_map(t_map *map, int fd)
 {
 	char	*line;
-	int		rows;
+	int		row;
 	char	**temp;
 
-	rows = 0;
+	row = 0;
 	line = get_next_line(fd);
 	while (line && *line == '\n')
+	{
+		free(line);
 		line = get_next_line(fd);
+	}
 	while (line)
 	{
-		temp = ft_realloc(map->map, sizeof(char *) * ((rows + 1) + 1));
+		temp = ft_realloc(map->map, sizeof(char *) * (row + 1), sizeof(char *) * (row + 2));
 		if (!temp)
 		{
 			free (line);
@@ -93,18 +98,17 @@ void	read_map(t_map *map, int fd)
 			error_message("Memory allocation failed");
 		}
 		map->map = temp;
-		map->map[rows] = ft_strtrim(line, "\n");
-		if (!map->map[rows])
+		map->map[row] = ft_strtrim(line, "\n");
+		if (!map->map[row])
 		{
 			free(line);
 			free_map(map, "Memory allocation failed", 1);
 		}
 		free(line);
 		line = get_next_line(fd);
-		rows++;
+		row++;
 	}
-	// map->map[rows] = NULL;
-	remove_extra_rows(map, rows, temp);
+	remove_extra_rows(map, row, temp);
 }
 
 void	check_arguments(int argc, char *argv[])

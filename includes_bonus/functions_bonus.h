@@ -6,7 +6,7 @@
 /* ------------------------------- Read Input ------------------------------ */
 /* ------------------------------------------------------------------------- */
 void	read_input(int argc, char *argv[], t_map *map);
-void	check_arguments(int argc, char *argv[]);
+void	check_arguments(t_map *map, int argc, char *argv[]);
 bool	is_cub(char *file);
 void	read_textures(t_map *map, int fd);
 void	read_map(t_map *map, int fd);
@@ -113,9 +113,12 @@ void	print_pixel_map(t_game *game);
 
 /* ----------------------------- Close Program ----------------------------- */
 /* ------------------------------------------------------------------------- */
-void	error_message(char *str);
+void	error_message(t_map *map, char *str);
 void	free_map(t_map *map, char *str, int status);
 int		close_window(t_game *game, int status, int exit);
 void	player_dead(t_game *game);
+void	free_map_copy(char **map);
+void	clean_up(t_game *game, char *str, int status);
+void	free_enemies(t_map *map);
 
 #endif

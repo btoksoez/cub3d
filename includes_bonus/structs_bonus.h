@@ -70,7 +70,7 @@ typedef struct s_textures
 	struct s_img	map;
 	struct s_img	sky;
 	struct s_img	ground;
-	struct s_img	weapon[4][5];
+	struct s_img	weapon[3][5];
 	struct s_img	enemy[3][4];
 }					t_textures;
 

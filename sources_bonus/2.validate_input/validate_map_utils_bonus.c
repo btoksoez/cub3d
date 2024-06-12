@@ -19,7 +19,9 @@ void	get_enemy_coordinates(t_map *map, int rows, int coll)
 	t_enemy *enemy;
 
 	enemy = malloc(sizeof(t_enemy));
-	map->enemies = realloc(map->enemies, sizeof(t_enemy *) * map->enemy_count);
+	if (!enemy)
+		return error_message(map, "malloc error enemy");
+	map->enemies = ft_realloc(map->enemies, sizeof(t_enemy *) * (map->enemy_count - 1), sizeof(t_enemy *) * map->enemy_count);
 	map->enemies[map->enemy_count - 1] = enemy;
 	enemy->pos.x = coll * SCALE + 3 * (ESIZE / 2);
 	enemy->pos.y = rows * SCALE + 3 * (ESIZE / 2);
@@ -57,7 +59,7 @@ bool	invalid_characters(t_map *map)
 				get_player_coordinates(map, rows, coll);
 				player_found = true;
 			}
-			if (strchr(ENEMY, map->map[rows][coll]))
+			if (ft_strchr(ENEMY, map->map[rows][coll]))
 			{
 				map->enemy_count++;
 				get_enemy_coordinates(map, rows, coll);
@@ -76,48 +78,3 @@ bool	invalid_characters(t_map *map)
 	return (false);
 }
 
-bool	found_leaking_space(t_map *map, int row, int coll)
-{
-	if (row != 0)
-	{
-		if (map->map[row - 1][coll] != WALL && !ft_isspace(map->map[row - 1][coll]))
-			return (true);
-	}
-	if (row != map->rows - 1)
-	{
-		if (map->map[row + 1][coll] != WALL && !ft_isspace(map->map[row + 1][coll]))
-			return (true);
-	}
-	if (coll != 0)
-	{
-		if (map->map[row][coll - 1] != WALL && !ft_isspace(map->map[row][coll - 1]))
-			return (true);
-	}
-	if (coll != map->cols - 1)
-	{
-		if (map->map[row][coll + 1] != WALL && !ft_isspace(map->map[row][coll + 1]))
-			return (true);
-	}
-	return (false);
-}
-
-bool	leaking_empty_spaces(t_map *map)
-{
-	int	row;
-	int	coll;
-
-	row = 0;
-	while (map->map[row])
-	{
-		coll = 0;
-		while (map->map[row][coll])
-		{
-			if (ft_isspace(map->map[row][coll]))
-				if (found_leaking_space(map, row, coll))
-					return (false);
-			coll++;
-		}
-		row++;
-	}
-	return (true);
-}

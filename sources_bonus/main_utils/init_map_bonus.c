@@ -22,4 +22,6 @@ void init_map(t_map *map)
 	map->c_color.blue = -1;
 	map->enemy_count = 0;
 	map->enemies = malloc(sizeof(t_enemy *));
+	if (!map->enemies)
+		error_message(map, "Malloc error enemies");
 }

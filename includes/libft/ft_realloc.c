@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:48:02 by andre-da          #+#    #+#             */
-/*   Updated: 2024/05/21 18:17:06 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:02:25 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_realloc(void *ptr, size_t new_size)
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
 	void	*new_ptr;
 
@@ -21,7 +21,7 @@ void	*ft_realloc(void *ptr, size_t new_size)
 		return (NULL);
 	if (ptr)
 	{
-		memcpy(new_ptr, ptr, new_size);
+		ft_memcpy(new_ptr, ptr, old_size);
 		free(ptr);
 	}
 	return (new_ptr);

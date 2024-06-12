@@ -10,6 +10,7 @@ void	get_texture(char *line, char type, t_map *map)
 	if (access(file, F_OK) != 0 || access(file, R_OK) != 0)
 	{
 		free(file);
+		free(line);
 		free_map(map, "texture file not readable", 1);
 	}
 	if (type == 'N')
