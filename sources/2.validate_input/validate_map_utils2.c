@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map_utils2.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 15:44:58 by andre-da          #+#    #+#             */
+/*   Updated: 2024/06/12 15:44:59 by andre-da         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 bool	flood_fill(t_map *map_array, char **map, int row, int col)
@@ -51,9 +63,7 @@ bool	empty_left(char **map)
 		while (map[row][col])
 		{
 			if (map[row][col] == EMPTY)
-			{
 				return (true);
-			}
 			col++;
 		}
 		row++;

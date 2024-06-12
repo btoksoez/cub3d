@@ -1,7 +1,16 @@
-#include "../../includes_bonus/cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map_bonus.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 15:47:09 by andre-da          #+#    #+#             */
+/*   Updated: 2024/06/12 15:47:14 by andre-da         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// map split triggers if there is text after map
-// trim 1's which are outside of the outer wall
+#include "../../includes_bonus/cub3d_bonus.h"
 
 void	validate_map(t_map *map)
 {

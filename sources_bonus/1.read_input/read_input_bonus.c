@@ -1,4 +1,16 @@
-#include "../../includes_bonus/cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_input_bonus.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 15:46:18 by andre-da          #+#    #+#             */
+/*   Updated: 2024/06/12 15:46:42 by andre-da         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes_bonus/cub3d_bonus.h"
 
 void	read_input(int argc, char *argv[], t_map *map)
 {

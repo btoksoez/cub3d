@@ -1,4 +1,16 @@
-#include "../../includes_bonus/cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map_utils_bonus.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 15:47:17 by andre-da          #+#    #+#             */
+/*   Updated: 2024/06/12 15:47:18 by andre-da         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes_bonus/cub3d_bonus.h"
 
 void	get_player_coordinates(t_map *map, int rows, int coll)
 {

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   functions.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 15:37:01 by andre-da          #+#    #+#             */
+/*   Updated: 2024/06/12 15:37:05 by andre-da         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FUNCTIONS_H
 # define FUNCTIONS_H
 
@@ -38,7 +50,8 @@ void	fill_with_space(t_map *map);
 /* ------------------------------- Mlx Init -------------------------------- */
 /* ------------------------------------------------------------------------- */
 void	start_game(t_map *map);
-void	init_mlx(t_game *game, t_textures *textures, t_player *player, t_map *map);
+void	init_mlx(t_game *game, t_textures *textures, t_player *player,
+			t_map *map);
 void	init_game_struct(t_game *game, t_player *player, t_map *map);
 void	init_window(t_game *game, t_map *map);
 void	init_image(t_game *game);
@@ -52,12 +65,15 @@ void	init_textures(t_game *game, t_textures *textures);
 /* ------------------------------------------------------------------------- */
 int		render(t_game *game);
 void	put_pixel_to_img(t_game *game, int x, int y, int color);
-void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
+void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y,
+			int color);
 void	move_player(t_game *game, float move_x, float move_y);
 void	check_movements(t_game *game);
-void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y, int color);
+void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y,
+			int color);
 int		get_texture_color(t_game *game, int tex_x, int tex_y);
-void	draw_textures(t_game *game, int start_x, int start_y, int end_x, int end_y);
+void	draw_textures(t_game *game, int start_x, int start_y, int end_x,
+			int end_y);
 void	jumping(t_player *player);
 
 /* ------------------------------ Ray Caster ------------------------------- */
@@ -75,7 +91,6 @@ void	render_weapon(t_game *game);
 
 /* --------------------------- Sprite Rendering ---------------------------- */
 /* ------------------------------------------------------------------------- */
-// void	render_sprites(t_game *game);
 void	get_enemy_distance(t_raycaster *ray, t_game *game);
 t_point	get_normalized_vector(t_point p1, t_point p2);
 void	get_enemy_positions(t_game *game);

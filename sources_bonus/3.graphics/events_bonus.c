@@ -1,10 +1,22 @@
-#include "../../includes_bonus/cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   events_bonus.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 15:47:28 by andre-da          #+#    #+#             */
+/*   Updated: 2024/06/12 15:48:14 by andre-da         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes_bonus/cub3d_bonus.h"
 
 void	init_events(t_game *game)
 {
-	mlx_hook(game->win, KeyPress, KeyPressMask, &key_press, game);
-	mlx_hook(game->win, KeyRelease, KeyReleaseMask, &key_release, game);
-	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, &close_window,
+	mlx_hook(game->win, KEYPRESS, KEYPRESSMASK, &key_press, game);
+	mlx_hook(game->win, KEYRELEASE, KEYRELEASEMASK, &key_release, game);
+	mlx_hook(game->win, DESTROYNOTIFY, STRUCTURENOTIFYMASK, &close_window,
 		game);
 }
 

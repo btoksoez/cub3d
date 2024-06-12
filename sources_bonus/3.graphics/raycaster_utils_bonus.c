@@ -1,4 +1,16 @@
-#include "../../includes_bonus/cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycaster_utils_bonus.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 15:48:58 by andre-da          #+#    #+#             */
+/*   Updated: 2024/06/12 15:49:03 by andre-da         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes_bonus/cub3d_bonus.h"
 
 void	draw_textures(t_game *game, int start_x, int start_y, int end_x,
 		int end_y)
@@ -17,7 +29,7 @@ void	draw_textures(t_game *game, int start_x, int start_y, int end_x,
 		start_y = end_y;
 		end_y = temp;
 	}
-	tex_y = 0; // why north? what if they have different heights/widths?
+	tex_y = 0;
 	tex_x = game->textures->north.width * (game->fraction_x + game->fraction_y);
 	step = (float)game->textures->north.height / (end_y - start_y);
 	while (start_y <= end_y)

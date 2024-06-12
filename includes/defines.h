@@ -1,39 +1,51 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   defines.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 15:36:56 by andre-da          #+#    #+#             */
+/*   Updated: 2024/06/12 15:41:17 by andre-da         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef DEFINE_H
 # define DEFINE_H
 
-#ifdef LINUX
+# ifdef LINUX
 /* ----------------- Linux---------------- */
-# include "./minilibx-linux/mlx.h"
-#define ESC			65307
-#define W			119
-#define A			97
-#define S			115
-#define D			100
-#define LEFT_KEY	65361
-#define RIGHT_KEY	65363
-#define SHIFT		0xFFE1
-#define SPACEBAR	32
-#define LEFT_BTN	65361  // Left arrow key
-#define RIGHT_BTN 	65363  // Right arrow key
-#define SHOOT		102    // 's' key
-#define SWITCH		114    // 'd' key
-#else
+#  include "./minilibx-linux/mlx.h"
+#  define ESC 65307
+#  define W 119
+#  define A 97
+#  define S 115
+#  define D 100
+#  define LEFT_KEY 65361
+#  define RIGHT_KEY 65363
+#  define SHIFT 0xFFE1
+#  define SPACEBAR 32
+#  define LEFT_BTN 65361  // Left arrow key
+#  define RIGHT_BTN 65363 // Right arrow key
+#  define SHOOT 102       // 's' key
+#  define SWITCH 114      // 'd' key
+# else
 /* ------------------ Mac ----------------- */
-# include "./minilibx-mac/mlx.h"
-#define ESC			0x35
-#define W			0x0D
-#define A			0x00
-#define S			0x01
-#define D			0x02
-#define LEFT_KEY	0x7B
-#define RIGHT_KEY	0x7C
-#define SHIFT		0x101
-#define SPACEBAR	0x31
-#define LEFT_BTN	0xF0
-#define RIGHT_BTN 	0xF1
-#define SHOOT		0x03
-#define SWITCH		0x0F
-#endif
+#  include "./minilibx-mac/mlx.h"
+#  define ESC 0x35
+#  define W 0x0D
+#  define A 0x00
+#  define S 0x01
+#  define D 0x02
+#  define LEFT_KEY 0x7B
+#  define RIGHT_KEY 0x7C
+#  define SHIFT 0x101
+#  define SPACEBAR 0x31
+#  define LEFT_BTN 0xF0
+#  define RIGHT_BTN 0xF1
+#  define SHOOT 0x03
+#  define SWITCH 0x0F
+# endif
 /* --------------- General --------------- */
 # define WHITESPACE " \t\n\r\f\v"
 # define VALID_CHARS "NSEW01 \t\n\r\f\v\0"
@@ -103,11 +115,11 @@
 # define WALLS WHITE
 # define PLAYER_ BLUE
 /* ----------------- Keys ---------------- */
-# define KeyPress 2
-# define KeyPressMask 1L<<0
-# define KeyRelease 3
-# define KeyReleaseMask 1L<<1
-# define DestroyNotify 17
-# define StructureNotifyMask 1L<<17
+# define KEYPRESS 2
+# define KEYPRESSMASK 1L << 0
+# define KEYRELEASE 3
+# define KEYRELEASEMASK 1L << 1
+# define DESTROYNOTIFY 17
+# define STRUCTURENOTIFYMASK 1L << 17
 
 #endif

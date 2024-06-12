@@ -1,4 +1,16 @@
-#include "../../includes_bonus/cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_textures_utils_bonus.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 15:47:04 by andre-da          #+#    #+#             */
+/*   Updated: 2024/06/12 15:47:05 by andre-da         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes_bonus/cub3d_bonus.h"
 
 void	get_texture(char *line, char type, t_map *map)
 {

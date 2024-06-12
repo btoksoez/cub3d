@@ -1,80 +1,94 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs_bonus.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 15:37:24 by andre-da          #+#    #+#             */
+/*   Updated: 2024/06/12 15:37:25 by andre-da         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCTS_BONUS_H
 # define STRUCTS_BONUS_H
 
-typedef struct	s_rgb
+# include "cub3d_bonus.h"
+
+typedef struct s_rgb
 {
-	int	red;
-	int	green;
-	int	blue;
-}				t_rgb;
+	int					red;
+	int					green;
+	int					blue;
+}						t_rgb;
 
 typedef struct s_point
 {
-	float			x;
-	float			y;
-}					t_point;
+	float				x;
+	float				y;
+}						t_point;
 
 typedef struct s_point_i
 {
-	int				x;
-	int				y;
-}					t_point_i;
+	int					x;
+	int					y;
+}						t_point_i;
 
 typedef struct s_enemy
 {
-	int				type;
-	t_point			pos;
-	t_point			left;
-	t_point			right;
-	t_point			dir_vec;
-	int				speed;
-	int				size;
-	int				frame;
-}					t_enemy;
+	int					type;
+	t_point				pos;
+	t_point				left;
+	t_point				right;
+	t_point				dir_vec;
+	int					speed;
+	int					size;
+	int					frame;
+}						t_enemy;
 
-typedef struct	s_map
+typedef struct s_map
 {
-	char			**map;
-	int				rows;
-	int				cols;
-	t_point_i		player;
-	struct s_enemy	**enemies;
-	int				enemy_count;
-	float			player_dir;
-	char			*no_texture;
-	char			*so_texture;
-	char			*we_texture;
-	char			*ea_texture;
-	struct s_rgb	f_color;
-	struct s_rgb	c_color;
-}					t_map;
+	char				**map;
+	int					rows;
+	int					cols;
+	t_point_i			player;
+	struct s_enemy		**enemies;
+	int					enemy_count;
+	float				player_dir;
+	char				*no_texture;
+	char				*so_texture;
+	char				*we_texture;
+	char				*ea_texture;
+	struct s_rgb		f_color;
+	struct s_rgb		c_color;
+}						t_map;
 
 typedef struct s_img
 {
-	void			*img_ptr;
-	char			*pixels_ptr;
-	int				bits_per_pixel;
-	int				endian;
-	int				line_len;
-	int				width;
-	int				height;
-}					t_img;
+	void				*img_ptr;
+	char				*pixels_ptr;
+	int					bits_per_pixel;
+	int					endian;
+	int					line_len;
+	int					width;
+	int					height;
+}						t_img;
 
 typedef struct s_textures
 {
-	struct s_img	north;
-	struct s_img	south;
-	struct s_img	east;
-	struct s_img	west;
-	struct s_img	aim;
-	struct s_img	map;
-	struct s_img	sky;
-	struct s_img	ground;
-	struct s_img	weapon[3][5];
-	struct s_img	enemy[3][4];
-}					t_textures;
+	struct s_img		north;
+	struct s_img		south;
+	struct s_img		east;
+	struct s_img		west;
+	struct s_img		aim;
+	struct s_img		map;
+	struct s_img		sky;
+	struct s_img		ground;
+	struct s_img		weapon[3][5];
+	struct s_img		enemy[3][4];
+}						t_textures;
 
-typedef struct	s_game
+typedef struct s_game
 {
 	void				*mlx;
 	void				*win;
@@ -99,50 +113,50 @@ typedef struct	s_game
 
 typedef struct s_player
 {
-	int				up_down;
-	int				left_right;
-	int				rot;
-	t_point			pos;
-	float			p_angle;
-	int				look_dir;
-	int				speed;
-	float			jump_height;
-	bool			jumping;
-	bool			jump_peak;
-	int				shooting;
-	int				weapon;
-	int				prev_mouse_x;
-	int				prev_mouse_y;
-}					t_player;
+	int					up_down;
+	int					left_right;
+	int					rot;
+	t_point				pos;
+	float				p_angle;
+	int					look_dir;
+	int					speed;
+	float				jump_height;
+	bool				jumping;
+	bool				jump_peak;
+	int					shooting;
+	int					weapon;
+	int					prev_mouse_x;
+	int					prev_mouse_y;
+}						t_player;
 
 typedef struct s_raycaster
 {
-	t_point		dir;
-	t_point		scalingf;
-	t_point		ray_len;
-	t_point_i	map_loc;
-	t_point_i	map_step;
-	float		len;
-	t_point		intersection;
-	t_point		start;
-	bool		wall;
-	bool		enemy;
-	int			enemy_type;
-	float		distance_enemy;
-	float		tex_x;
-	int			enemy_id;
-}					t_raycaster;
+	t_point				dir;
+	t_point				scalingf;
+	t_point				ray_len;
+	t_point_i			map_loc;
+	t_point_i			map_step;
+	float				len;
+	t_point				intersection;
+	t_point				start;
+	bool				wall;
+	bool				enemy;
+	int					enemy_type;
+	float				distance_enemy;
+	float				tex_x;
+	int					enemy_id;
+}						t_raycaster;
 
-typedef struct	s_minimap
+typedef struct s_minimap
 {
-	int				start_x;
-	int				start_y;
-	int				end_x;
-	int				end_y;
-	int				hori_vision;
-	int				vert_vision;
-	int				initial_x;
-	int				initial_y;
-}					t_minimap;
+	int					start_x;
+	int					start_y;
+	int					end_x;
+	int					end_y;
+	int					hori_vision;
+	int					vert_vision;
+	int					initial_x;
+	int					initial_y;
+}						t_minimap;
 
 #endif
