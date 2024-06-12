@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:24 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 19:40:23 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:05:43 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,5 +169,15 @@ typedef struct s_positions
 	int					y;
 	int					x;
 }						t_positions;
+
+typedef struct s_draw_line_tools
+{
+	int					dx;
+	int					dy;
+	int					sx;
+	int					sy;
+	int					err;
+	int					e2;
+}						t_draw_line_tools;
 
 #endif

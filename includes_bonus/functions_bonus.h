@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:21 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 20:40:25 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:10:47 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,7 @@ bool	invalid_color(t_map *map);
 bool	map_split(t_map *map);
 void	get_player_coordinates(t_map *map, int rows, int coll);
 bool	invalid_characters(t_map *map);
-bool	found_leaking_space(t_map *map, int row, int coll);
-bool	leaking_empty_spaces(t_map *map);
 bool	surrounded_by_walls(t_map *map);
-bool	surrounded_by_walls2(t_map *map);
-bool	valid_upside(t_map *map, int *coll, int *row, bool *last_dir);
-bool	valid_rightside(t_map *map, int *coll, int *row, bool *last_dir);
-bool	valid_downside(t_map *map, int *coll, int *row, bool *last_dir);
-bool	valid_leftside(t_map *map, int *coll, int *row, bool *last_dir);
 void	fill_with_space(t_map *map);
 
 /* ------------------------------- Mlx Init -------------------------------- */
@@ -122,6 +115,12 @@ void	adjust_raylen(t_raycaster *ray, float angle, t_minimap mini,
 void	draw_ray(t_game *game, t_player *player, t_raycaster *ray,
 			t_minimap mini);
 void	get_start_x(t_player *player, t_minimap *mini);
+void	draw_ray_aux1(t_point_i *start, t_point_i *end, t_point close_to_b);
+void	draw_ray_aux2(t_point_i *start, t_point_i *end, t_point close_to_b,
+			t_point centered);
+void	draw_ray_aux3(t_point_i *start, t_point_i *end, t_point close_to_b,
+			t_point centered);
+void	draw_ray_aux4(t_point_i *start, t_point_i *end, t_point centered);
 
 /* -------------------------------- Utils ---------------------------------- */
 /* ------------------------------------------------------------------------- */

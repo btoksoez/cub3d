@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 20:04:14 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 20:39:04 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:11:23 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,33 +82,16 @@ void	draw_ray(t_game *game, t_player *player, t_raycaster *ray,
 					/ 2) - MINI_PCENTER) + MINI_PCENTER);
 	centered.y = (((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + ((MINI_SCALE
 						* 5) / 2) - MINI_PCENTER) + MINI_PCENTER);
-	if ((player->pos.x <= mini.hori_vision) && (player->pos.y <= mini.vert_vision))
-	{
-		start.x = close_to_b.x;
-		start.y = close_to_b.y;
-		end.x = close_to_b.x + (ray->dir.x * ray->len);
-		end.y = close_to_b.y + (ray->dir.y * ray->len);
-	}
+	if ((player->pos.x <= mini.hori_vision)
+		&& (player->pos.y <= mini.vert_vision))
+		draw_ray_aux1(&start, &end, close_to_b);
 	else if (player->pos.y <= mini.vert_vision)
-	{
-		start.x = centered.x;
-		start.y = close_to_b.y;
-		end.x = centered.x + (ray->dir.x * ray->len);
-		end.y = close_to_b.y + (ray->dir.y * ray->len);
-	}
+		draw_ray_aux2(&start, &end, close_to_b, centered);
 	else if (player->pos.x <= mini.hori_vision)
-	{
-		start.x = close_to_b.x;
-		start.y = centered.y;
-		end.x = close_to_b.x + (ray->dir.x * ray->len);
-		end.y = centered.y + (ray->dir.y * ray->len);
-	}
+		draw_ray_aux3(&start, &end, close_to_b, centered);
 	else
-	{
-		start.x = centered.x;
-		start.y = centered.y;
-		end.x = centered.x + (ray->dir.x * ray->len);
-		end.y = centered.y + (ray->dir.y * ray->len);
-	}
+		draw_ray_aux4(&start, &end, centered);
+	end.x += (ray->dir.x * ray->len);
+	end.y += (ray->dir.y * ray->len);
 	draw_line(game, start, end);
 }

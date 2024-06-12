@@ -6,47 +6,47 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 20:20:53 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 20:40:10 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 21:09:10 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes_bonus/cub3d_bonus.h"
 
+void	draw_line_aux(t_draw_line_tools *t, t_point_i start, t_point_i end)
+{
+	t->dx = abs(end.x - start.x);
+	t->dy = abs(end.y - start.y);
+	if (start.x < end.x)
+		t->sx = 1;
+	else
+		t->sx = -1;
+	if (start.y < end.y)
+		t->sy = 1;
+	else
+		t->sy = -1;
+	t->err = t->dx - t->dy;
+}
+
 void	draw_line(t_game *game, t_point_i start, t_point_i end)
 {
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-	int	e2;
+	t_draw_line_tools	t;
 
-	dx = abs(end.x - start.x);
-	dy = abs(end.y - start.y);
-	if (start.x < end.x)
-		sx = 1;
-	else
-		sx = -1;
-	if (start.y < end.y)
-		sy = 1;
-	else
-		sy = -1;
-	err = dx - dy;
+	draw_line_aux(&t, start, end);
 	while (true)
 	{
 		put_pixel_to_img(game, start.x, start.y, BLUE);
 		if (start.x == end.x && start.y == end.y)
 			break ;
-		e2 = 2 * err;
-		if (e2 > -dy)
+		t.e2 = 2 * t.err;
+		if (t.e2 > -t.dy)
 		{
-			err -= dy;
-			start.x += sx;
+			t.err -= t.dy;
+			start.x += t.sx;
 		}
-		if (e2 < dx)
+		if (t.e2 < t.dx)
 		{
-			err += dx;
-			start.y += sy;
+			t.err += t.dx;
+			start.y += t.sy;
 		}
 	}
 }
