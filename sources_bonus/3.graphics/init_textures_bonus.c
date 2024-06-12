@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:48:30 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:48:31 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:00:02 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,26 @@ void	init_texture(t_game *game, t_img *texture_img, char *texture)
 	texture_img->pixels_ptr = mlx_get_data_addr(texture_img->img_ptr,
 			&texture_img->bits_per_pixel, &texture_img->line_len,
 			&texture_img->endian);
+}
+
+void	init_textures_aux(t_game *game, t_textures *textures)
+{
+	init_texture(game, &textures->enemy[0][0],
+		"./textures/officer/officer1.xpm");
+	init_texture(game, &textures->enemy[0][1],
+		"./textures/officer/officer2.xpm");
+	init_texture(game, &textures->enemy[0][2],
+		"./textures/officer/officer3.xpm");
+	init_texture(game, &textures->enemy[0][3],
+		"./textures/officer/officer4.xpm");
+	init_texture(game, &textures->enemy[1][0], "./textures/boss/boss1.xpm");
+	init_texture(game, &textures->enemy[1][1], "./textures/boss/boss2.xpm");
+	init_texture(game, &textures->enemy[1][2], "./textures/boss/boss3.xpm");
+	init_texture(game, &textures->enemy[1][3], "./textures/boss/boss4.xpm");
+	init_texture(game, &textures->enemy[2][0], "./textures/rat/rat1.xpm");
+	init_texture(game, &textures->enemy[2][1], "./textures/rat/rat2.xpm");
+	init_texture(game, &textures->enemy[2][2], "./textures/rat/rat3.xpm");
+	init_texture(game, &textures->enemy[2][3], "./textures/rat/rat4.xpm");
 }
 
 void	init_textures(t_game *game, t_textures *textures)
@@ -53,21 +73,6 @@ void	init_textures(t_game *game, t_textures *textures)
 	init_texture(game, &textures->weapon[2][2], "./textures/mg/mg3.xpm");
 	init_texture(game, &textures->weapon[2][3], "./textures/mg/mg4.xpm");
 	init_texture(game, &textures->weapon[2][4], "./textures/mg/mg5.xpm");
-	init_texture(game, &textures->enemy[0][0],
-		"./textures/officer/officer1.xpm");
-	init_texture(game, &textures->enemy[0][1],
-		"./textures/officer/officer2.xpm");
-	init_texture(game, &textures->enemy[0][2],
-		"./textures/officer/officer3.xpm");
-	init_texture(game, &textures->enemy[0][3],
-		"./textures/officer/officer4.xpm");
-	init_texture(game, &textures->enemy[1][0], "./textures/boss/boss1.xpm");
-	init_texture(game, &textures->enemy[1][1], "./textures/boss/boss2.xpm");
-	init_texture(game, &textures->enemy[1][2], "./textures/boss/boss3.xpm");
-	init_texture(game, &textures->enemy[1][3], "./textures/boss/boss4.xpm");
-	init_texture(game, &textures->enemy[2][0], "./textures/rat/rat1.xpm");
-	init_texture(game, &textures->enemy[2][1], "./textures/rat/rat2.xpm");
-	init_texture(game, &textures->enemy[2][2], "./textures/rat/rat3.xpm");
-	init_texture(game, &textures->enemy[2][3], "./textures/rat/rat4.xpm");
+	init_textures_aux(game, textures);
 	game->textures = textures;
 }

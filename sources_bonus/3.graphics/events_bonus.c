@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:47:28 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 18:32:14 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:49:58 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,24 @@ void	init_events(t_game *game)
 {
 	mlx_hook(game->win, 2, 1L << 0, &key_press, game);
 	mlx_hook(game->win, 3, 1L << 1, &key_release, game);
-	mlx_hook(game->win, 17, 1L << 17, &close_window,
-		game);
+	mlx_hook(game->win, 17, 1L << 17, &close_window, game);
 }
 
-// add shooting, space, reload ...
+void	key_press_aux(int key, t_player *player)
+{
+	if (key == SHIFT)
+		player->speed = 2;
+	if (key == SPACEBAR)
+	{
+		player->jumping = true;
+		player->jump_peak = false;
+	}
+	if (key == SHOOT)
+		player->shooting = 10;
+	if (key == SWITCH)
+		player->weapon = (player->weapon + 1) % 3;
+}
+
 int	key_press(int key, t_game *game)
 {
 	t_player	*player;
@@ -40,17 +53,7 @@ int	key_press(int key, t_game *game)
 		player->rot = LEFT;
 	if (key == RIGHT_KEY)
 		player->rot = RIGHT;
-	if (key == SHIFT)
-		player->speed = 2;
-	if (key == SPACEBAR)
-	{
-		player->jumping = true;
-		player->jump_peak = false;
-	}
-	if (key == SHOOT)
-		player->shooting = 10;
-	if (key == SWITCH)
-		player->weapon = (player->weapon + 1) % 3;
+	key_press_aux(key, player);
 	return (0);
 }
 
