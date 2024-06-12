@@ -6,11 +6,35 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:45:48 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:45:49 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:39:02 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+void	prepate_to_move_player(t_player *p, float *new_x, float *new_y)
+{
+	if (p->up_down == UP)
+	{
+		*new_x = p->pos.x + (p->speed * (float)cos(p->p_angle));
+		*new_y = p->pos.y + (p->speed * (float)sin(p->p_angle));
+	}
+	if (p->up_down == DOWN)
+	{
+		*new_x = p->pos.x + (p->speed * (float)cos(p->p_angle + PI));
+		*new_y = p->pos.y + (p->speed * (float)sin(p->p_angle + PI));
+	}
+	if (p->left_right == LEFT)
+	{
+		*new_x = p->pos.x + (p->speed * (float)cos(p->p_angle - _05PI));
+		*new_y = p->pos.y + (p->speed * (float)sin(p->p_angle - _05PI));
+	}
+	if (p->left_right == RIGHT)
+	{
+		*new_x = p->pos.x + (p->speed * (float)cos(p->p_angle + _05PI));
+		*new_y = p->pos.y + (p->speed * (float)sin(p->p_angle + _05PI));
+	}
+}
 
 void	check_movements(t_game *game)
 {
@@ -21,64 +45,38 @@ void	check_movements(t_game *game)
 	player = game->player;
 	new_x = player->pos.x;
 	new_y = player->pos.y;
-	if (player->up_down == UP)
-	{
-		new_x = player->pos.x + (player->speed * (float)cos(player->p_angle));
-		new_y = player->pos.y + (player->speed * (float)sin(player->p_angle));
-	}
-	if (player->up_down == DOWN)
-	{
-		new_x = player->pos.x + (player->speed * (float)cos(player->p_angle
-					+ PI));
-		new_y = player->pos.y + (player->speed * (float)sin(player->p_angle
-					+ PI));
-	}
-	if (player->left_right == LEFT)
-	{
-		new_x = player->pos.x + (player->speed * (float)cos(player->p_angle
-					- _05PI));
-		new_y = player->pos.y + (player->speed * (float)sin(player->p_angle
-					- _05PI));
-	}
-	if (player->left_right == RIGHT)
-	{
-		new_x = player->pos.x + (player->speed * (float)cos(player->p_angle
-					+ _05PI));
-		new_y = player->pos.y + (player->speed * (float)sin(player->p_angle
-					+ _05PI));
-	}
+	prepate_to_move_player(player, &new_x, &new_y);
 	rotate_player(player);
 	move_player(game, new_x, new_y);
 }
 
-void	move_player(t_game *game, float new_x, float new_y)
+void	move_player(t_game *game, float nx, float ny)
 {
-	t_player	*player;
-	int			wall_in_x;
-	int			wall_in_y;
+	t_player	*p;
+	char		**m;
+	int			wall_x;
+	int			wall_y;
 
-	player = game->player;
-	wall_in_x = game->map->map[(int)(player->pos.y / SCALE)][(int)(new_x
-			/ SCALE)] == WALL || game->map->map[(int)(player->pos.y + PSIZE)
-		/ SCALE][((int)(new_x + PSIZE)) / SCALE] == WALL
-		|| game->map->map[(int)(player->pos.y + PSIZE) / SCALE][(int)new_x
-		/ SCALE] == WALL || game->map->map[(int)(player->pos.y)
-		/ SCALE][((int)new_x + PSIZE) / SCALE] == WALL;
-	wall_in_y = game->map->map[(int)(new_y / SCALE)][(int)(player->pos.x
-			/ SCALE)] == WALL || game->map->map[(int)(new_y + PSIZE)
-		/ SCALE][(int)(player->pos.x + PSIZE) / SCALE] == WALL
-		|| game->map->map[(int)(new_y + PSIZE) / SCALE][(int)player->pos.x
-		/ SCALE] == WALL || game->map->map[(int)(new_y)
-		/ SCALE][((int)player->pos.x + PSIZE) / SCALE] == WALL;
-	if (!wall_in_x && !wall_in_y)
+	m = game->map->map;
+	p = game->player;
+	wall_x = m[(int)(p->pos.y / SCALE)][(int)(nx / SCALE)] == WALL
+		|| m[(int)(p->pos.y + PSIZE) / SCALE][((int)(nx + PSIZE))
+		/ SCALE] == WALL || m[(int)(p->pos.y + PSIZE) / SCALE][(int)nx
+		/ SCALE] == WALL || m[(int)(p->pos.y) / SCALE][((int)nx + PSIZE)
+		/ SCALE] == WALL;
+	wall_y = m[(int)(ny / SCALE)][(int)(p->pos.x / SCALE)] == WALL || m[(int)(ny
+			+ PSIZE) / SCALE][(int)(p->pos.x + PSIZE) / SCALE] == WALL
+		|| m[(int)(ny + PSIZE) / SCALE][(int)p->pos.x / SCALE] == WALL
+		|| m[(int)(ny) / SCALE][((int)p->pos.x + PSIZE) / SCALE] == WALL;
+	if (!wall_x && !wall_y)
 	{
-		player->pos.y = new_y;
-		player->pos.x = new_x;
+		p->pos.y = ny;
+		p->pos.x = nx;
 	}
-	else if (!wall_in_x)
-		player->pos.x = new_x;
-	else if (!wall_in_y)
-		player->pos.y = new_y;
+	else if (!wall_x)
+		p->pos.x = nx;
+	else if (!wall_y)
+		p->pos.y = ny;
 }
 
 void	rotate_player(t_player *player)

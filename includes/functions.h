@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:01 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:37:05 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:15:25 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	assign_color(int i, char *num, char type, t_map *map);
 void	get_color(char *line, char type, t_map *map);
 bool	assigned_all(t_map *map);
 void	init_map(t_map *map);
+void	get_texture_or_color(char *tmp, t_map *map);
 
 /* ----------------------------- Validate map ------------------------------ */
 /* ------------------------------------------------------------------------- */
@@ -37,14 +38,7 @@ bool	invalid_color(t_map *map);
 bool	map_split(t_map *map);
 void	get_player_coordinates(t_map *map, int rows, int coll);
 bool	invalid_characters(t_map *map);
-bool	found_leaking_space(t_map *map, int row, int coll);
-bool	leaking_empty_spaces(t_map *map);
 bool	surrounded_by_walls(t_map *map);
-bool	surrounded_by_walls2(t_map *map);
-bool	valid_upside(t_map *map, int *coll, int *row, bool *last_dir);
-bool	valid_rightside(t_map *map, int *coll, int *row, bool *last_dir);
-bool	valid_downside(t_map *map, int *coll, int *row, bool *last_dir);
-bool	valid_leftside(t_map *map, int *coll, int *row, bool *last_dir);
 void	fill_with_space(t_map *map);
 
 /* ------------------------------- Mlx Init -------------------------------- */
@@ -69,11 +63,9 @@ void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y,
 			int color);
 void	move_player(t_game *game, float move_x, float move_y);
 void	check_movements(t_game *game);
-void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y,
-			int color);
+void	draw_vline(t_game *game, int x, int start_y, int end_y);
 int		get_texture_color(t_game *game, int tex_x, int tex_y);
-void	draw_textures(t_game *game, int start_x, int start_y, int end_x,
-			int end_y);
+void	draw_textures(t_game *game, int x, int start_y, int end_y);
 void	jumping(t_player *player);
 
 /* ------------------------------ Ray Caster ------------------------------- */
@@ -82,21 +74,8 @@ void	init_ray(t_raycaster *ray, t_player *player, float angle);
 float	cast_ray(t_game *game, float angle, t_raycaster *ray);
 void	raycast(t_game *game, t_raycaster *ray);
 void	check_direction(t_game *game, t_raycaster *ray, int visited);
-
-/* --------------------------- Weapon Rendering ---------------------------- */
-/* ------------------------------------------------------------------------- */
-void	draw_weapon(t_game *game, int frame);
-int		get_weapon_color(t_game *game, int tex_x, int tex_y, int frame);
-void	render_weapon(t_game *game);
-
-/* --------------------------- Sprite Rendering ---------------------------- */
-/* ------------------------------------------------------------------------- */
-void	get_enemy_distance(t_raycaster *ray, t_game *game);
-t_point	get_normalized_vector(t_point p1, t_point p2);
-void	get_enemy_positions(t_game *game);
-void	draw_enemy(t_game *game, int x, t_raycaster *ray);
-void	animate_sprites(t_game *game);
-void	move_sprites(t_game *game);
+void	closer_distance(t_raycaster *ray, int *visited);
+void	check_dir(t_raycaster *ray);
 
 /* ------------------------------- Movements ------------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -118,6 +97,7 @@ void	error_message(char *str);
 void	free_map(t_map *map, char *str, int status);
 int		close_window(t_game *game, int status, int exit);
 void	free_map_copy(char **map);
+void	free_textures(t_game *game, t_textures *textures);
 void	clean_up(t_game *game, char *str, int status);
 
 #endif

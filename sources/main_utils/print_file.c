@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:46:05 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:46:06 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:15:00 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	print_map(char **map)
 		printf("The last row is NULL.\n");
 	else
 		printf("The last row is not NULL.\n");
-	printf("\n\n\n");
 }
 
 void	print_pixel_map(t_game *game)

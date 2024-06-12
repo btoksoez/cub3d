@@ -6,37 +6,45 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:45:54 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:45:55 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:12:20 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
+void	init_ray_tools(t_ray_tools *r)
+{
+	r->adjusted = 0;
+	r->angle = 0;
+	r->distance = 0;
+	r->top.x = 0;
+	r->top.y = 0;
+	r->bottom.x = 0;
+	r->bottom.y = 0;
+	r->wall_height = 0;
+}
+
 void	raycast(t_game *game, t_raycaster *ray)
 {
 	t_player	*player;
-	float		distance;
-	float		adjusted;
-	t_point		top;
-	t_point		bottom;
+	t_ray_tools	r;
 	int			x;
-	float		angle;
-	int			wall_height;
 
+	init_ray_tools(&r);
 	player = game->player;
-	angle = player->p_angle - (PLAYER_VISION / 2);
+	r.angle = player->p_angle - (PLAYER_VISION / 2);
 	x = 0;
-	while (angle < player->p_angle + (PLAYER_VISION / 2))
+	while (r.angle < player->p_angle + (PLAYER_VISION / 2))
 	{
-		distance = cast_ray(game, angle, ray);
-		adjusted = distance * cos(angle - player->p_angle);
-		wall_height = (WALL_SCALE / adjusted);
-		top.y = (HEIGHT / 2) - wall_height;
-		bottom.y = (HEIGHT / 2) + wall_height;
-		draw_textures(game, x, top.y, x, bottom.y);
-		draw_vline(game, x, bottom.y, x, HEIGHT, game->f_color);
-		draw_vline(game, x, 0, x, top.y, game->c_color);
-		angle += (PLAYER_VISION / WIDTH);
+		r.distance = cast_ray(game, r.angle, ray);
+		r.adjusted = r.distance * cos(r.angle - player->p_angle);
+		r.wall_height = (WALL_SCALE / r.adjusted);
+		r.top.y = (HEIGHT / 2) - r.wall_height;
+		r.bottom.y = (HEIGHT / 2) + r.wall_height;
+		draw_textures(game, x, r.top.y, r.bottom.y);
+		draw_vline(game, x, r.bottom.y, HEIGHT);
+		draw_vline(game, x, 0, r.top.y);
+		r.angle += (PLAYER_VISION / WIDTH);
 		x++;
 	}
 }
@@ -51,20 +59,7 @@ float	cast_ray(t_game *game, float angle, t_raycaster *ray)
 	init_ray(ray, player, angle);
 	while (!ray->wall)
 	{
-		if (ray->ray_len.x < ray->ray_len.y)
-		{
-			visited = 1;
-			ray->len = ray->ray_len.x;
-			ray->ray_len.x += ray->scalingf.x * SCALE;
-			ray->map_loc.x += ray->map_step.x;
-		}
-		else
-		{
-			visited = 2;
-			ray->len = ray->ray_len.y;
-			ray->ray_len.y += ray->scalingf.y * SCALE;
-			ray->map_loc.y += ray->map_step.y;
-		}
+		closer_distance(ray, &visited);
 		if (game->map->map[ray->map_loc.y][ray->map_loc.x] == WALL)
 			check_direction(game, ray, visited);
 	}
@@ -87,30 +82,7 @@ void	init_ray(t_raycaster *ray, t_player *player, float angle)
 	ray->map_loc.y = (int)(player->pos.y + PCENTER) / SCALE;
 	ray->start.x = player->pos.x + PCENTER;
 	ray->start.y = player->pos.y + PCENTER;
-	if (ray->dir.y < NORTH_)
-	{
-		ray->map_step.y = -1;
-		ray->ray_len.y = (ray->start.y - ray->map_loc.y * SCALE)
-			* ray->scalingf.y;
-	}
-	else
-	{
-		ray->map_step.y = 1;
-		ray->ray_len.y = ((ray->map_loc.y + 1) * SCALE - ray->start.y)
-			* ray->scalingf.y;
-	}
-	if (ray->dir.x < WEST_)
-	{
-		ray->map_step.x = -1;
-		ray->ray_len.x = (ray->start.x - ray->map_loc.x * SCALE)
-			* ray->scalingf.x;
-	}
-	else
-	{
-		ray->map_step.x = 1;
-		ray->ray_len.x = ((ray->map_loc.x + 1) * SCALE - ray->start.x)
-			* ray->scalingf.x;
-	}
+	check_dir(ray);
 	ray->wall = false;
 	ray->len = 0;
 }

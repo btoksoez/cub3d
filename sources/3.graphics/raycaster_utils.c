@@ -5,15 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 15:45:51 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:45:52 by andre-da         ###   ########.fr       */
+/*   Created: 2024/06/12 17:06:43 by andre-da          #+#    #+#             */
+/*   Updated: 2024/06/12 17:13:07 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	draw_textures(t_game *game, int start_x, int start_y, int end_x,
-		int end_y)
+void	draw_textures(t_game *game, int x, int start_y, int end_y)
 {
 	int		temp;
 	int		color;
@@ -21,7 +20,6 @@ void	draw_textures(t_game *game, int start_x, int start_y, int end_x,
 	float	tex_x;
 	float	step;
 
-	(void)end_x;
 	temp = 0;
 	if (start_y > end_y)
 	{
@@ -35,7 +33,7 @@ void	draw_textures(t_game *game, int start_x, int start_y, int end_x,
 	while (start_y <= end_y)
 	{
 		color = get_texture_color(game, tex_x, tex_y);
-		put_pixel_to_img(game, start_x, start_y, color);
+		put_pixel_to_img(game, x, start_y, color);
 		start_y++;
 		tex_y += step;
 	}
@@ -63,11 +61,15 @@ int	get_texture_color(t_game *game, int tex_x, int tex_y)
 	return (color);
 }
 
-void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y,
-		int color)
+void	draw_vline(t_game *game, int x, int start_y, int end_y)
 {
 	int	temp;
+	int	color;
 
+	if (end_y == HEIGHT)
+		color = game->f_color;
+	else
+		color = game->c_color;
 	temp = 0;
 	if (start_y > end_y)
 	{
@@ -77,8 +79,8 @@ void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y,
 	}
 	while (true)
 	{
-		put_pixel_to_img(game, start_x, start_y, color);
-		if (start_x == end_x && start_y == end_y)
+		put_pixel_to_img(game, x, start_y, color);
+		if (start_y == end_y)
 			break ;
 		start_y++;
 	}

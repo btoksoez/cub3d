@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:09 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:37:10 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:46:09 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,15 @@ typedef struct s_raycaster
 	t_point				start;
 	bool				wall;
 }						t_raycaster;
+
+typedef struct s_ray_tools
+{
+	t_point				top;
+	t_point				bottom;
+	float				distance;
+	float				adjusted;
+	float				angle;
+	int					wall_height;
+}						t_ray_tools;
 
 #endif

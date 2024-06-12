@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:44:50 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:44:51 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:28:34 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,18 @@ void	get_player_coordinates(t_map *map, int rows, int coll)
 	map->map[rows][coll] = '0';
 }
 
+void	invalid_characters_aux(t_map *map, int rows, int coll,
+		bool *player_found)
+{
+	if (ft_strchr(PLAYER, map->map[rows][coll]))
+	{
+		if (*player_found)
+			free_map(map, "There can only be 1 player", 1);
+		get_player_coordinates(map, rows, coll);
+		*player_found = true;
+	}
+}
+
 bool	invalid_characters(t_map *map)
 {
 	int		rows;
@@ -40,13 +52,7 @@ bool	invalid_characters(t_map *map)
 		coll = 0;
 		while (map->map[rows][coll])
 		{
-			if (ft_strchr(PLAYER, map->map[rows][coll]))
-			{
-				if (player_found)
-					free_map(map, "There can only be 1 player", 1);
-				get_player_coordinates(map, rows, coll);
-				player_found = true;
-			}
+			invalid_characters_aux(map, rows, coll, &player_found);
 			if (!ft_strchr(VALID_CHARS, map->map[rows][coll]))
 				return (true);
 			coll++;
