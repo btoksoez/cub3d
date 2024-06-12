@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 20:04:14 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 20:04:45 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:39:04 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ void	adjust_raylen(t_raycaster *ray, float angle, t_minimap mini,
 void	draw_ray(t_game *game, t_player *player, t_raycaster *ray,
 		t_minimap mini)
 {
-	t_point	close_to_b;
-	t_point	centered;
+	t_point		close_to_b;
+	t_point		centered;
+	t_point_i	start;
+	t_point_i	end;
 
 	close_to_b.x = (((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (player->pos.x
 					/ 2)) + MINI_PCENTER);
@@ -80,17 +82,33 @@ void	draw_ray(t_game *game, t_player *player, t_raycaster *ray,
 					/ 2) - MINI_PCENTER) + MINI_PCENTER);
 	centered.y = (((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + ((MINI_SCALE
 						* 5) / 2) - MINI_PCENTER) + MINI_PCENTER);
-	if ((player->pos.x <= mini.hori_vision)
-		&& (player->pos.y <= mini.vert_vision))
-		draw_line(game, close_to_b.x, close_to_b.y, close_to_b.x + (ray->dir.x
-				* ray->len), close_to_b.y + (ray->dir.y * ray->len), BLUE);
+	if ((player->pos.x <= mini.hori_vision) && (player->pos.y <= mini.vert_vision))
+	{
+		start.x = close_to_b.x;
+		start.y = close_to_b.y;
+		end.x = close_to_b.x + (ray->dir.x * ray->len);
+		end.y = close_to_b.y + (ray->dir.y * ray->len);
+	}
 	else if (player->pos.y <= mini.vert_vision)
-		draw_line(game, centered.x, close_to_b.y, centered.x + (ray->dir.x
-				* ray->len), close_to_b.y + (ray->dir.y * ray->len), BLUE);
+	{
+		start.x = centered.x;
+		start.y = close_to_b.y;
+		end.x = centered.x + (ray->dir.x * ray->len);
+		end.y = close_to_b.y + (ray->dir.y * ray->len);
+	}
 	else if (player->pos.x <= mini.hori_vision)
-		draw_line(game, close_to_b.x, centered.y, close_to_b.x + (ray->dir.x
-				* ray->len), centered.y + (ray->dir.y * ray->len), BLUE);
+	{
+		start.x = close_to_b.x;
+		start.y = centered.y;
+		end.x = close_to_b.x + (ray->dir.x * ray->len);
+		end.y = centered.y + (ray->dir.y * ray->len);
+	}
 	else
-		draw_line(game, centered.x, centered.y, centered.x + (ray->dir.x
-				* ray->len), centered.y + (ray->dir.y * ray->len), BLUE);
+	{
+		start.x = centered.x;
+		start.y = centered.y;
+		end.x = centered.x + (ray->dir.x * ray->len);
+		end.y = centered.y + (ray->dir.y * ray->len);
+	}
+	draw_line(game, start, end);
 }

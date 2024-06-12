@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap_utils_bonus.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 20:20:53 by andre-da          #+#    #+#             */
+/*   Updated: 2024/06/12 20:40:10 by andre-da         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes_bonus/cub3d_bonus.h"
 
-void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y,
-		int color)
+void	draw_line(t_game *game, t_point_i start, t_point_i end)
 {
 	int	dx;
 	int	dy;
@@ -10,26 +21,32 @@ void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y,
 	int	err;
 	int	e2;
 
-	dx = abs(end_x - start_x);
-	dy = abs(end_y - start_y);
-	sx = (start_x < end_x) ? 1 : -1;
-	sy = (start_y < end_y) ? 1 : -1;
+	dx = abs(end.x - start.x);
+	dy = abs(end.y - start.y);
+	if (start.x < end.x)
+		sx = 1;
+	else
+		sx = -1;
+	if (start.y < end.y)
+		sy = 1;
+	else
+		sy = -1;
 	err = dx - dy;
 	while (true)
 	{
-		put_pixel_to_img(game, start_x, start_y, color);
-		if (start_x == end_x && start_y == end_y)
+		put_pixel_to_img(game, start.x, start.y, BLUE);
+		if (start.x == end.x && start.y == end.y)
 			break ;
 		e2 = 2 * err;
 		if (e2 > -dy)
 		{
 			err -= dy;
-			start_x += sx;
+			start.x += sx;
 		}
 		if (e2 < dx)
 		{
 			err += dx;
-			start_y += sy;
+			start.y += sy;
 		}
 	}
 }
@@ -46,26 +63,26 @@ void	get_start_x(t_player *player, t_minimap *mini)
 void	render_player_and_rays(t_game *game, t_raycaster *ray, t_minimap mini)
 {
 	t_player	*player;
+	t_point		center;
 
 	player = game->player;
+	mini.player.x = ((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (player->pos.x
+				/ 2));
+	mini.player.y = ((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + (player->pos.y
+				/ 2));
+	center.x = ((WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + ((MINI_SCALE * 7) / 2)
+			- MINI_PCENTER);
+	center.y = ((HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + ((MINI_SCALE * 5)
+				/ 2) - MINI_PCENTER);
 	if ((player->pos.x <= mini.hori_vision)
 		&& (player->pos.y <= mini.vert_vision))
-		render_player(game, ((WIDTH - (WIDTH / 5) + (WIDTH / SCALE))
-				+ (player->pos.x / 2)), ((HEIGHT - (HEIGHT / 5) + (HEIGHT
-						/ SCALE)) + (player->pos.y / 2)));
+		render_player(game, mini.player.x, mini.player.y);
 	else if (player->pos.y <= mini.vert_vision)
-		render_player(game, ((WIDTH - (WIDTH / 5) + (WIDTH / SCALE))
-				+ ((MINI_SCALE * 7) / 2) - MINI_PCENTER), ((HEIGHT - (HEIGHT
-						/ 5) + (HEIGHT / SCALE)) + (player->pos.y / 2)));
+		render_player(game, center.x, mini.player.y);
 	else if (player->pos.x <= mini.hori_vision)
-		render_player(game, ((WIDTH - (WIDTH / 5) + (WIDTH / SCALE))
-				+ (player->pos.x / 2)), ((HEIGHT - (HEIGHT / 5) + (HEIGHT
-						/ SCALE)) + ((MINI_SCALE * 5) / 2) - MINI_PCENTER));
+		render_player(game, mini.player.x, center.y);
 	else
-		render_player(game, ((WIDTH - (WIDTH / 5) + (WIDTH / SCALE))
-				+ ((MINI_SCALE * 7) / 2) - MINI_PCENTER), ((HEIGHT - (HEIGHT
-						/ 5) + (HEIGHT / SCALE)) + ((MINI_SCALE * 5) / 2)
-				- MINI_PCENTER));
+		render_player(game, center.x, center.y);
 	raycast_2d(game, ray, mini);
 }
 
