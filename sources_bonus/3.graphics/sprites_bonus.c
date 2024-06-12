@@ -187,8 +187,8 @@ void	move_sprites(t_game *game)
 	{
 		new_pos.x = enemy[i]->pos.x + (enemy[i]->speed * enemy[i]->dir_vec.x);
 		new_pos.y = enemy[i]->pos.y + (enemy[i]->speed * enemy[i]->dir_vec.y);
-		// if (distance(new_pos.x, new_pos.y, game->player->pos.x, game->player->pos.y) < 10)
-		// 	return (player_dead(game));
+		if (distance(new_pos.x, new_pos.y, game->player->pos.x, game->player->pos.y) < 10)
+			return (player_dead(game));
 		wall_in_x = game->map->map[(int)(enemy[i]->pos.y / SCALE)][(int)(new_pos.x / SCALE)] == WALL
 				|| game->map->map[(int)(enemy[i]->pos.y + PSIZE) / SCALE][((int)(new_pos.x + PSIZE)) / SCALE] == WALL
 				|| game->map->map[(int)(enemy[i]->pos.y + PSIZE) / SCALE][(int)new_pos.x / SCALE] == WALL

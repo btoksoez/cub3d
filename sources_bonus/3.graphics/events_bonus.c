@@ -5,7 +5,6 @@ void	init_events(t_game *game)
 	mlx_hook(game->win, KeyPress, KeyPressMask, &key_press, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, &key_release, game);
 	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, &close_window, game);
-	mlx_mouse_hook(game->win, mouse_hook, game);
 }
 
 // add shooting, space, reload ...
@@ -38,7 +37,7 @@ int	key_press(int key, t_game *game)
 	if (key == SHOOT)
 		player->shooting = 10;
 	if (key == SWITCH)
-		player->weapon = (player->weapon + 1) % 4;
+		player->weapon = (player->weapon + 1) % 3;
 	return (0);
 }
 
@@ -63,20 +62,4 @@ int key_release(int key, t_game *game)
 		player->speed = 1;
 	return (0);
 
-}
-
-// need to fix if mouse gets to screen edge
-int	mouse_hook(int x, t_player *player)
-{
-	int	delta_x;
-
-	delta_x = x - player->prev_mouse_x;
-	player->prev_mouse_x = x;
-	player->p_angle += (delta_x * MOUSE_SENSITIVITY);
-
-	if (player->p_angle < 0)
-		player->p_angle += _2PI;
-	else if (player->p_angle > _2PI)
-		player->p_angle -= _2PI;
-	return (0);
 }
