@@ -1,7 +1,7 @@
 NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-LIBFT_DIR = includes/libft
+LIBFT_DIR = libraries/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 COMPRESS = ar rcs
 RM = rm -rf
@@ -20,13 +20,13 @@ BONUS_OBJ = $(BONUS_SRC:%.c=$(OBJ_DIR)/%.o)
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S),Linux)
-	MLX_DIR = includes/minilibx-linux
+	MLX_DIR = libraries/minilibx-linux
 	MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
 	MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/linux
 	MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 	CFLAGS += -DLINUX
 else
-	MLX_DIR = includes/minilibx-mac
+	MLX_DIR = libraries/minilibx-mac
 	MLX_LIB = $(MLX_DIR)/libmlx.a
 	MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/libmlx
 	MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
@@ -71,8 +71,8 @@ fclean: clean
 
 re: fclean b
 
-v: re
+v: all
 	@echo "\n"
-	valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) maps/map2.ber
+	valgrind -s --leak-check=full --show-leak-kinds=all ./$(NAME) maps/map_small.cub
 
 .PHONY: all clean fclean re v

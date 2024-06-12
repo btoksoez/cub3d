@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:36:56 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:41:17 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:21:28 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # ifdef LINUX
 /* ----------------- Linux---------------- */
-#  include "./minilibx-linux/mlx.h"
+#  include "../libraries/minilibx-linux/mlx.h"
 #  define ESC 65307
 #  define W 119
 #  define A 97
@@ -31,7 +31,7 @@
 #  define SWITCH 114      // 'd' key
 # else
 /* ------------------ Mac ----------------- */
-#  include "./minilibx-mac/mlx.h"
+#  include "../libraries/minilibx-mac/mlx.h"
 #  define ESC 0x35
 #  define W 0x0D
 #  define A 0x00
