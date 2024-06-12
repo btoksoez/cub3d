@@ -6,12 +6,12 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:36:56 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 17:21:28 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:37:19 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEFINE_H
-# define DEFINE_H
+#ifndef DEFINES_H
+# define DEFINES_H
 
 # ifdef LINUX
 /* ----------------- Linux---------------- */
@@ -54,9 +54,9 @@
 # define EPSILON 0.0001
 /* -------------- PI Values -------------- */
 # define PI 3.141592653f
-# define _05PI (PI / 2.0)
-# define _15PI (3.0 * PI / 2.0)
-# define _2PI (2.0 * PI)
+# define _05PI 1.5707963265f
+# define _15PI 4.71238898f
+# define _2PI 6.283185306f
 /* -------------- Directions ------------- */
 # define NORTH _15PI
 # define SOUTH _05PI
@@ -80,8 +80,8 @@
 /* ----------------- Game ---------------- */
 # define PLAYER "NSEW"
 # define SCALE 50
-# define PSIZE SCALE / 4
-# define PCENTER PSIZE / 2
+# define PSIZE 12.5
+# define PCENTER 6.25
 # define ROT_SPEED 0.01
 # define BUFFER 10
 # define WALL 49
@@ -91,7 +91,7 @@
 # define WON 89
 # define WIDTH 1080
 # define HEIGHT 720
-# define PLAYER_VISION (PI / 3)
+# define PLAYER_VISION 1.0471975511965976f
 # define WALL_SCALE 8000
 # define N_ 0x000000
 # define S_ 0xFF4500
@@ -114,12 +114,5 @@
 # define SPACE GREY
 # define WALLS WHITE
 # define PLAYER_ BLUE
-/* ----------------- Keys ---------------- */
-# define KEYPRESS 2
-# define KEYPRESSMASK 1L << 0
-# define KEYRELEASE 3
-# define KEYRELEASEMASK 1L << 1
-# define DESTROYNOTIFY 17
-# define STRUCTURENOTIFYMASK 1L << 17
 
 #endif

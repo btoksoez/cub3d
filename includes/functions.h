@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:01 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 17:15:25 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:36:14 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ void	init_textures(t_game *game, t_textures *textures);
 /* ------------------------------------------------------------------------- */
 int		render(t_game *game);
 void	put_pixel_to_img(t_game *game, int x, int y, int color);
-void	draw_line(t_game *game, int start_x, int start_y, int end_x, int end_y,
-			int color);
 void	move_player(t_game *game, float move_x, float move_y);
 void	check_movements(t_game *game);
 void	draw_vline(t_game *game, int x, int start_y, int end_y);
