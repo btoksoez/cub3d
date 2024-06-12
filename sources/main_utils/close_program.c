@@ -4,7 +4,7 @@ void	error_message(char *str)
 {
 	ft_putendl_fd("Error", 2);
 	ft_putendl_fd(str, 2);
-	exit (1);
+	exit(1);
 }
 
 int	close_window(t_game *game, int status, int exit)
@@ -64,7 +64,6 @@ void	free_textures(t_game *game, t_textures *textures)
 		mlx_destroy_image(game->mlx, textures->south.img_ptr);
 	if (textures->east.img_ptr)
 		mlx_destroy_image(game->mlx, textures->east.img_ptr);
-
 }
 
 void	clean_up(t_game *game, char *str, int status)
@@ -80,7 +79,6 @@ void	clean_up(t_game *game, char *str, int status)
 	else
 	{
 		ft_printf("%s\n", str);
-		exit (0);
+		exit(0);
 	}
-
 }

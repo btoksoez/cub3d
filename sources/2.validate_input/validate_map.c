@@ -1,8 +1,5 @@
 #include "../../includes/cub3d.h"
 
-// map split triggers if there is text after map
-// trim 1's which are outside of the outer wall
-
 void	validate_map(t_map *map)
 {
 	if (invalid_color(map))

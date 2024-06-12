@@ -4,10 +4,10 @@ void	init_events(t_game *game)
 {
 	mlx_hook(game->win, KeyPress, KeyPressMask, &key_press, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, &key_release, game);
-	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, &close_window, game);
+	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, &close_window,
+		game);
 }
 
-// add reload ...
 int	key_press(int key, t_game *game)
 {
 	t_player	*player;
@@ -30,7 +30,7 @@ int	key_press(int key, t_game *game)
 	return (0);
 }
 
-int key_release(int key, t_game *game)
+int	key_release(int key, t_game *game)
 {
 	t_player	*player;
 
@@ -58,7 +58,6 @@ int	mouse_hook(int x, t_player *player)
 	delta_x = x - player->prev_mouse_x;
 	player->prev_mouse_x = x;
 	player->p_angle += (delta_x * MOUSE_SENSITIVITY);
-
 	if (player->p_angle < 0)
 		player->p_angle += _2PI;
 	else if (player->p_angle > _2PI)

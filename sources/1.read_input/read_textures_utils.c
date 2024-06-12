@@ -2,7 +2,7 @@
 
 void	get_texture(char *line, char type, t_map *map)
 {
-	char *file;
+	char	*file;
 
 	line += 2;
 	ft_skip_whitespace(&line);
@@ -65,12 +65,10 @@ void	get_color(char *line, char type, t_map *map)
 
 bool	assigned_all(t_map *map)
 {
-	if (map->ea_texture && map->no_texture
-		&& map->so_texture && map->we_texture
+	if (map->ea_texture && map->no_texture && map->so_texture && map->we_texture
 		&& map->f_color.blue != -1 && map->f_color.green != -1
 		&& map->f_color.red != -1 && map->c_color.green != -1
-		&& map->c_color.blue != -1 && map->f_color.red != -1
-		)
+		&& map->c_color.blue != -1 && map->f_color.red != -1)
 		return (true);
 	return (false);
 }

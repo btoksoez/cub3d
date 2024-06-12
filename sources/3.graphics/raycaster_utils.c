@@ -1,14 +1,15 @@
 #include "../../includes/cub3d.h"
 
-void	draw_textures(t_game *game, int start_x, int start_y, int end_x, int end_y)
+void	draw_textures(t_game *game, int start_x, int start_y, int end_x,
+		int end_y)
 {
 	int		temp;
 	int		color;
 	float	tex_y;
 	float	tex_x;
 	float	step;
-	(void)	end_x;
 
+	(void)end_x;
 	temp = 0;
 	if (start_y > end_y)
 	{
@@ -39,19 +40,19 @@ int	get_texture_color(t_game *game, int tex_x, int tex_y)
 	t = game->textures;
 	bpp = t->north.bits_per_pixel;
 	len = t->north.line_len;
-
 	if (game->dir == N_)
-		color = *(int*)&t->north.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+		color = *(int *)&t->north.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
 	else if (game->dir == S_)
-		color = *(int*)&t->south.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+		color = *(int *)&t->south.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
 	else if (game->dir == W_)
-		color = *(int*)&t->west.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+		color = *(int *)&t->west.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
 	else
-		color = *(int*)&t->east.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
+		color = *(int *)&t->east.pixels_ptr[tex_x * (bpp / 8) + (tex_y * len)];
 	return (color);
 }
 
-void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y, int color)
+void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y,
+		int color)
 {
 	int	temp;
 
@@ -73,9 +74,12 @@ void	draw_vline(t_game *game, int start_x, int start_y, int end_x, int end_y, in
 
 void	put_pixel_to_img(t_game *game, int x, int y, int color)
 {
+	int	offset;
+
 	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 	{
-		int offset = (y * game->img.line_len) + (x * (game->img.bits_per_pixel / 8));
+		offset = (y * game->img.line_len) + (x * (game->img.bits_per_pixel
+					/ 8));
 		*(unsigned int *)(game->img.pixels_ptr + offset) = color;
 	}
 }

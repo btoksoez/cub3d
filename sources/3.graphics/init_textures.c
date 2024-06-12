@@ -2,13 +2,13 @@
 
 void	init_texture(t_game *game, t_img *texture_img, char *texture)
 {
-	texture_img->img_ptr = mlx_xpm_file_to_image(game->mlx, texture, &texture_img->width, &texture_img->height);
+	texture_img->img_ptr = mlx_xpm_file_to_image(game->mlx, texture,
+			&texture_img->width, &texture_img->height);
 	if (!texture_img->img_ptr)
 		clean_up(game, "failed to initialize texture", 1);
 	texture_img->pixels_ptr = mlx_get_data_addr(texture_img->img_ptr,
-												&texture_img->bits_per_pixel,
-												&texture_img->line_len,
-												&texture_img->endian);
+			&texture_img->bits_per_pixel, &texture_img->line_len,
+			&texture_img->endian);
 }
 
 void	init_textures(t_game *game, t_textures *textures)
