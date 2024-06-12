@@ -6,7 +6,7 @@
 /*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:24 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 19:08:15 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:40:23 by andre-da         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ typedef struct s_minimap
 	int					vert_vision;
 	int					initial_x;
 	int					initial_y;
+	t_point				player;
 }						t_minimap;
 
 typedef struct s_positions
@@ -165,6 +166,8 @@ typedef struct s_positions
 	int					pos_y;
 	int					img_x;
 	int					img_y;
+	int					y;
+	int					x;
 }						t_positions;
 
 #endif
