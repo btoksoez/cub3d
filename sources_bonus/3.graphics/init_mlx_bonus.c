@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:48:24 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 18:57:45 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:23:03 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 	player->weapon = GUN;
 	game->enemies = map->enemies;
 	game->enemy_count = map->enemy_count;
-	game->hit_enemy = -1;
 	get_enemy_positions(game);
 }
 
@@ -59,7 +58,7 @@ void	init_window(t_game *game, t_map *map)
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3D");
 	if (!game->win)
 	{
-		mlx_destroy_display(game->mlx);
+		// mlx_destroy_display(game->mlx);
 		free(game->mlx);
 		free_map(map, "Window initialization failed", 1);
 	}
@@ -71,7 +70,7 @@ void	init_image(t_game *game)
 	if (!game->img.img_ptr)
 	{
 		mlx_destroy_window(game->mlx, game->win);
-		mlx_destroy_display(game->mlx);
+		// mlx_destroy_display(game->mlx);
 		free(game->mlx);
 		free_map(game->map, "Image initialization failed", 1);
 	}

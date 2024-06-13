@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:24 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 21:05:43 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:13:46 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ typedef struct s_game
 	float				fraction_y;
 	struct s_enemy		**enemies;
 	int					enemy_count;
-	int					hit_enemy;
 }						t_game;
 
 typedef struct s_player
@@ -170,7 +169,30 @@ typedef struct s_positions
 	int					x;
 }						t_positions;
 
-typedef struct s_draw_line_tools
+typedef struct s_ray_tools
+{
+	t_player			*player;
+	float				distance;
+	float				adjusted;
+	t_point				top;
+	t_point				bottom;
+	float				angle;
+	int					wall_height;
+}						t_ray_tools;
+
+typedef struct s_line_tools
+{
+	t_point				q1;
+	t_point				q2;
+	t_point				r;
+	t_point				s;
+	t_point				qp;
+	float				cross;
+	float				t;
+	float				u;
+}						t_line_tools;
+
+typedef struct s_drawline_tools
 {
 	int					dx;
 	int					dy;
@@ -178,6 +200,37 @@ typedef struct s_draw_line_tools
 	int					sy;
 	int					err;
 	int					e2;
-}						t_draw_line_tools;
+}						t_drawline_tools;
+
+typedef struct s_enemy_tools
+{
+	t_point				ray_end;
+	t_enemy				**enemy;
+	t_point				intersection;
+	int					i;
+	float				distance;
+	float				enemy_line_length;
+	float				intersection_pos;
+}						t_enemy_tools;
+
+typedef struct s_drawenemy_tools
+{
+	int					color;
+	float				tex_y;
+	float				step;
+	t_point				top;
+	t_point				bottom;
+	int					enemy_height;
+	float				distance_factor;
+	int					enemy_scale;
+}						t_drawenemy_tools;
+
+typedef struct s_sprite_tools
+{
+	t_enemy				**enemy;
+	t_point				new_pos;
+	t_point				wall_in;
+	char				**map;
+}						t_sprite_tools;
 
 #endif

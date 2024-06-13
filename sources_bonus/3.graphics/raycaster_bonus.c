@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:48:54 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:48:55 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:32:31 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,153 +87,41 @@ void	draw_floor(t_game *game, int x, int bottom, int top)
 	}
 }
 
+void	init_ray_tools(t_ray_tools *r, t_game *game)
+{
+	r->player = game->player;
+	r->angle = r->player->p_angle - (PLAYER_VISION / 2);
+	r->distance = 0;
+	r->adjusted = 0;
+	r->bottom.x = 0;
+	r->top.y = 0;
+	r->wall_height = 0;
+}
+
 void	raycast(t_game *game, t_raycaster *ray)
 {
-	t_player	*player;
-	float		distance;
-	float		adjusted;
-	t_point		top;
-	t_point		bottom;
+	t_ray_tools	r;
 	int			x;
-	float		angle;
-	int			wall_height;
 
-	player = game->player;
-	angle = player->p_angle - (PLAYER_VISION / 2);
-	game->hit_enemy = -1;
+	init_ray_tools(&r, game);
 	x = 0;
-	while (angle < player->p_angle + (PLAYER_VISION / 2))
+	while (r.angle < r.player->p_angle + (PLAYER_VISION / 2))
 	{
-		distance = cast_ray(ray, game, angle);
-		adjusted = distance * cos(angle - player->p_angle);
-		wall_height = (WALL_SCALE / adjusted);
-		top.y = (HEIGHT / 2) - wall_height + player->jump_height;
-		bottom.y = (HEIGHT / 2) + wall_height + player->jump_height;
-		draw_textures(game, x, top.y, x, bottom.y);
-		draw_floor(game, x, bottom.y, HEIGHT);
-		draw_ceiling(game, x, 0, top.y);
+		r.distance = cast_ray(ray, game, r.angle);
+		r.adjusted = r.distance * cos(r.angle - r.player->p_angle);
+		r.wall_height = (WALL_SCALE / r.adjusted);
+		r.top.y = (HEIGHT / 2) - r.wall_height + r.player->jump_height;
+		r.bottom.y = (HEIGHT / 2) + r.wall_height + r.player->jump_height;
+		draw_textures(game, x, r.top.y, r.bottom.y);
+		draw_floor(game, x, r.bottom.y, HEIGHT);
+		draw_ceiling(game, x, 0, r.top.y);
 		get_enemy_distance(ray, game);
 		if (ray->enemy)
 		{
-			game->hit_enemy = ray->enemy_id;
-			ray->distance_enemy *= cos(angle - player->p_angle);
+			ray->distance_enemy *= cos(r.angle - r.player->p_angle);
 			draw_enemy(game, x, ray);
 		}
-		angle += (PLAYER_VISION / WIDTH);
+		r.angle += (PLAYER_VISION / WIDTH);
 		x++;
 	}
-}
-
-float	cast_ray(t_raycaster *ray, t_game *game, float angle)
-{
-	t_player	*player;
-	int			visited;
-
-	visited = 0;
-	player = game->player;
-	init_ray(ray, player, angle);
-	while (!ray->wall)
-	{
-		if (ray->ray_len.x < ray->ray_len.y)
-		{
-			visited = 1;
-			ray->len = ray->ray_len.x;
-			ray->ray_len.x += ray->scalingf.x * SCALE;
-			ray->map_loc.x += ray->map_step.x;
-		}
-		else
-		{
-			visited = 2;
-			ray->len = ray->ray_len.y;
-			ray->ray_len.y += ray->scalingf.y * SCALE;
-			ray->map_loc.y += ray->map_step.y;
-		}
-		if (game->map->map[ray->map_loc.y][ray->map_loc.x] == WALL)
-		{
-			if (visited == 2)
-			{
-				if (ray->dir.y < NORTH_)
-					game->dir = N_;
-				else
-					game->dir = S_;
-			}
-			else
-			{
-				if (ray->dir.x < WEST_)
-					game->dir = W_;
-				else
-					game->dir = E_;
-			}
-			ray->wall = true;
-		}
-	}
-	game->fraction_x = fmod((ray->start.x + ray->dir.x * ray->len),
-			(float)SCALE) / (float)SCALE;
-	game->fraction_y = fmod((ray->start.y + ray->dir.y * ray->len),
-			(float)SCALE) / (float)SCALE;
-	return (ray->len);
-}
-
-void	init_ray(t_raycaster *ray, t_player *player, float angle)
-{
-	ray->dir.x = cos(angle);
-	ray->dir.y = sin(angle);
-	ray->scalingf.x = sqrt(1 + (ray->dir.y / ray->dir.x) * (ray->dir.y
-				/ ray->dir.x));
-	ray->scalingf.y = sqrt(1 + (ray->dir.x / ray->dir.y) * (ray->dir.x
-				/ ray->dir.y));
-	ray->map_loc.x = (int)(player->pos.x + PCENTER) / SCALE;
-	ray->map_loc.y = (int)(player->pos.y + PCENTER) / SCALE;
-	ray->start.x = player->pos.x + PCENTER;
-	ray->start.y = player->pos.y + PCENTER;
-	ray->wall = false;
-	if (ray->dir.y < NORTH_)
-	{
-		ray->map_step.y = -1;
-		ray->ray_len.y = (ray->start.y - ray->map_loc.y * SCALE)
-			* ray->scalingf.y;
-	}
-	else
-	{
-		ray->map_step.y = 1;
-		ray->ray_len.y = ((ray->map_loc.y + 1) * SCALE - ray->start.y)
-			* ray->scalingf.y;
-	}
-	if (ray->dir.x < WEST_)
-	{
-		ray->map_step.x = -1;
-		ray->ray_len.x = (ray->start.x - ray->map_loc.x * SCALE)
-			* ray->scalingf.x;
-	}
-	else
-	{
-		ray->map_step.x = 1;
-		ray->ray_len.x = ((ray->map_loc.x + 1) * SCALE - ray->start.x)
-			* ray->scalingf.x;
-	}
-	ray->len = 0;
-	ray->enemy = false;
-	ray->enemy_type = -1;
-	ray->distance_enemy = (float)INT_MAX;
-	ray->tex_x = 0;
-	ray->enemy_id = 0;
-}
-
-void	check_direction(t_game *game, t_raycaster *ray, int visited)
-{
-	if (visited == 2)
-	{
-		if (ray->dir.y < NORTH_)
-			game->dir = N_;
-		else
-			game->dir = S_;
-	}
-	else
-	{
-		if (ray->dir.x < WEST_)
-			game->dir = W_;
-		else
-			game->dir = E_;
-	}
-	ray->wall = true;
 }

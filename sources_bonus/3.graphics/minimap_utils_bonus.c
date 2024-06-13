@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_utils_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 20:20:53 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 21:09:10 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:23:21 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes_bonus/cub3d_bonus.h"
 
-void	draw_line_aux(t_draw_line_tools *t, t_point_i start, t_point_i end)
+void	draw_line_aux(t_drawline_tools *t, t_point_i start, t_point_i end)
 {
 	t->dx = abs(end.x - start.x);
 	t->dy = abs(end.y - start.y);
@@ -29,7 +29,7 @@ void	draw_line_aux(t_draw_line_tools *t, t_point_i start, t_point_i end)
 
 void	draw_line(t_game *game, t_point_i start, t_point_i end)
 {
-	t_draw_line_tools	t;
+	t_drawline_tools	t;
 
 	draw_line_aux(&t, start, end);
 	while (true)
