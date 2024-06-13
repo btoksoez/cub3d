@@ -6,7 +6,7 @@
 /*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:48:34 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/13 15:44:46 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/13 16:33:57 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	draw_texture(t_game *game, t_img texture, t_positions p)
 	tex_y = (int)(p.img_y * scale_y) % MINI_SCALE;
 	color = get_img_color((int)tex_x, (int)tex_y, texture);
 	if (!((color >> 24) & 0xFF))
-		put_pixel_to_img(game, p.pos_x, p.pos_y, color);
+		put_pixel_to_img(game, p.pos_x, p.pos_y - ADJUST, color);
 }
 
 void	minimap_aux(t_game *game, t_minimap mini, t_textures *texture,

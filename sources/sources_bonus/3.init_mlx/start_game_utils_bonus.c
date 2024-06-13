@@ -6,7 +6,7 @@
 /*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 13:56:00 by andrealbuqu       #+#    #+#             */
-/*   Updated: 2024/06/13 15:44:46 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/13 16:34:14 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	map(t_game *game)
 	while (m.pixel.y < (HEIGHT - (HEIGHT / 5) + (HEIGHT / SCALE)) + (MINI_SCALE
 			* MINI_ROWS))
 	{
-		m.pixel.x = (WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) - 10;
+		m.pixel.x = (WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) - ADJUST;
 		m.tex.x = 0;
 		while (m.pixel.x < (WIDTH - (WIDTH / 5) + (WIDTH / SCALE)) + (MINI_SCALE
-				* MINI_COLS) + 10)
+				* MINI_COLS) + ADJUST)
 		{
 			m.color = get_map_color((int)m.tex.x, (int)m.tex.y, m.texture);
 			if (!((m.color >> 24) & 0xFF))

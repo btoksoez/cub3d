@@ -6,7 +6,7 @@
 /*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 20:20:53 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/13 15:44:46 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/13 16:34:08 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	draw_line(t_game *game, t_point_i start, t_point_i end)
 	draw_line_aux(&t, start, end);
 	while (true)
 	{
-		put_pixel_to_img(game, start.x, start.y, BLUE);
+		put_pixel_to_img(game, start.x, start.y - ADJUST, BLUE);
 		if (start.x == end.x && start.y == end.y)
 			break ;
 		t.e2 = 2 * t.err;
@@ -95,8 +95,8 @@ void	render_player(t_game *game, int start_x, int start_y)
 
 	width = PSIZE / 2;
 	height = PSIZE / 2;
-	y = start_y;
-	while (y < start_y + height)
+	y = start_y - 10;
+	while (y < start_y + height - ADJUST)
 	{
 		x = start_x;
 		while (x < start_x + width)

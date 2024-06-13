@@ -6,7 +6,7 @@
 /*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:18 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/13 15:54:53 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/13 16:33:32 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@
 # define SCALE_FACTOR 2
 # define MINI_PCENTER 3
 # define MINI_PSIZE 6
+# define ADJUST 10
 /* ---------------- Colors --------------- */
 # define RED 0xFF0000
 # define GREEN 0x00FF00
