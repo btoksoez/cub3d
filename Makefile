@@ -1,24 +1,61 @@
 NAME = cub3D
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
 LIBFT_DIR = libraries/libft
 LIBFT = $(LIBFT_DIR)/libft.a
+CFLAGS = -Wall -Wextra -Werror
+CC = cc
 COMPRESS = ar rcs
 RM = rm -rf
 
+# Mandatory files
 OBJ_DIR = objects
 SRC_DIR = sources/sources_normal
-SRC_DIRS = $(wildcard $(SRC_DIR)/*)
-SRC = $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/*/*.c)
-OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
+SRC_DIRS = $(SRC_DIR)/1.read_input $(SRC_DIR)/2.validate_input $(SRC_DIR)/3.init_mlx \
+			$(SRC_DIR)/4.raycast $(SRC_DIR)/5.movements $(SRC_DIR)/main_utils $(SRC_DIR)
+SRC_READ_INPUT = read_input.c read_input_utils.c read_map_utils.c read_textures_utils.c
+SRC_VALIDATE_INPUT = validate_map_utils.c validate_map_utils2.c validate_map.c
+SRC_INIT_MLX = init_mlx.c init_textures.c start_game.c
+SRC_RAYCAST = raycaster_utils.c raycaster_utils2.c raycaster.c
+SRC_MOVEMENTS = events.c movements.c
+SRC_MAIN_UTILS = close_program.c free.c init_map.c print_file.c
+SRC_MAIN = cub3d.c
+SRC =
+SRC += $(addprefix $(SRC_DIR)/1.read_input/,$(SRC_READ_INPUT))
+SRC += $(addprefix $(SRC_DIR)/2.validate_input/,$(SRC_VALIDATE_INPUT))
+SRC += $(addprefix $(SRC_DIR)/3.init_mlx/,$(SRC_INIT_MLX))
+SRC += $(addprefix $(SRC_DIR)/4.raycast/,$(SRC_RAYCAST))
+SRC += $(addprefix $(SRC_DIR)/5.movements/,$(SRC_MOVEMENTS))
+SRC += $(addprefix $(SRC_DIR)/main_utils/,$(SRC_MAIN_UTILS))
+SRC += $(addprefix $(SRC_DIR)/,$(SRC_MAIN))
+OBJ = $(SRC:$(SRC_DIRECTORY)/%.c=$(OBJ_DIR)/%.o)
 
-BONUS_SRC_DIR = sources/sources_bonus
-BONUS_SRC_DIRS = $(wildcard $(BONUS_SRC_DIR)/*)
-BONUS_SRC = $(wildcard $(BONUS_SRC_DIR)/*.c $(BONUS_SRC_DIR)/*/*.c)
-BONUS_OBJ = $(BONUS_SRC:%.c=$(OBJ_DIR)/%.o)
+# Bonus files
+BONUS_DIR = sources/sources_bonus
+BONUS_DIRS = $(BONUS_DIR)/1.read_input $(BONUS_DIR)/2.validate_input $(BONUS_DIR)/3.init_mlx \
+			$(BONUS_DIR)/4.raycast $(BONUS_DIR)/5.movements $(BONUS_DIR)/6.minimap \
+			$(BONUS_DIR)/7.sprites $(BONUS_DIR)/main_utils $(BONUS_DIR)
+BONUS_READ_INPUT = read_input_bonus.c read_input_utils_bonus.c read_map_utils_bonus.c read_textures_utils_bonus.c
+BONUS_VALIDATE_INPUT = validate_map_utils_bonus.c validate_map_utils2_bonus.c validate_map_bonus.c
+BONUS_INIT_MLX = init_mlx_bonus.c init_textures_bonus.c start_game_bonus.c start_game_utils_bonus.c
+BONUS_RAYCAST = raycaster_utils_bonus.c raycaster_utils2_bonus.c raycaster_bonus.c
+BONUS_MOVEMENTS = events_bonus.c movements_bonus.c movements_utils_bonus.c
+BONUS_MINIMAP= draw_ray_utils_bonus.c minimap_bonus.c minimap_rays_bonus.c minimap_rays_utils_bonus.c minimap_utils_bonus.c
+BONUS_SPRITES = enemies_position_bonus.c sprites_bonus.c sprites_utils_bonus.c sprites_utils2_bonus.c weapon_bonus.c
+BONUS_MAIN_UTILS = close_program_bonus.c free_bonus.c init_map_bonus.c print_file_bonus.c
+BONUS_MAIN = cub3d_bonus.c
+BONUS =
+BONUS += $(addprefix $(BONUS_DIR)/1.read_input/,$(BONUS_READ_INPUT))
+BONUS += $(addprefix $(BONUS_DIR)/2.validate_input/,$(BONUS_VALIDATE_INPUT))
+BONUS += $(addprefix $(BONUS_DIR)/3.init_mlx/,$(BONUS_INIT_MLX))
+BONUS += $(addprefix $(BONUS_DIR)/4.raycast/,$(BONUS_RAYCAST))
+BONUS += $(addprefix $(BONUS_DIR)/5.movements/,$(BONUS_MOVEMENTS))
+BONUS += $(addprefix $(BONUS_DIR)/6.minimap/,$(BONUS_MINIMAP))
+BONUS += $(addprefix $(BONUS_DIR)/7.sprites/,$(BONUS_SPRITES))
+BONUS += $(addprefix $(BONUS_DIR)/main_utils/,$(BONUS_MAIN_UTILS))
+BONUS += $(addprefix $(BONUS_DIR)/,$(BONUS_MAIN))
+BONUS_OBJ = $(BONUS:$(BONUS_DIRECTORY)/%.c=$(OBJ_DIR)/%.o)
 
+# Detecting system
 UNAME_S := $(shell uname -s)
-
 ifeq ($(UNAME_S),Linux)
 	MLX_DIR = libraries/minilibx-linux
 	MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
@@ -45,7 +82,7 @@ $(NAME): $(OBJ_DIR) $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) $(LIBFT) -o $(NAME)
 	@echo "$(CYAN)make$(RESET)   $@ $(GREEN)[OK]$(RESET)"
 
-b: $(OBJ_DIR) $(BONUS_OBJ) $(LIBFT)
+bonus: $(OBJ_DIR) $(BONUS_OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(BONUS_OBJ) $(MLX_FLAGS) $(LIBFT) -o $(NAME)
 	@echo "$(CYAN)make$(RESET)   bonus $(GREEN)[OK]$(RESET)"
 
@@ -53,9 +90,12 @@ $(LIBFT):
 	@$(MAKE) -s -C $(LIBFT_DIR) --no-print-directory
 
 $(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR) $(foreach dir, $(SRC_DIRS), $(OBJ_DIR)/$(notdir $(dir))) $(foreach dir, $(BONUS_SRC_DIRS), $(OBJ_DIR)/$(notdir $(dir)))
+	@mkdir -p $(OBJ_DIR) $(foreach dir, $(SRC_DIR), $(OBJ_DIR)/$(notdir $(dir))) \
+		$(foreach dir, $(BONUS_SRC_DIRS), $(OBJ_DIR)/$(notdir $(dir)))
 
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/1.read_input/%.c $(SRC_DIR)/2.validate_input/%.c \
+				$(SRC_DIR)/3.init_mlx/%.c $(SRC_DIR)/4.raycast/%.c $(SRC_DIR)/5.movements/%.c \
+				$(SRC_DIR)/main_utils/%.c $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(MLX_INC) -c $< -o $@
 
@@ -75,4 +115,4 @@ v: all
 	@echo "\n"
 	valgrind -s --leak-check=full --show-leak-kinds=all ./$(NAME) maps/map_small.cub
 
-.PHONY: all clean fclean re v
+.PHONY: all clean fclean re bonus v
