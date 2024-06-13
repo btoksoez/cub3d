@@ -7,12 +7,12 @@ COMPRESS = ar rcs
 RM = rm -rf
 
 OBJ_DIR = objects
-SRC_DIR = sources
+SRC_DIR = sources/sources_normal
 SRC_DIRS = $(wildcard $(SRC_DIR)/*)
 SRC = $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/*/*.c)
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
-BONUS_SRC_DIR = sources_bonus
+BONUS_SRC_DIR = sources/sources_bonus
 BONUS_SRC_DIRS = $(wildcard $(BONUS_SRC_DIR)/*)
 BONUS_SRC = $(wildcard $(BONUS_SRC_DIR)/*.c $(BONUS_SRC_DIR)/*/*.c)
 BONUS_OBJ = $(BONUS_SRC:%.c=$(OBJ_DIR)/%.o)
@@ -69,7 +69,7 @@ fclean: clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
 	@echo "$(RED)$@$(RESET) $(NAME) $(GREEN)[OK]$(RESET)"
 
-re: fclean b
+re: fclean all
 
 v: all
 	@echo "\n"
