@@ -6,7 +6,7 @@
 /*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:24 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/13 13:13:46 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/13 14:09:22 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,5 +232,25 @@ typedef struct s_sprite_tools
 	t_point				wall_in;
 	char				**map;
 }						t_sprite_tools;
+
+typedef struct s_map_tools
+{
+	t_textures			*texture;
+	int					color;
+	t_point				pixel;
+	t_point				scale;
+	t_point				tex;
+	int					mini_width;
+	int					mini_height;
+}						t_map_tools;
+
+typedef struct s_weapon_tools
+{
+	t_point_i			pixel;
+	t_point				tex;
+	int					color;
+	int					scale;
+	int					type;
+}						t_weapon_tools;
 
 #endif

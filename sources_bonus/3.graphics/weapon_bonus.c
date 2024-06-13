@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   weapon_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:49:21 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:49:22 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:13:08 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,43 +27,46 @@ int	get_weapon_color(t_game *game, int tex_x, int tex_y, int frame)
 	len = t->weapon[w_type][frame].line_len;
 	color = *(int *)&t->weapon[w_type][frame].pixels_ptr[tex_x * (bpp / 8)
 		+ (tex_y * len)];
-	if (color == 9961608 || color == 33023) // removing background
+	if (color == 9961608 || color == 33023)
 		return (-1);
 	return (color);
 }
 
+void	init_weapon_tools(t_game *game, t_weapon_tools *w)
+{
+	w->scale = 8;
+	w->type = game->player->weapon;
+	w->color = 0;
+	w->pixel.x = 0;
+	w->pixel.y = 0;
+}
+
 void	draw_weapon(t_game *game, int frame)
 {
-	int	x;
-	int	y;
-	int	tex_y;
-	int	tex_x;
-	int	color;
-	int	scale;
-	int	w_type;
+	t_weapon_tools	w;
 
 	t_img(*weapon)[5];
-	scale = 8;
-	w_type = game->player->weapon;
+	init_weapon_tools(game, &w);
 	weapon = game->textures->weapon;
-	y = HEIGHT - weapon[w_type][frame].height * scale;
-	tex_y = 0;
-	while (y < HEIGHT)
+	w.pixel.y = HEIGHT - weapon[w.type][frame].height * w.scale;
+	w.tex.y = 0;
+	while (w.pixel.y < HEIGHT)
 	{
-		x = (WIDTH / 2) - (weapon[w_type][frame].width * scale / 2);
-		tex_x = 0;
-		while (x < (WIDTH / 2) + (weapon[w_type][frame].width * scale / 2))
+		w.pixel.x = (WIDTH / 2) - (weapon[w.type][frame].width * w.scale / 2);
+		w.tex.x = 0;
+		while (w.pixel.x < (WIDTH / 2) + (weapon[w.type][frame].width * w.scale
+			/ 2))
 		{
-			color = get_weapon_color(game, tex_x, tex_y, frame);
-			if (color != -1)
-				put_pixel_to_img(game, x, y, color);
-			x++;
-			if (x % scale == 0)
-				tex_x++;
+			w.color = get_weapon_color(game, w.tex.x, w.tex.y, frame);
+			if (w.color != -1)
+				put_pixel_to_img(game, w.pixel.x, w.pixel.y, w.color);
+			w.pixel.x++;
+			if (w.pixel.x % w.scale == 0)
+				w.tex.x++;
 		}
-		y++;
-		if (y % scale == 0)
-			tex_y++;
+		w.pixel.y++;
+		if (w.pixel.y % w.scale == 0)
+			w.tex.y++;
 	}
 }
 

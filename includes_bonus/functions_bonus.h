@@ -6,7 +6,7 @@
 /*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:21 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/13 13:20:52 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/13 14:18:18 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ int		get_texture_color(t_game *game, int tex_x, int tex_y);
 void	draw_textures(t_game *game, int x, int start_y, int end_y);
 void	jumping(t_player *player);
 void	prepate_to_move_player(t_player *p, float *new_x, float *new_y);
+int		get_map_color(int tex_x, int tex_y, t_textures *texture);
+void	init_map_tools(t_game *game, t_map_tools *m);
+void	aim(t_game *game);
 
 /* --------------------------- Weapon Rendering ---------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -100,7 +103,7 @@ void	move_player(t_game *game, float new_x, float new_y);
 void	check_movements(t_game *game);
 void	init_enemy_tools(t_enemy_tools *e, t_game *game, t_raycaster *ray);
 bool	lines_intersect(t_point p1, t_point p2, t_enemy *enemy,
-		t_point *intersection);
+			t_point *intersection);
 
 /* ------------------------------- Mini Map -------------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -139,5 +142,6 @@ void	player_dead(t_game *game);
 void	free_map_copy(char **map);
 void	clean_up(t_game *game, char *str, int status);
 void	free_enemies(t_map *map);
+void	free_textures(t_game *game, t_textures *textures);
 
 #endif

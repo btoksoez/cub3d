@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_file_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andre-da <andre-da@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:49:38 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/12 15:49:39 by andre-da         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:18:46 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	print_map(char **map)
 		printf("The last row is NULL.\n");
 	else
 		printf("The last row is not NULL.\n");
-	printf("\n\n\n");
 }
 
 void	print_pixel_map(t_game *game)
