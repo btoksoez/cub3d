@@ -6,7 +6,7 @@
 /*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:18 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/13 15:44:23 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/13 15:54:53 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@
 # define JUMP_SPEED 10
 # define MAX_JUMP_HEIGHT 140
 # define MAX_JUMP_SPEED 30
-# define ROT_SPEED 0.01
+# define ROT_SPEED 0.02
 # define BUFFER 10
 # define WALL 49
 # define VISITED 85

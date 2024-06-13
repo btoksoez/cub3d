@@ -1,12 +1,12 @@
-S ./textures/pillar.xpm
+S ./assets/textures/pillar.xpm
 	R 900 600
 
-H ./textures/health.xpm
+H ./assets/textures/health.xpm
 
-	NO ./textures/north.xpm
-           SO ./textures/south.xpm
-WE ./textures/west.xpm
-EA 	./textures/east.xpm
+	NO ./assets/textures/north.xpm
+           SO ./assets/textures/south.xpm
+WE ./assets/textures/west.xpm
+EA 	./assets/textures/east.xpm
 
 		F	 220,100,0
    C 			  			235,30,0
