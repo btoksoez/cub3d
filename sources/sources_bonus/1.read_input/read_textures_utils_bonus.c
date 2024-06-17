@@ -6,7 +6,7 @@
 /*   By: btoksoez <btoksoez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:47:04 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/17 10:31:45 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:34:22 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,28 @@ void	assign_color(int i, char *num, char type, t_map *map)
 
 int	get_color(char *line, char type, t_map *map)
 {
-	char	*num;
+	char	*trimmed_num[3];
 	int		i;
 
-	i = 0;
 	line++;
 	ft_skip_whitespace(&line);
+	i = 0;
 	while (i < 3)
 	{
-		num = ft_strdup_delimiter(line, WS_COMMA);
-		printf("%s\n", num);
-		if (!ft_isdigit_str(num) || ft_strlen(num) > 3)
-		{
-			free(num);
+		if (num_length(line, num_start(line)) == 0
+			|| num_length(line, num_start(line)) > 3)
 			return (false);
-		}
-		assign_color(i, num, type, map);
-		line += ft_strlen(num) + 1;
-		free(num);
+		trimmed_num[i] = malloc(num_length(line, num_start(line)) + 1);
+		if (!trimmed_num[i])
+			return (false);
+		copy_color(trimmed_num, line, i);
+		assign_color(i, trimmed_num[i], type, map);
+		line += num_start(line) + num_length(line, num_start(line)) + 1;
+		free(trimmed_num[i]);
 		i++;
 	}
+	if (*line != '\0')
+		return (false);
 	return (true);
 }
 

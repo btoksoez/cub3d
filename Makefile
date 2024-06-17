@@ -11,7 +11,7 @@ OBJ_DIR = objects
 SRC_DIR = sources/sources_normal
 SRC_DIRS = $(SRC_DIR)/1.read_input $(SRC_DIR)/2.validate_input $(SRC_DIR)/3.init_mlx \
 			$(SRC_DIR)/4.raycast $(SRC_DIR)/5.movements $(SRC_DIR)/main_utils $(SRC_DIR)
-SRC_READ_INPUT = read_input.c read_input_utils.c read_map_utils.c read_textures_utils.c
+SRC_READ_INPUT = read_input.c read_input_utils.c read_map_utils.c read_textures_utils.c read_textures_utils2.c
 SRC_VALIDATE_INPUT = validate_map_utils.c validate_map_utils2.c validate_map.c
 SRC_INIT_MLX = init_mlx.c init_textures.c start_game.c
 SRC_RAYCAST = raycaster_utils.c raycaster_utils2.c raycaster.c
@@ -33,7 +33,7 @@ BONUS_DIR = sources/sources_bonus
 BONUS_DIRS = $(BONUS_DIR)/1.read_input $(BONUS_DIR)/2.validate_input $(BONUS_DIR)/3.init_mlx \
 			$(BONUS_DIR)/4.raycast $(BONUS_DIR)/5.movements $(BONUS_DIR)/6.minimap \
 			$(BONUS_DIR)/7.sprites $(BONUS_DIR)/main_utils $(BONUS_DIR)
-BONUS_READ_INPUT = read_input_bonus.c read_input_utils_bonus.c read_map_utils_bonus.c read_textures_utils_bonus.c
+BONUS_READ_INPUT = read_input_bonus.c read_input_utils_bonus.c read_map_utils_bonus.c read_textures_utils_bonus.c read_textures_utils_bonus2.c
 BONUS_VALIDATE_INPUT = validate_map_utils_bonus.c validate_map_utils2_bonus.c validate_map_bonus.c
 BONUS_INIT_MLX = init_mlx_bonus.c init_textures_bonus.c start_game_bonus.c start_game_utils_bonus.c
 BONUS_RAYCAST = raycaster_utils_bonus.c raycaster_utils2_bonus.c raycaster_bonus.c

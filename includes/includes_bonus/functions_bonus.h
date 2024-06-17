@@ -6,7 +6,7 @@
 /*   By: btoksoez <btoksoez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:21 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/17 10:07:57 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:33:37 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ int		get_color(char *line, char type, t_map *map);
 bool	assigned_all(t_map *map);
 void	init_map(t_map *map);
 int		get_texture_or_color(char *tmp, t_map *map);
+void	copy_color(char **trimmed_num, char *line, int i);
+int		num_length(char *line, int num_start);
+int		num_start(char *line);
 
 /* ----------------------------- Validate map ------------------------------ */
 /* ------------------------------------------------------------------------- */
