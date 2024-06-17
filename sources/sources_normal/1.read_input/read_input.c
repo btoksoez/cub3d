@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:44:40 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/13 15:43:17 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/17 09:59:57 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ void	read_textures(t_map *map, int fd)
 	{
 		tmp = line;
 		ft_skip_whitespace(&tmp);
-		get_texture_or_color(tmp, map);
+		if (!get_texture_or_color(tmp, map))
+		{
+			free(line);
+			free_map(map, "texture file or color not readable", 1);
+		}
 		if (line)
 			free(line);
 		if (assigned_all(map))

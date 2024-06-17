@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   read_textures_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:44:47 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/13 15:43:17 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/17 10:38:35 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/includes_normal/cub3d.h"
 
-void	get_texture(char *line, char type, t_map *map)
+int	get_texture(char *line, char type, t_map *map)
 {
 	char	*file;
+	char	*line_before;
 
+	line_before = line;
 	line += 2;
 	ft_skip_whitespace(&line);
 	file = ft_strdup_delimiter(line, WHITESPACE);
 	if (access(file, F_OK) != 0 || access(file, R_OK) != 0)
 	{
 		free(file);
-		free(line);
-		free_map(map, "texture file not readable", 1);
+		return (false);
 	}
 	if (type == 'N')
 		map->no_texture = file;
@@ -34,6 +35,7 @@ void	get_texture(char *line, char type, t_map *map)
 	else if (type == 'E')
 		map->ea_texture = file;
 	line += ft_strlen(file);
+	return (true);
 }
 
 void	assign_color(int i, char *num, char type, t_map *map)
@@ -52,9 +54,10 @@ void	assign_color(int i, char *num, char type, t_map *map)
 		map->c_color.blue = ft_atoi(num);
 }
 
-void	get_color(char *line, char type, t_map *map)
+int	get_color(char *line, char type, t_map *map)
 {
 	char	*num;
+	char	*num_trimmed;
 	int		i;
 
 	i = 0;
@@ -62,18 +65,22 @@ void	get_color(char *line, char type, t_map *map)
 	ft_skip_whitespace(&line);
 	while (i < 3)
 	{
-		num = ft_strdup_delimiter(line, WS_COMMA);
-		if (!ft_isdigit_str(num))
-		{
-			free(num);
-			free(line);
-			free_map(map, "invalid color", 1);
-		}
-		assign_color(i, num, type, map);
-		line += ft_strlen(num) + 1;
+		num = ft_strdup_delimiter(line, ",\n");
+		printf("num: %s\n", num);
+		num_trimmed = ft_strtrim(num, " ");
+		printf("trimmed: %s\n", num_trimmed);
 		free(num);
+		// if (!ft_isdigit_str(num_trimmed) || ft_strlen(num_trimmed) > 3)
+		// {
+		// 	free(num_trimmed);
+		// 	return (false);
+		// }
+		assign_color(i, num_trimmed, type, map);
+		line += ft_strlen(num_trimmed) + 1;
+		free(num_trimmed);
 		i++;
 	}
+	return (true);
 }
 
 bool	assigned_all(t_map *map)
