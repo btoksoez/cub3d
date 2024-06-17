@@ -1,4 +1,5 @@
 NAME = cub3D
+NAME_BONUS = cub3D_bonus
 LIBFT_DIR = libraries/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 CFLAGS = -Wall -Wextra -Werror
@@ -7,8 +8,8 @@ COMPRESS = ar rcs
 RM = rm -rf
 
 # Mandatory files
-OBJ_DIR = objects
 SRC_DIR = sources/sources_normal
+OBJ_DIR = objects
 SRC_DIRS = $(SRC_DIR)/1.read_input $(SRC_DIR)/2.validate_input $(SRC_DIR)/3.init_mlx \
 			$(SRC_DIR)/4.raycast $(SRC_DIR)/5.movements $(SRC_DIR)/main_utils $(SRC_DIR)
 SRC_READ_INPUT = read_input.c read_input_utils.c read_map_utils.c read_textures_utils.c read_textures_utils2.c
@@ -30,6 +31,7 @@ OBJ = $(SRC:$(SRC_DIRECTORY)/%.c=$(OBJ_DIR)/%.o)
 
 # Bonus files
 BONUS_DIR = sources/sources_bonus
+OBJ_BONUS_DIR = bonus_objects
 BONUS_DIRS = $(BONUS_DIR)/1.read_input $(BONUS_DIR)/2.validate_input $(BONUS_DIR)/3.init_mlx \
 			$(BONUS_DIR)/4.raycast $(BONUS_DIR)/5.movements $(BONUS_DIR)/6.minimap \
 			$(BONUS_DIR)/7.sprites $(BONUS_DIR)/main_utils $(BONUS_DIR)
@@ -52,7 +54,7 @@ BONUS += $(addprefix $(BONUS_DIR)/6.minimap/,$(BONUS_MINIMAP))
 BONUS += $(addprefix $(BONUS_DIR)/7.sprites/,$(BONUS_SPRITES))
 BONUS += $(addprefix $(BONUS_DIR)/main_utils/,$(BONUS_MAIN_UTILS))
 BONUS += $(addprefix $(BONUS_DIR)/,$(BONUS_MAIN))
-BONUS_OBJ = $(BONUS:$(BONUS_DIRECTORY)/%.c=$(OBJ_DIR)/%.o)
+BONUS_OBJ = $(BONUS:$(BONUS_DIRECTORY)/%.c=$(OBJ_BONUS_DIR)/%.o)
 
 # Detecting system
 UNAME_S := $(shell uname -s)
@@ -82,30 +84,40 @@ $(NAME): $(OBJ_DIR) $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) $(LIBFT) -o $(NAME)
 	@echo "$(CYAN)make$(RESET)   $@ $(GREEN)[OK]$(RESET)"
 
-bonus: $(OBJ_DIR) $(BONUS_OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) $(BONUS_OBJ) $(MLX_FLAGS) $(LIBFT) -o $(NAME)
+bonus: $(NAME_BONUS)
+
+$(NAME_BONUS): $(OBJ_BONUS_DIR) $(BONUS_OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) $(BONUS_OBJ) $(MLX_FLAGS) $(LIBFT) -o $(NAME_BONUS)
 	@echo "$(CYAN)make$(RESET)   bonus $(GREEN)[OK]$(RESET)"
 
 $(LIBFT):
 	@$(MAKE) -s -C $(LIBFT_DIR) --no-print-directory
 
 $(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR) $(foreach dir, $(SRC_DIR), $(OBJ_DIR)/$(notdir $(dir))) \
+	@mkdir -p $(OBJ_DIR) $(foreach dir, $(SRC_DIRS), $(OBJ_DIR)/$(notdir $(dir))) \
 		$(foreach dir, $(BONUS_SRC_DIRS), $(OBJ_DIR)/$(notdir $(dir)))
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/1.read_input/%.c $(SRC_DIR)/2.validate_input/%.c \
 				$(SRC_DIR)/3.init_mlx/%.c $(SRC_DIR)/4.raycast/%.c $(SRC_DIR)/5.movements/%.c \
 				$(SRC_DIR)/main_utils/%.c $(SRC_DIR)/%.c
-	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(MLX_INC) -c $< -o $@
+
+$(OBJ_BONUS_DIR):
+	@mkdir -p $(OBJ_BONUS_DIR) $(foreach dir, $(BONUS_DIRS), $(OBJ_BONUS_DIR)/$(notdir $(dir))) \
+		$(foreach dir, $(BONUS_SRC_DIRS), $(OBJ_BONUS_DIR)/$(notdir $(dir)))
+
+$(OBJ_BONUS_DIR)/%.o: $(BONUS_DIR)/1.read_input/%.c $(BONUS_DIR)/2.validate_input/%.c \
+				$(BONUS_DIR)/3.init_mlx/%.c $(BONUS_DIR)/4.raycast/%.c $(BONUS_DIR)/5.movements/%.c \
+				$(BONUS_DIR)/6.minimap $(BONUS_DIR)/7.sprites $(BONUS_DIR)/main_utils/%.c $(BONUS_DIR)/%.c
 	@$(CC) $(CFLAGS) $(MLX_INC) -c $< -o $@
 
 clean:
-	@$(RM) $(OBJ_DIR)
+	@$(RM) $(OBJ_DIR) $(OBJ_BONUS_DIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
 	@echo "$(ORANGE)$@$(RESET)  $(NAME) $(GREEN)[OK]$(RESET)"
 
 fclean: clean
-	@$(RM) $(NAME)
+	@$(RM) $(NAME) $(NAME_BONUS)
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
 	@echo "$(RED)$@$(RESET) $(NAME) $(GREEN)[OK]$(RESET)"
 
