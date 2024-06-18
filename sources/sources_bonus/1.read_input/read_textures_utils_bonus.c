@@ -6,7 +6,7 @@
 /*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:47:04 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/18 10:59:12 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/06/18 12:11:06 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	get_color(char *line, char type, t_map *map)
 		if (!trimmed_num[i])
 			return (false);
 		copy_color(trimmed_num, line, i);
+		if (trimmed_num < 0 || !ft_isdigit_str(trimmed_num[i]))
+			return (false);
 		assign_color(i, trimmed_num[i], type, map);
 		line += num_start(line) + num_length(line, num_start(line)) + 1;
 		free(trimmed_num[i]);
