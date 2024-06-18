@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_textures_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:48:30 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/13 17:34:25 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/18 10:59:44 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_texture(t_game *game, t_img *texture_img, char *texture)
 	if (!texture_img->img_ptr)
 	{
 		mlx_destroy_window(game->mlx, game->win);
-		mlx_destroy_display(game->mlx);
+		// mlx_destroy_display(game->mlx);
 		free(game->mlx);
 		free_map(game->map, "Failed to initialize texture", 1);
 	}

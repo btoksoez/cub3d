@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites_utils_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 13:19:06 by andrealbuqu       #+#    #+#             */
-/*   Updated: 2024/06/13 15:44:46 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/18 11:24:58 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ void	move_sprites(t_game *game)
 				* s.enemy[i]->dir_vec.x);
 		s.new_pos.y = s.enemy[i]->pos.y + (s.enemy[i]->speed
 				* s.enemy[i]->dir_vec.y);
-		if (distance(s.new_pos.x, s.new_pos.y, game->player->pos.x,
-				game->player->pos.y) < 10)
-			return (player_dead(game));
+		// if (distance(s.new_pos.x, s.new_pos.y, game->player->pos.x,
+		// 		game->player->pos.y) < 10)
+		// 	return (player_dead(game));
 		get_wall_in(&s, i);
 		move_sprites_aux(s.wall_in, s.enemy, s.new_pos, i);
 		i++;

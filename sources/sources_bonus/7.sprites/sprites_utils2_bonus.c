@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites_utils2_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 13:21:45 by andrealbuqu       #+#    #+#             */
-/*   Updated: 2024/06/13 15:44:46 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/18 11:01:50 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

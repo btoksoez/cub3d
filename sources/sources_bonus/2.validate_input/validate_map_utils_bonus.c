@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map_utils_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:47:17 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/13 15:44:46 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/18 11:14:02 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ void	get_enemy_coordinates(t_map *map, int rows, int coll)
 	enemy = malloc(sizeof(t_enemy));
 	if (!enemy)
 		return (error_message(map, "malloc error enemy"));
-	map->enemies = ft_realloc(map->enemies, sizeof(t_enemy *)
-			* (map->enemy_count - 1), sizeof(t_enemy *) * map->enemy_count);
+	if (map->enemy_count > 1)
+		map->enemies = ft_realloc(map->enemies, sizeof(t_enemy *)
+				* (map->enemy_count - 1), sizeof(t_enemy *) * map->enemy_count);
 	map->enemies[map->enemy_count - 1] = enemy;
 	enemy->pos.x = coll * SCALE + 3 * (ESIZE / 2);
 	enemy->pos.y = rows * SCALE + 3 * (ESIZE / 2);
@@ -62,6 +63,11 @@ void	invalid_characters_aux(t_map *map, int rows, int coll,
 			free_map(map, "There can only be 1 player", 1);
 		get_player_coordinates(map, rows, coll);
 		*player_found = true;
+	}
+	else if (ft_strchr(ENEMY, map->map[rows][coll]))
+	{
+		map->enemy_count++;
+		get_enemy_coordinates(map, rows, coll);
 	}
 }
 

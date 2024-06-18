@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_textures_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btoksoez <btoksoez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:44:47 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/17 11:32:16 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:59:20 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 int	get_texture(char *line, char type, t_map *map)
 {
 	char	*file;
-	char	*line_before;
 
-	line_before = line;
 	line += 2;
 	ft_skip_whitespace(&line);
 	file = ft_strdup_delimiter(line, WHITESPACE);

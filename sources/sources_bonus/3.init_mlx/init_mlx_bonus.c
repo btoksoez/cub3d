@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:48:24 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/13 17:34:25 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/18 11:26:22 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_game_struct(t_game *game, t_player *player, t_map *map)
 	player->pos.x = map->player.x * SCALE + 3 * (PSIZE / 2);
 	player->pos.y = map->player.y * SCALE + 3 * (PSIZE / 2);
 	player->look_dir = 0;
-	player->speed = 1;
+	player->speed = 2;
 	player->jump_height = 0;
 	player->jump_peak = false;
 	player->jumping = false;
@@ -58,7 +58,7 @@ void	init_window(t_game *game, t_map *map)
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3D");
 	if (!game->win)
 	{
-		mlx_destroy_display(game->mlx);
+		// mlx_destroy_display(game->mlx);
 		free(game->mlx);
 		free_map(map, "Window initialization failed", 1);
 	}
@@ -70,7 +70,7 @@ void	init_image(t_game *game)
 	if (!game->img.img_ptr)
 	{
 		mlx_destroy_window(game->mlx, game->win);
-		mlx_destroy_display(game->mlx);
+		// mlx_destroy_display(game->mlx);
 		free(game->mlx);
 		free_map(game->map, "Image initialization failed", 1);
 	}

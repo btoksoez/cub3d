@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_program_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:49:26 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/13 17:34:25 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/18 10:59:47 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	clean_up(t_game *game, char *str, int status)
 	free_map(game->map, NULL, 0);
 	mlx_destroy_image(game->mlx, game->img.img_ptr);
 	mlx_destroy_window(game->mlx, game->win);
-	mlx_destroy_display(game->mlx);
+	// mlx_destroy_display(game->mlx);
 	free(game->mlx);
 	if (status)
 		error_message(game->map, str);
