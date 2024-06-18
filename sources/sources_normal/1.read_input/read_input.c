@@ -6,7 +6,7 @@
 /*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:44:40 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/18 12:13:03 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/06/18 12:50:21 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,7 @@ void	read_map_aux(t_map *map, int row, char **temp, char *line)
 	if (!temp)
 	{
 		free(line);
-		if (map->map)
-			free_map(map, "Memory allocation failed", 1);
-		error_message("Memory allocation failed");
+		free_map(map, "map alloc failed", 1);
 	}
 	map->map = temp;
 	map->map[row] = ft_strtrim(line, "\n");

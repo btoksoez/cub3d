@@ -6,7 +6,7 @@
 /*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 13:56:00 by andrealbuqu       #+#    #+#             */
-/*   Updated: 2024/06/18 11:24:34 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/06/18 12:52:23 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	render(t_game *game)
 {
 	t_raycaster	ray;
 
-	printf("%d\n", game->is_player_dead);
 	if (game->is_player_dead)
 		return (0);
 	check_movements(game);
