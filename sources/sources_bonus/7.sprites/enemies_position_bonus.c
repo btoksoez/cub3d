@@ -6,7 +6,7 @@
 /*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:45:23 by andrealbuqu       #+#    #+#             */
-/*   Updated: 2024/06/18 11:26:10 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:49:29 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	get_enemy_positions_aux(t_enemy **enemy, t_point dir, int i)
 	}
 	else if (enemy[i]->type == BOSS)
 	{
-		enemy[i]->size = 3;
+		enemy[i]->size = 20;
 		enemy[i]->speed = 1;
 	}
 	else

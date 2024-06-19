@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:24 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/13 14:09:22 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/19 11:57:36 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ typedef struct s_sprite_tools
 	t_enemy				**enemy;
 	t_point				new_pos;
 	t_point				wall_in;
+	int					close_to_others;
 	char				**map;
 }						t_sprite_tools;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:18 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/13 16:33:32 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/19 11:56:23 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@
 # define ENEMY_SCALE 8000
 # define ESIZE 20
 # define ANIMATION_SPEED 10
+# define MIN_DISTANCE 15
 /* --------------- Minimap -------------- */
 # define MINI_ROWS 5
 # define MINI_COLS 7
