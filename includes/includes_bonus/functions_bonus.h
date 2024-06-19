@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btoksoez <btoksoez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:21 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/17 11:33:37 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:22:02 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,12 @@ int		key_press(int keysym, t_game *game);
 int		key_release(int keysym, t_game *game);
 int		mouse_hook(int x, t_player *player);
 int		convert(t_rgb color);
+void	init_texture(t_game *game, t_img *texture_img, char *texture);
 void	init_textures(t_game *game, t_textures *textures);
+void	init_textures_rat(t_game *game, t_textures *textures);
+void	init_textures_officer(t_game *game, t_textures *textures);
+void	init_textures_boss(t_game *game, t_textures *textures);
+void	init_textures_weapons(t_game *game, t_textures *textures);
 
 /* ------------------------------- Rendering ------------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -74,6 +79,10 @@ void	prepate_to_move_player(t_player *p, float *new_x, float *new_y);
 int		get_map_color(int tex_x, int tex_y, t_textures *texture);
 void	init_map_tools(t_game *game, t_map_tools *m);
 void	aim(t_game *game);
+void	draw(t_game *game, int x, t_ray_tools *r);
+void	draw_floor(t_game *game, int x, int bottom, int top);
+void	draw_ceiling(t_game *game, int x, int bottom, int top);
+void	draw_textures(t_game *game, int x, int start_y, int end_y);
 
 /* --------------------------- Weapon Rendering ---------------------------- */
 /* ------------------------------------------------------------------------- */
@@ -85,6 +94,7 @@ void	render_weapon(t_game *game);
 /* ------------------------------------------------------------------------- */
 // void	render_sprites(t_game *game);
 void	get_enemy_distance(t_raycaster *ray, t_game *game);
+float	distance(float x1, float y1, float x2, float y2);
 t_point	get_normalized_vector(t_point p1, t_point p2);
 void	get_enemy_positions(t_game *game);
 void	draw_enemy(t_game *game, int x, t_raycaster *ray);

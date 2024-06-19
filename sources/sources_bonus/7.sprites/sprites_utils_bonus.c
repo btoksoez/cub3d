@@ -6,21 +6,11 @@
 /*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 13:19:06 by andrealbuqu       #+#    #+#             */
-/*   Updated: 2024/06/19 12:04:00 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:08:25 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/includes_bonus/cub3d_bonus.h"
-
-float	distance(float x1, float y1, float x2, float y2)
-{
-	float	dx;
-	float	dy;
-
-	dx = x2 - x1;
-	dy = y2 - y1;
-	return (sqrtf(dx * dx + dy * dy));
-}
 
 void	move_sprites_aux(t_sprite_tools *s, int i)
 {
@@ -57,16 +47,17 @@ void	init_sprite_tools(t_sprite_tools *s, t_game *game)
 void	get_wall_in(t_sprite_tools *s, int i)
 {
 	s->wall_in.x = s->map[(int)(s->enemy[i]->pos.y / SCALE)][(int)(s->new_pos.x
-			/ SCALE)] == WALL || s->map[(int)(s->enemy[i]->pos.y + s->enemy[i]->size)
-		/ SCALE][((int)(s->new_pos.x + s->enemy[i]->size)) / SCALE] == WALL
-		|| s->map[(int)(s->enemy[i]->pos.y + s->enemy[i]->size) / SCALE][(int)s->new_pos.x
-		/ SCALE] == WALL || s->map[(int)(s->enemy[i]->pos.y)
+			/ SCALE)] == WALL || s->map[(int)(s->enemy[i]->pos.y
+			+ s->enemy[i]->size) / SCALE][((int)(s->new_pos.x
+				+ s->enemy[i]->size)) / SCALE] == WALL
+		|| s->map[(int)(s->enemy[i]->pos.y + s->enemy[i]->size) / SCALE]
+	[(int)s->new_pos.x / SCALE] == WALL || s->map[(int)(s->enemy[i]->pos.y)
 		/ SCALE][((int)s->new_pos.x + s->enemy[i]->size) / SCALE] == WALL;
 	s->wall_in.y = s->map[(int)(s->new_pos.y / SCALE)][(int)(s->enemy[i]->pos.x
 			/ SCALE)] == WALL || s->map[(int)(s->new_pos.y + s->enemy[i]->size)
 		/ SCALE][(int)(s->enemy[i]->pos.x + s->enemy[i]->size) / SCALE] == WALL
-		|| s->map[(int)(s->new_pos.y + s->enemy[i]->size) / SCALE][(int)s->enemy[i]->pos.x
-		/ SCALE] == WALL || s->map[(int)(s->new_pos.y)
+		|| s->map[(int)(s->new_pos.y + s->enemy[i]->size) / SCALE]
+	[(int)s->enemy[i]->pos.x / SCALE] == WALL || s->map[(int)(s->new_pos.y)
 		/ SCALE][((int)s->enemy[i]->pos.x + s->enemy[i]->size) / SCALE] == WALL;
 }
 
@@ -75,21 +66,21 @@ bool	distance_to_others(t_game *game, t_sprite_tools *s, int id)
 	int	i;
 
 	if (distance(s->new_pos.x, s->new_pos.y, game->player->pos.x,
-				game->player->pos.y) < MIN_DISTANCE)
+			game->player->pos.y) < MIN_DISTANCE)
 		return (true);
 	i = 0;
 	while (i < game->enemy_count)
 	{
 		if (i != id)
 		{
-			if (distance(s->new_pos.x, s->new_pos.y, game->enemies[i]->pos.x, game->enemies[i]->pos.y) < MIN_DISTANCE)
+			if (distance(s->new_pos.x, s->new_pos.y, game->enemies[i]->pos.x,
+					game->enemies[i]->pos.y) < MIN_DISTANCE)
 				return (true);
 		}
 		i++;
 	}
 	return (false);
 }
-
 
 void	move_sprites(t_game *game)
 {
@@ -100,14 +91,17 @@ void	move_sprites(t_game *game)
 	i = 0;
 	while (i < game->enemy_count)
 	{
-		s.new_pos.x = s.enemy[i]->pos.x + (s.enemy[i]->speed
-				* s.enemy[i]->dir_vec.x);
-		s.new_pos.y = s.enemy[i]->pos.y + (s.enemy[i]->speed
-				* s.enemy[i]->dir_vec.y);
-		if (distance_to_others(game, &s, i))
-			s.close_to_others = true;
-		get_wall_in(&s, i);
-		move_sprites_aux(&s, i);
+		if (!s.enemy[i]->dead)
+		{
+			s.new_pos.x = s.enemy[i]->pos.x + (s.enemy[i]->speed
+					* s.enemy[i]->dir_vec.x);
+			s.new_pos.y = s.enemy[i]->pos.y + (s.enemy[i]->speed
+					* s.enemy[i]->dir_vec.y);
+			if (distance_to_others(game, &s, i))
+				s.close_to_others = true;
+			get_wall_in(&s, i);
+			move_sprites_aux(&s, i);
+		}
 		i++;
 	}
 }

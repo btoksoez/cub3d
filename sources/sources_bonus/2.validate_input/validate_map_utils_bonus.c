@@ -6,7 +6,7 @@
 /*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:47:17 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/18 12:48:39 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:21:24 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@ void	get_player_coordinates(t_map *map, int rows, int coll)
 	map->map[rows][coll] = '0';
 }
 
+void	get_enemy_coordinates_aux(t_enemy *enemy)
+{
+	enemy->left.x = 0;
+	enemy->left.y = 0;
+	enemy->right.x = 0;
+	enemy->right.y = 0;
+	enemy->speed = 2;
+	enemy->shot = false;
+	enemy->dead = false;
+}
+
 void	get_enemy_coordinates(t_map *map, int rows, int coll)
 {
 	t_enemy	*enemy;
@@ -42,17 +53,13 @@ void	get_enemy_coordinates(t_map *map, int rows, int coll)
 	map->enemies[map->enemy_count - 1] = enemy;
 	enemy->pos.x = coll * SCALE + 3 * (ESIZE / 2);
 	enemy->pos.y = rows * SCALE + 3 * (ESIZE / 2);
-	enemy->left.x = 0;
-	enemy->left.y = 0;
-	enemy->right.x = 0;
-	enemy->right.y = 0;
-	enemy->speed = 2;
+	get_enemy_coordinates_aux(enemy);
 	if (map->map[rows][coll] == 'O')
 		enemy->type = OFFICER;
 	else if (map->map[rows][coll] == 'B')
 		enemy->type = BOSS;
-	else if (map->map[rows][coll] == 'H')
-		enemy->type = HITLER;
+	else if (map->map[rows][coll] == 'R')
+		enemy->type = RAT;
 	map->map[rows][coll] = '0';
 }
 

@@ -37,7 +37,7 @@ BONUS_DIRS = $(BONUS_DIR)/1.read_input $(BONUS_DIR)/2.validate_input $(BONUS_DIR
 			$(BONUS_DIR)/7.sprites $(BONUS_DIR)/main_utils $(BONUS_DIR)
 BONUS_READ_INPUT = read_input_bonus.c read_input_utils_bonus.c read_map_utils_bonus.c read_textures_utils_bonus.c read_textures_utils_bonus2.c
 BONUS_VALIDATE_INPUT = validate_map_utils_bonus.c validate_map_utils2_bonus.c validate_map_bonus.c
-BONUS_INIT_MLX = init_mlx_bonus.c init_textures_bonus.c start_game_bonus.c start_game_utils_bonus.c
+BONUS_INIT_MLX = init_mlx_bonus.c init_textures_bonus.c init_textures_utils_bonus.c start_game_bonus.c start_game_utils_bonus.c
 BONUS_RAYCAST = raycaster_utils_bonus.c raycaster_utils2_bonus.c raycaster_bonus.c
 BONUS_MOVEMENTS = events_bonus.c movements_bonus.c movements_utils_bonus.c
 BONUS_MINIMAP= draw_ray_utils_bonus.c minimap_bonus.c minimap_rays_bonus.c minimap_rays_utils_bonus.c minimap_utils_bonus.c
