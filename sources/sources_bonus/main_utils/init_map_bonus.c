@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:49:31 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/19 14:05:38 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:44:16 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	init_map(t_map *map)
 		return ;
 	map->map = NULL;
 	map->rows = 0;
+	map->fd = 0;
 	map->player.x = 0;
 	map->player.y = 0;
 	map->player_dir = 0;

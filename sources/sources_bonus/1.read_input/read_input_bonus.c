@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:46:18 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/18 12:49:18 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:45:32 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,21 @@
 
 void	read_input(int argc, char *argv[], t_map *map)
 {
-	int	fd;
-
 	check_arguments(map, argc, argv);
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
+	map->fd = open(argv[1], O_RDONLY);
+	if (map->fd< 0)
 		error_message(map, "Failed to open file");
-	read_textures(map, fd);
-	read_map(map, fd);
-	close(fd);
+	read_textures(map);
+	read_map(map);
 	validate_map(map);
 }
 
-void	read_textures(t_map *map, int fd)
+void	read_textures(t_map *map)
 {
 	char	*line;
 	char	*tmp;
 
-	line = get_next_line(fd);
+	line = get_next_line(map->fd);
 	while (line && *line)
 	{
 		tmp = line;
@@ -45,7 +42,7 @@ void	read_textures(t_map *map, int fd)
 			free(line);
 		if (assigned_all(map))
 			return ;
-		line = get_next_line(fd);
+		line = get_next_line(map->fd);
 	}
 	if (line)
 		free(line);
@@ -98,7 +95,7 @@ void	read_map_aux(t_map *map, int row, char **temp, char *line)
 	}
 }
 
-void	read_map(t_map *map, int fd)
+void	read_map(t_map *map)
 {
 	char	*line;
 	int		row;
@@ -106,17 +103,17 @@ void	read_map(t_map *map, int fd)
 
 	row = 0;
 	temp = NULL;
-	line = get_next_line(fd);
+	line = get_next_line(map->fd);
 	while (line && *line == '\n')
 	{
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(map->fd);
 	}
 	while (line)
 	{
 		read_map_aux(map, row, temp, line);
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(map->fd);
 		row++;
 	}
 	remove_extra_rows(map, row, temp);

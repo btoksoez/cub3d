@@ -60,13 +60,13 @@ BONUS_OBJ = $(BONUS:$(BONUS_DIRECTORY)/%.c=$(OBJ_BONUS_DIR)/%.o)
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
 	MLX_DIR = libraries/minilibx-linux
-	MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
+	MLX = $(MLX_DIR)/libmlx_Linux.a
 	MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/linux
 	MLX_FLAGS = -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 	CFLAGS += -DLINUX
 else
 	MLX_DIR = libraries/minilibx-mac
-	MLX_LIB = $(MLX_DIR)/libmlx.a
+	MLX = $(MLX_DIR)/libmlx.a
 	MLX_INC = -I$(MLX_DIR) -I$(MLX_DIR)/libmlx
 	MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 endif
@@ -80,15 +80,18 @@ RESET = \033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJ_DIR) $(OBJ) $(LIBFT)
+$(NAME): $(OBJ_DIR) $(OBJ) $(LIBFT) $(MLX)
 	@$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) $(LIBFT) -o $(NAME)
 	@echo "$(CYAN)make$(RESET)   $@ $(GREEN)[OK]$(RESET)"
 
 bonus: $(NAME_BONUS)
 
-$(NAME_BONUS): $(OBJ_BONUS_DIR) $(BONUS_OBJ) $(LIBFT)
+$(NAME_BONUS): $(OBJ_BONUS_DIR) $(BONUS_OBJ) $(LIBFT) $(MLX)
 	@$(CC) $(CFLAGS) $(BONUS_OBJ) $(MLX_FLAGS) $(LIBFT) -o $(NAME_BONUS)
 	@echo "$(CYAN)make$(RESET)   bonus $(GREEN)[OK]$(RESET)"
+
+$(MLX):
+	@$(MAKE) -s -C $(MLX_DIR) --no-print-directory
 
 $(LIBFT):
 	@$(MAKE) -s -C $(LIBFT_DIR) --no-print-directory

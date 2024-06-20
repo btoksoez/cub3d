@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:37:24 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/19 14:01:53 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:42:59 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_map
 	char				**map;
 	int					rows;
 	int					cols;
+	int					fd;
 	t_point_i			player;
 	struct s_enemy		**enemies;
 	int					enemy_count;

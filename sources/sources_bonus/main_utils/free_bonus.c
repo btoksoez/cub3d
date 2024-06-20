@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:17:54 by andrealbuqu       #+#    #+#             */
-/*   Updated: 2024/06/18 12:48:13 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:45:06 by andrealbuqu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	free_map(t_map *map, char *str, int status)
 		}
 		free(map->map);
 	}
+	if (map->fd)
+		close(map->fd);
 	if (map->ea_texture)
 		free(map->ea_texture);
 	if (map->no_texture)
