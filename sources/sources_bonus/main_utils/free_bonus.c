@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:17:54 by andrealbuqu       #+#    #+#             */
-/*   Updated: 2024/06/20 10:45:06 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/21 09:13:02 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	free_textures(t_game *game, t_textures *textures)
 	while (++i < 3)
 	{
 		j = -1;
-		while (++j < 4)
+		while (++j < 8)
 			if (textures->enemy[i][j].img_ptr)
 				mlx_destroy_image(game->mlx, textures->enemy[i][j].img_ptr);
 	}

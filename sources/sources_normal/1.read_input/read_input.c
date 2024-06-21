@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrealbuquerque <andrealbuquerque@stud    +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:44:40 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/20 10:41:23 by andrealbuqu      ###   ########.fr       */
+/*   Updated: 2024/06/21 09:16:15 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	read_input(int argc, char *argv[], t_map *map)
 {
 	check_arguments(argc, argv);
 	map->fd = open(argv[1], O_RDONLY);
-	if (map->fd  < 0)
+	if (map->fd < 0)
 		error_message("Failed to open file");
 	read_textures(map);
 	read_map(map);
@@ -103,7 +103,7 @@ void	read_map(t_map *map)
 
 	row = 0;
 	temp = NULL;
-	line = get_next_line(map->fd );
+	line = get_next_line(map->fd);
 	while (line && *line == '\n')
 	{
 		free(line);

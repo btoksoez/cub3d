@@ -7,9 +7,10 @@ SO ./assets/textures/south.xpm
 WE ./assets/textures/west.xpm
 EA ./assets/textures/east.xpm
 
+
 100000000000000000000000001
 1000000000000000S0000000001
-100000000000000000000000001
+
 
 F 211,211,211
 C 173, 216, 230
