@@ -14,15 +14,15 @@ Raycasting is a rendering technique used to create a 3D perspective in a 2D map 
 ## Features
 
 ### Normal Version
-**Movement**: Use W, A, S, D to move around.
-**Looking Around**: Use the arrow keys to look around.
-**Customizable Maps and Textures:** The map file specifies textures for the north, west, south, and east walls, as well as the color of the ceiling and floor.
+**Movement**: Use W, A, S, D to move around.  
+**Looking Around**: Use the arrow keys to look around.  
+**Customizable Maps and Textures:** The map file specifies textures for the north, west, south, and east walls, as well as the color of the ceiling and floor.  
 ### Bonus Version
-**Shooting**: Press F to shoot.
-**Weapon Switching**: Press R to change weapons.
-**Jumping**: Press Spacebar to jump.
-**Sprinting**: Hold Shift to sprint.
-**Enemies:** Enemies are animated and will follow the player.
+**Shooting**: Press F to shoot.  
+**Weapon Switching**: Press R to change weapons.  
+**Jumping**: Press Spacebar to jump.  
+**Sprinting**: Hold Shift to sprint.  
+**Enemies:** Enemies are animated and will follow the player.  
 
 
 ## Installation
@@ -46,7 +46,7 @@ make bonus
 
 ## Usage
 
-To run the game, use the following command:
+To run the game, use the following command:  
 To play the normal version:
 ```
 ./cub3D assets/maps/2_normal/map2.cub
