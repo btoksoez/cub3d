@@ -2,7 +2,7 @@
 
 Cub3D is a project that demonstrates the creation of a basic 3D game environment using raycasting principles, inspired by the classic game Wolfenstein 3D.
 
-![cub3d_bonus](https://youtu.be/ehQFkm8mGIU)
+![cub3d](./videos/cub3d.gif) ![cub3d_bonus](./videos/cub3d_bonus.gif)
 
 ## Introduction
 
