@@ -29,7 +29,7 @@ Raycasting is a rendering technique used to create a 3D perspective in a 2D map 
 
 Clone the repository:
 ```
-git clone https://github.com/yourusername/cub3d.git
+git clone https://github.com/btoksoez/cub3d.git
 ```
 Navigate to the project directory:
 ```
