@@ -78,15 +78,15 @@ RED = \033[1;31m
 CYAN = \033[1;36m
 RESET = \033[0m
 
-all: $(NAME)
+all: $(LIBFT) $(MLX) $(NAME)
 
-$(NAME): $(OBJ_DIR) $(OBJ) $(LIBFT) $(MLX)
+$(NAME): $(OBJ_DIR) $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) $(LIBFT) -o $(NAME)
 	@echo "$(CYAN)make$(RESET)   $@ $(GREEN)[OK]$(RESET)"
 
 bonus: $(NAME_BONUS)
 
-$(NAME_BONUS): $(OBJ_BONUS_DIR) $(BONUS_OBJ) $(LIBFT) $(MLX)
+$(NAME_BONUS): $(LIBFT) $(MLX) $(OBJ_BONUS_DIR) $(BONUS_OBJ)
 	@$(CC) $(CFLAGS) $(BONUS_OBJ) $(MLX_FLAGS) $(LIBFT) -o $(NAME_BONUS)
 	@echo "$(CYAN)make$(RESET)   bonus $(GREEN)[OK]$(RESET)"
 

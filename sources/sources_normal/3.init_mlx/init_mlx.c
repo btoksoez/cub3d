@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btoksoez <btoksoez@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btoksoez <btoksoez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:45:38 by andre-da          #+#    #+#             */
-/*   Updated: 2024/06/21 09:05:08 by btoksoez         ###   ########.fr       */
+/*   Updated: 2024/07/13 14:06:31 by btoksoez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ void	init_window(t_game *game, t_map *map)
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3D");
 	if (!game->win)
 	{
+		#ifdef LINUX
 		mlx_destroy_display(game->mlx);
+		#endif
 		free(game->mlx);
 		free_map(map, "Window initialization failed", 1);
 	}
@@ -61,7 +63,9 @@ void	init_image(t_game *game)
 	if (!game->img.img_ptr)
 	{
 		mlx_destroy_window(game->mlx, game->win);
+		#ifdef LINUX
 		mlx_destroy_display(game->mlx);
+		#endif
 		free(game->mlx);
 		free_map(game->map, "Image initialization failed", 1);
 	}
